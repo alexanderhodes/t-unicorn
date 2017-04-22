@@ -29,7 +29,7 @@ var statementIndex = proxyquire('./index.js', {
   './statement.controller': statementCtrlStub
 });
 
-describe('Thing API Router:', function() {
+describe('Statement API Router:', function() {
   it('should return an express router instance', function() {
     expect(statementIndex).to.equal(routerStub);
   });
