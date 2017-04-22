@@ -15,19 +15,24 @@ import Statement from '../api/statement/statement.model';
 
 Option.find({}).remove()
   .then(() => {
-    Option.create({
-      _id: '617364617364616473736461',
-      option_text: '',
-      valuation: 123
+    Option.create(
+  {
+    _id: '617364617364616473736461',
+    option_text: 'Supergeil.',
+    valuation: 123
+  },{
+  _id: '617364617364616473736462',
+  option_text: 'Superkacke.',
+  valuation: 123
   });
 });
 
 Statement.find({}).remove()
   .then(() => {
   Statement.create({
-    _id: '617364617364616473736462',
+    _id: '617364617364616473736463',
     statement_text: 'asdasdad',
-    options: ['asdas', 'asdads'],
+    options: ['617364617364616473736461','617364617364616473736462'],
     results: {benefit: String, risk: String},
     points: 12123,
     user_option: String
