@@ -4,13 +4,37 @@
  */
 
 'use strict';
-import Thing from '../api/thing/thing.model';
+//import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
-import Frage from '../api/frage/frage.model';
-import Produkt from '../api/produkt/produkt.model';
-import Katalog from '../api/katalog/katalog.model';
-import Sicherheitstyp from '../api/sicherheitstyp/sicherheitstyp.model';
+//import Frage from '../api/frage/frage.model';
+//import Produkt from '../api/produkt/produkt.model';
+//import Katalog from '../api/katalog/katalog.model';
+//import Sicherheitstyp from '../api/sicherheitstyp/sicherheitstyp.model';
+import Option from '../api/option/option.model';
+import Statement from '../api/statement/statement.model';
 
+Option.find({}).remove()
+  .then(() => {
+    Option.create({
+      _id: '617364617364616473736461',
+      option_text: '',
+      valuation: 123
+  });
+});
+
+Statement.find({}).remove()
+  .then(() => {
+  Statement.create({
+    _id: '617364617364616473736462',
+    statement_text: 'asdasdad',
+    options: ['asdas', 'asdads'],
+    results: {benefit: String, risk: String},
+    points: 12123,
+    user_option: String
+  });
+});
+
+/*
 Thing.find({}).remove()
   .then(() => {
     Thing.create({
@@ -42,20 +66,20 @@ Thing.find({}).remove()
             + 'and openshift subgenerators'
     });
   });
-
+*/
 User.find({}).remove()
   .then(() => {
     User.create({
       name: 'Test User',
-      email: 'm.bahr@telekom.de',
+      email: 's144513@hftl.de',
       password: 'test'
     }, {
       name: 'Admin',
-      email: 'm.bahr@telekom.de',
+      email: 's144513@hftl.de',
       password: 'admin'
     });
   });
-
+/*
 Frage.find({}).remove()
   .then(() => {
     Frage.create({
@@ -290,4 +314,4 @@ Produkt.find({}).remove()
         })})
       .then(() => {
         console.log('finished populating users');
-      });
+      });*/

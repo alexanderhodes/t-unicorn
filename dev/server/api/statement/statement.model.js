@@ -6,7 +6,7 @@ var StatementSchema = new mongoose.Schema({
   statement_text: String,
   options: [String],
   results: {benefit: String, risk: String},
-  points: Integer,
+  points: Number,
   user_option: String
 });
 
