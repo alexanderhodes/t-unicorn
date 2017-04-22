@@ -3,9 +3,11 @@
 import mongoose from 'mongoose';
 
 var StatementSchema = new mongoose.Schema({
-  name: String,
-  info: String,
-  active: Boolean
+  statement_text: String,
+  options: [String],
+  results: {benefit: String, risk: String},
+  points: Integer,
+  user_option: String
 });
 
 export default mongoose.model('Statement', StatementSchema);

@@ -2,13 +2,13 @@
 
 var proxyquire = require('proxyquire').noPreserveCache();
 
-var thingCtrlStub = {
-  index: 'thingCtrl.index',
-  show: 'thingCtrl.show',
-  create: 'thingCtrl.create',
-  upsert: 'thingCtrl.upsert',
-  patch: 'thingCtrl.patch',
-  destroy: 'thingCtrl.destroy'
+var optionCtrlStub = {
+  index: 'optionCtrl.index',
+  show: 'optionCtrl.show',
+  create: 'optionCtrl.create',
+  upsert: 'optionCtrl.upsert',
+  patch: 'optionCtrl.patch',
+  destroy: 'optionCtrl.destroy'
 };
 
 var routerStub = {
@@ -20,64 +20,64 @@ var routerStub = {
 };
 
 // require the index with our stubbed out modules
-var thingIndex = proxyquire('./index.js', {
+var optionIndex = proxyquire('./index.js', {
   express: {
     Router() {
       return routerStub;
     }
   },
-  './thing.controller': thingCtrlStub
+  './option.controller': optionCtrlStub
 });
 
-describe('Thing API Router:', function() {
+describe('Option API Router:', function() {
   it('should return an express router instance', function() {
-    expect(thingIndex).to.equal(routerStub);
+    expect(optionIndex).to.equal(routerStub);
   });
 
-  describe('GET /api/things', function() {
-    it('should route to thing.controller.index', function() {
+  describe('GET /api/options', function() {
+    it('should route to option.controller.index', function() {
       expect(routerStub.get
-        .withArgs('/', 'thingCtrl.index')
+        .withArgs('/', 'optionCtrl.index')
         ).to.have.been.calledOnce;
     });
   });
 
-  describe('GET /api/things/:id', function() {
-    it('should route to thing.controller.show', function() {
+  describe('GET /api/options/:id', function() {
+    it('should route to option.controller.show', function() {
       expect(routerStub.get
-        .withArgs('/:id', 'thingCtrl.show')
+        .withArgs('/:id', 'optionCtrl.show')
         ).to.have.been.calledOnce;
     });
   });
 
-  describe('POST /api/things', function() {
-    it('should route to thing.controller.create', function() {
+  describe('POST /api/options', function() {
+    it('should route to option.controller.create', function() {
       expect(routerStub.post
-        .withArgs('/', 'thingCtrl.create')
+        .withArgs('/', 'optionCtrl.create')
         ).to.have.been.calledOnce;
     });
   });
 
-  describe('PUT /api/things/:id', function() {
-    it('should route to thing.controller.upsert', function() {
+  describe('PUT /api/options/:id', function() {
+    it('should route to option.controller.upsert', function() {
       expect(routerStub.put
-        .withArgs('/:id', 'thingCtrl.upsert')
+        .withArgs('/:id', 'optionCtrl.upsert')
         ).to.have.been.calledOnce;
     });
   });
 
-  describe('PATCH /api/things/:id', function() {
-    it('should route to thing.controller.patch', function() {
+  describe('PATCH /api/options/:id', function() {
+    it('should route to option.controller.patch', function() {
       expect(routerStub.patch
-        .withArgs('/:id', 'thingCtrl.patch')
+        .withArgs('/:id', 'optionCtrl.patch')
         ).to.have.been.calledOnce;
     });
   });
 
-  describe('DELETE /api/things/:id', function() {
-    it('should route to thing.controller.destroy', function() {
+  describe('DELETE /api/options/:id', function() {
+    it('should route to option.controller.destroy', function() {
       expect(routerStub.delete
-        .withArgs('/:id', 'thingCtrl.destroy')
+        .withArgs('/:id', 'optionCtrl.destroy')
         ).to.have.been.calledOnce;
     });
   });
