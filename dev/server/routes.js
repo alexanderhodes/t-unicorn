@@ -16,6 +16,7 @@ export default function(app) {
   //app.use('/api/kataloge', require('./api/katalog'));
   app.use('/api/options', require('./api/option'));
   app.use('/api/statements', require('./api/statement'));
+  app.use('/api/results', require('./api/result'));
   //app.use('/api/sicherheitstypen', require('./api/sicherheitstyp'));
 
   app.use('/auth', require('./auth').default);

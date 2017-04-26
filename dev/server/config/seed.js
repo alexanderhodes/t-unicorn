@@ -12,6 +12,7 @@ import User from '../api/user/user.model';
 //import Sicherheitstyp from '../api/sicherheitstyp/sicherheitstyp.model';
 import Option from '../api/option/option.model';
 import Statement from '../api/statement/statement.model';
+import Result from '../api/result/result.model';
 
 Option.find({}).remove()
   .then(() => {
@@ -27,15 +28,27 @@ Option.find({}).remove()
   });
 });
 
+Result.find({}).remove()
+  .then(() => {
+  Result.create(
+  {
+    _id: '617364617364616473736464',
+    result_text: 'Nice!'
+  },{
+    _id: '617364617364616473736465',
+    result_text: 'Bad!'
+  });
+});
+
 Statement.find({}).remove()
   .then(() => {
   Statement.create({
     _id: '617364617364616473736463',
     statement_text: 'asdasdad',
-    options: ['617364617364616473736461','617364617364616473736462'],
-    results: {benefit: String, risk: String},
-    points: 12123,
-    user_option: String
+    statement_rank: 1,
+    options: [{option_id: '617364617364616473736461', result_id:'617364617364616473736464'},
+              {option_id: '617364617364616473736462', result_id:'617364617364616473736465'}],
+    points: 12123
   });
 });
 
