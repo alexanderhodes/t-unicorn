@@ -53,7 +53,7 @@ $(document).ready(function() {
    */
 
   function getStatementsLayout(currentStatement) {
-alert(currentStatement.statement_text);
+//alert(currentStatement.options.length);
     //var progress_circles;
     //progress_circles = setProgressCircles(q.length, currentStatement.rang);
 
@@ -66,11 +66,11 @@ alert(currentStatement.statement_text);
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
     var card_options = "";
-    alert("6");
-    for (var i = 0; i < currentStatement.options.length(); i++) {
+    
+    for (var i = 0; i < currentStatement.options.length; i++) {
 
       var option_id = i + 1;
-      for (var j=0; j<ops.length(); j++)
+      for (var j=0; j<ops.length; j++)
       {
         if(currentStatement.options[i].option_id==ops[j].option_id)
         {
@@ -82,7 +82,7 @@ alert(currentStatement.statement_text);
 
     }
 
-    var card_grid_end = "</div></div><div class='option_back'></div></div></div>";
+    var card_grid_end = "<div class='option_back'></div></div></div>";
 
     card_layout = card_grid_definition + card_statement + card_options + card_grid_end;
 
