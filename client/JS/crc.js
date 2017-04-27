@@ -71,8 +71,8 @@ $(document).ready(function() {
       }
 
     }
-    card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
-         "rz-slider-options=\"slider.options\"></rzslider></div>";
+   // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
+    //     "rz-slider-options=\"slider.options\"></rzslider></div>";
 
 
     var card_grid_end = "<div class='option_back'></div></div></div>";
