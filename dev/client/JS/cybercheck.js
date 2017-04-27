@@ -6,9 +6,8 @@
  * @type {string}
  * @ Vladimir Doroch
  */
-let url = location.protocol + '//' + location.host+'/';
 //let url = 'http://localhost:4000/'; //for loacal access
-let base_url = url + 'api/'; // for local testing
+
 //let url = 'http://10.1.88.8:4000/ // REST-Api deployment server
 //let base_url = 'http://10.1.88.8:3001/api/'; // REST-Api deployment server
 
@@ -245,6 +244,7 @@ $(document).ready(function() {
 /* This Function generates the html code of the result with security type, products and an overview about the answers.
  * @returns(array) p array of products
  */
+/*
   function loadProducts() {
     var req = new XMLHttpRequest();
     req.open("GET", base_url + "produkte", true);
@@ -281,44 +281,33 @@ $(document).ready(function() {
  * @returns(text) html_text DOM elements as string
  */
   function getProductRecomendation(p) {
-
-
-    var type = "<span class='secruity_type_result_text' style='margin-top:1em' >Du gehörst zum Sicherheitstyp<br></span>" + "<span class=secruity_type_result id='sicherheitstyp'>" + sicherheitstyp + "</span><br>";
-
-
-  var recommendations = '<br><div><div class="accordion_header">Wir empfehlen Dir folgende Produkte für Dein Unternehmen:</div></div><br><div>';
-  for (var i = 0; i < p.length; i++) {
-    if (p[i] == undefined){
-      //next element
-    } else {
-      var Produkt = p[i].titel;
-      products_string+=p[i].titel + "\n";
-      var Bild = p[i].uri_logo;
-      var Link = p[i].link;
-      var Beschreibung = p[i].beschreibung.toString();
-      recommendations += '<button id="Button_'+i+'" class="accordion_button_products"><img id="product_icon" src =' + Bild + '></img>' + Produkt + '<i class="material-icons accordion_button_arrow">keyboard_arrow_left</i></button><div id="Produkt_' + i + '" class="accordion_content"><br><div>' + Beschreibung + '</div><br><a href="' + Link + '" target="_blank">Hier gibt es weitere Informationen</a><br></div></div>';
-    }}
-  recommendations+= '</div>';
-  var user_answers="";
-  for(var i=0; i<q.length; i++)
-  {
-    user_answers+='<span style=color:#000000 >'+ q[i].rang +'. '+ q[i].frage +'</span><br>';
-    user_answers+='<span style=color:#9E9E9E class="overview_answers">'+' '+q[i].antworten[sessionStorage.answers.split('~')[i]-1].antwort_text+'</span><br>';
+  var result_percent ='<div class="resultbackground"><div class="result"></div></div>';
+  var result ="";
+  result+='<div class="bigbox">';
+  var box1 ='<div class="box1"><div class="header1">VORTEILE</div>';
+  for(var i=0;i<3;i++){
+  box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">'+i+'.Vorteil</div><div class="datatext">Das ist ein Vorteil.</div></div>';
   }
-  var question_overview = "";
+  box1+='</div>';
+    var box2 ='<div class="box2"><div class="header2">RISIKEN</div>';
+    for(var i=0;i<3;i++){
+      box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">'+i+'.Risiko</div><div class="datatext">Das ist ein Risiko.</div></div>';
+      box2+='<br><br>';
+    }
+  result+=box1+box2+'</div></div>';
 
-  question_overview+='<br><div class="accordion_header">Die Produkte wurden auf Basis deiner Antworten ermittelt: </div><br><button id = "overview_button" onclick=fold_out("overview") class="accordion_button_overview"><span class="button_text">Hier findest Du deine Übersicht aller Ergebnisse</span></button><div id="overview" class="accordion_content"><p><br>' + user_answers + '</p></div><br>';
 
 
-  var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
+  /*var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
+*/
   $(".answer_back").remove();
-  $("#card_grid_content").html(type + recommendations+question_overview+buttons_atresult);
+  $("#card_grid_content").html(result_percent+result);
 
 
   componentHandler.upgradeDom();
   $("#recom").width($("#recom").parent().width() - 40);
 
-
+/*
   $(".accordion_button_products").on('click touch', function () {
     var counter=$(this).attr("id").split('_')[1];
     fold_out("Produkt_" + counter);
@@ -326,10 +315,11 @@ $(document).ready(function() {
 
   });
 }
-
+*/
 /**
  * opens mail programm of user with standard content and mail of "admin"
  */
+/*
 function sendMail() {
   $.ajax({
     type: "GET",
@@ -348,10 +338,11 @@ function sendMail() {
     }
   });
 }
-
+*/
 /**
  *  This Function opens the local mail client and it sets the subject and the body.
  */
+/*
 function answer_mailto(){
   var divider ="-----------------------------------------------------------------------------------";
   var mail_body = "\n"+divider+"\nDie Produkte wurden auf Basis deiner Antworten ermittelt:\n"+divider+"\n\n";
@@ -368,11 +359,12 @@ function answer_mailto(){
 
   window.location.href = mail_total;
 }
-
+*/
 /**
  *  This Function activate the content of the products and overview by clicking on the button.
  * @params{number} content_id id of the content
  */
+/*
 function fold_out(content_id) {
   var x = document.getElementById(content_id);
   if (x.className.indexOf("accordion_active") == -1) {
@@ -392,12 +384,13 @@ function fold_out(content_id) {
     if (x.id == "overview"){
     $("#overview_button > .material-icons").html("keyboard_arrow_left");}
   }
-
+*/
 }
 /**
  *  This Function changes the arrows on the buttons by clicking them.
  * @params{number} button_id id of the button
 */
+/*
 function button_change(button_id){
   var x = document.getElementById(button_id);
   if (x.className.indexOf("accordion_button_active") == -1) {
@@ -415,3 +408,4 @@ function button_change(button_id){
     $("#"+button_id+" > .material-icons").html("keyboard_arrow_left");
   }
 }
+*/
