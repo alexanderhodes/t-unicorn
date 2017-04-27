@@ -20,7 +20,22 @@ $(document).on('keyup',function(e){
  */
 $(document).ready(function() {
 
-
+/*Slider for options*/
+$scope.slider = {
+    value: 5,
+    options: {
+        showSelectionBar: true,
+        getSelectionBarColor: function(value) {
+            if (value <= 1)
+                return 'red';
+            if (value == 2)
+                return 'yellow';
+            if (value >= 3)
+                return '#2AE02A';
+            return '#2AE02A';
+        }
+    }
+};
 
   $("span[class='mdl-button__ripple-container']").height(36);
 
@@ -81,7 +96,8 @@ $(document).ready(function() {
       }
 
     }
-
+    card_options="<rzslider rz-slider-model=\"slider.value\""+
+          "rz-slider-options=\"slider.options\"></rzslider>";
     var card_grid_end = "<div class='option_back'></div></div></div>";
 
     card_layout = card_grid_definition + card_statement + card_options + card_grid_end;
