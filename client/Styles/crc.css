@@ -19,23 +19,23 @@
 }
 
 .mdl-layout-title {
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
 }
 
 .mdl-card__title,
 .mdl-card__supporting-text,
 table #btn_start_check {
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   font-size: 28px !important;
 }
 
 h2 {
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   font-size: 28px !important;
 }
 
 tr {
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   font-size: 22px !important;
 }
 
@@ -57,7 +57,7 @@ tr {
   padding-right: 15px;
   text-align: center;
   margin-top: 30px;
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
 }
 
 .welcome_center_slogan {
@@ -94,7 +94,7 @@ tr {
 
 .statement_text {
   font-size: 36px !important;
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   color: black !important;
   line-height: 40px !important;
 }
@@ -107,7 +107,7 @@ tr {
   cursor: pointer;
   color:#9E9E9E !important;
   font-size: 22px !important;
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   /*margin-left: 50px;
   margin-right: 50px;
   margin-top: 10px;*/
@@ -176,7 +176,7 @@ tr {
   cursor: pointer;
   color:#9E9E9E !important;
   font-size: 22px !important;
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   background: #FFFFFF !important;
 }
 .statement_back:hover{
@@ -193,7 +193,7 @@ tr {
   cursor: pointer;
   color:#FFFFFF !important;
   font-size: 22px !important;
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   background: #303F9F !important;
 }
 
@@ -266,7 +266,7 @@ tr {
   cursor: pointer;
   color:#9E9E9E !important;
   font-size: 100% !important;
-  font-family: 'Lucida Sans Unicode, Lucida Grande, sans-serif' !important;
+  font-family: "Lucida Console", Monaco, monospace !important;
   background: #FFFFFF !important;
 }
 .mail_buttons:hover{
@@ -289,4 +289,10 @@ tr {
 .button_text{
   margin-top: -6px !important;
   position: absolute;
+}
+
+#slider{
+  width:100px;
+  height: 50px;
+  background: black;
 }

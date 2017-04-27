@@ -3,7 +3,6 @@
  */
 
 
-
 /*
  *This function activates the start button if 'Enter' is pressed.
  */
@@ -21,21 +20,8 @@ $(document).on('keyup',function(e){
 $(document).ready(function() {
 
 /*Slider for options*/
-$scope.slider = {
-    value: 5,
-    options: {
-        showSelectionBar: true,
-        getSelectionBarColor: function(value) {
-            if (value <= 1)
-                return 'red';
-            if (value == 2)
-                return 'yellow';
-            if (value >= 3)
-                return '#2AE02A';
-            return '#2AE02A';
-        }
-    }
-};
+
+
 
   $("span[class='mdl-button__ripple-container']").height(36);
 
@@ -48,7 +34,7 @@ $scope.slider = {
     window.sessionStorage.setItem('options','');
     options = "";
     getStatementsLayout(statements[0]);
-
+ $("#slider").slider();
   });
 
 
@@ -68,7 +54,6 @@ $scope.slider = {
    */
 
   function getStatementsLayout(currentStatement) {
-//alert(currentStatement.options.length);
     //var progress_circles;
     //progress_circles = setProgressCircles(q.length, currentStatement.rang);
 
@@ -97,13 +82,13 @@ $scope.slider = {
 
     }
     card_options="<rzslider rz-slider-model=\"slider.value\""+
-          "rz-slider-options=\"slider.options\"></rzslider>";
+         "rz-slider-options=\"slider.options\"></rzslider>";
     var card_grid_end = "<div class='option_back'></div></div></div>";
 
     card_layout = card_grid_definition + card_statement + card_options + card_grid_end;
 
     $("#main_content").html(card_layout);
-
+putSliderIn();
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
     if (currentStatement.rang > 1 && currentStatement.rang <= statements.length) {
@@ -334,3 +319,25 @@ function builtHTMLAnswers(s){
 }
 
 
+function putSliderIn(){
+  angular.module('crc', [])
+  .controller('ArticlesCtrl', function($scope){
+    $scope.slider = {
+  value: 5,
+  options: {
+    showTicksValues: true,
+    stepsArray: [
+      {value: 1, legend: 'Very poor'},
+      {value: 2},
+      {value: 3, legend: 'Fair'},
+      {value: 4},
+      {value: 5, legend: 'Average'},
+      {value: 6},
+      {value: 7, legend: 'Good'},
+      {value: 8},
+      {value: 9, legend: 'Excellent'}
+    ]
+  }
+};
+  });
+}
