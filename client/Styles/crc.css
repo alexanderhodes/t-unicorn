@@ -296,3 +296,8 @@ tr {
   height: 50px;
   background: black;
 }
+
+
+.light_blue_background{
+  background: #BBDEFB !important;
+}
