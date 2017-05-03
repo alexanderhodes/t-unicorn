@@ -103,7 +103,7 @@ $(document).ready(function() {
  * This function places DOM elements for page header
  */
   function getHeaderWithLogo() {
-    $("#main_header").html("<span class=\"mdl-layout-title\">CyberCheck</span>" +
+    $("#main_header").html("<span class=\"mdl-layout-title\">CloudReadinessCheck</span>" +
       "<div class=\"mdl-layout-spacer\"></div>");
   }
 
@@ -338,7 +338,7 @@ function sendMail() {
       var mail = response[0].email;
 
       var link = "mailto:"+mail
-          +"?subject=Anfrage zu CyberCheck"
+          +"?subject=Anfrage zu CloudReadinessCheck"
           +"&body=Sehr geehrte Damen und Herren,"+
           encodeURIComponent("\n\n bitte nehmen Sie Kontakt mit mir auf. Ich möchte mich genauer über ihre Sicherheitslösungen informieren. \n\n Vielen Dank")
         ;
@@ -355,7 +355,7 @@ function sendMail() {
 function answer_mailto(){
   var divider ="-----------------------------------------------------------------------------------";
   var mail_body = "\n"+divider+"\nDie Produkte wurden auf Basis deiner Antworten ermittelt:\n"+divider+"\n\n";
-  var mail_info = "mailto:" + "?subject=" + "Ihr CyberCheck Ergebnis" + "&body="+divider;
+  var mail_info = "mailto:" + "?subject=" + "Ihr CloudReadinessCheck Ergebnis" + "&body="+divider;
   for(var i=0; i<q.length; i++)
   {
     mail_body+=q[i].rang +". "+ q[i].frage + "\n"+q[i].antworten[sessionStorage.answers.split('~')[i]-1].antwort_text+"\n\n";

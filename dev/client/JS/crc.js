@@ -3,6 +3,12 @@
  */
 
 
+let url = location.protocol + '//' + location.host+'/';
+//let url = 'http://localhost:4000/'; //for loacal access
+let base_url = url + 'api/'; // for local testing
+//let url = 'http://10.1.88.8:4000/ // REST-Api deployment server
+//let base_url = 'http://10.1.88.8:3001/api/'; // REST-Api deployment server
+
 /*
  *This function activates the start button if 'Enter' is pressed.
  */
@@ -56,7 +62,7 @@ $(document).ready(function() {
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
     var card_options = "";
-    
+
     for (var i = 0; i < currentStatement.options.length; i++) {
 
       var option_id = i + 1;
@@ -150,7 +156,7 @@ $(document).ready(function() {
             $(".option_card[id='" + last_option + "']").html($(".option_card[id='" + last_option + "']").html() + "<i class=\"material-icons done_icon\">done</i>");
           }, 200);
         });
-        
+
       }
 
     });

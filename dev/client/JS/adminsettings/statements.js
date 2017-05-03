@@ -3,7 +3,8 @@
  */
 var questions;
 
-// Methode zum Abruf von Fragen
+// Methode zum Abruf von Statements
+//TODO
 function getQuestionsData() {
 
   // Lade Fragen und speichere in questions
@@ -25,10 +26,11 @@ function getQuestionsData() {
 }
 
 /**
- *  get question by ID
- * @param id {String} QuestionID
+ *  get statement by ID
+ * @param id {String} StatementID
  * @returns {JSON} question
  */
+//TODO
 function getQuestionByID(id){
   for(var i = 0; i<questions.length; i++){
     if(questions[i]._id == id){

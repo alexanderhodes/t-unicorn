@@ -132,7 +132,7 @@ $(document).ready(function() {
  */
 function showMail(mail) {
   var mail_content = "<div id=\"mail\" class=\"mdl-card__actions mdl-card--border settings_frame grey-font\">" +
-    "Aktuelle E-mail Adresse: " +"<span style='color:#E20074'>"+ mail +"</span>"+
+    "Aktuelle E-mail Adresse: " +"<span style='color:#303F9F'>"+ mail +"</span>"+
     "<div class=\"new_Email_frame\">" +
     "<div class=\"group\" id=\"gr_email\">" +
     "<input type=\"text\" id=\"new_email\" required>" +

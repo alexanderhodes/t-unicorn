@@ -28,12 +28,12 @@ export default function(app) {
    .get(errors[404]);
 
   app.get('/', function(req, res) {
-    res.redirect(`${app.get('appPath')}/CyberCheck.html`);
+    res.redirect(`${app.get('appPath')}/crc.html`);
   });
 
   // All other routes should redirect to the index.html
   app.route('/*')
     .get((req, res) => {
-      res.sendFile(path.resolve(`${app.get('appPath')}/CyberCheck.html`));
+      res.sendFile(path.resolve(`${app.get('appPath')}/crc.html`));
     });
 }

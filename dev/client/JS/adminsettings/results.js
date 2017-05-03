@@ -39,7 +39,7 @@ function buildProductListHTML(){
       '<!-- Produkttext -->'+
       '<div class="question_title">'+
         '<span id="product_titel'+product._id+'" class="questiontext">' +
-          '<b>Produkt: </b>' + product.titel +
+          '<b>Ergebnis: </b>' + product.titel +
         '</span>'+
 
         '<!-- Buttons für das erste Produkt -->'+

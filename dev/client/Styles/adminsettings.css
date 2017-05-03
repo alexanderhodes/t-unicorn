@@ -1,5 +1,5 @@
 .settings_frame{
-  color:#757575 !important;
+  color: #303F9F !important;
 }
 
 .title_card{
@@ -42,8 +42,8 @@
 
 
 .admin_button{
-  color: #FFFFFF !important;
-  background: #E20074 !important;
+  color: #303F9F !important;
+  background: #FFFFFF !important;
   min-width: 70px !important;
 }
 
@@ -157,7 +157,7 @@ height: auto !important;
 }
 
 .mdl-layout__tab-bar-container, .mdl-layout__tab-bar-container div{
-  background: #E20074 !important;
+  background: #303F9F !important;
 }
 
 

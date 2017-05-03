@@ -31,7 +31,7 @@ label 				 {
 input:focus ~ label, input:valid ~ label 		{
   top:-20px;
   font-size:14px;
-  color:#E20074;
+  color:#303F9F !important;
 }
 
 /* BOTTOM BARS =================================
@@ -80,15 +80,15 @@ input:focus ~ .highlight {
 /* ANIMATIONS ================*/
 @-webkit-keyframes inputHighlighter {
   from {
-    background: #E20074; }
+    background: #303F9F !important; }
   to 	{ width:0; background:transparent; }
 }
 @-moz-keyframes inputHighlighter {
-  from { background:#E20074; }
+  from { background:#303F9F !important; }
   to 	{ width:0; background:transparent; }
 }
 @keyframes inputHighlighter {
-  from { background:#E20074; }
+  from { background:#303F9F !important; }
   to 	{ width:0; background:transparent; }
 }
 
@@ -100,8 +100,8 @@ input:focus ~ .highlight {
   margin-top: 30px;
   font-family: 'telegrotesk_halfbold' !important;
   font-size: 28px !important;
-  background: white !important;
-  color:#E20074;
+  background: #FFFFFF !important;
+  color: #303F9F !important;
 }
 .admin_layout{
   background: #FFFFFF !important;
@@ -122,8 +122,8 @@ input:focus ~ .highlight {
 
 
 #login_button {
-  color: #FFFFFF !important;
-  background: #E20074 !important;
+  color: #303F9F !important;
+  background: #FFFFFF !important;
   min-width: 70px !important;
 }
 
