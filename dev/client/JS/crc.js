@@ -212,3 +212,24 @@ $scope.slider = {
 };
 }
 
+function show_result(){
+  var result_percent = '<div class="resultbackground"><div class="result"></div></div>';
+  var result = "";
+  result += '<div class="bigbox">';
+  var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
+  for (var i = 0; i < 3; i++) {
+    box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + i + '.Vorteil</div><div class="datatext">Das ist ein Vorteil.</div></div>';
+  }
+  box1 += '</div>';
+  var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
+  for (var i = 0; i < 3; i++) {
+    box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + i + '.Risiko</div><div class="datatext">Das ist ein Risiko.</div></div>';
+    box2 += '<br><br>';
+  }
+  result += box1 + box2 + '</div></div>';
+
+  $("#card_grid_content").html(result_percent+result);
+
+  componentHandler.upgradeDom();
+  $("#recom").width($("#recom").parent().width() - 40);
+}
