@@ -1,16 +1,3 @@
-/**
- * Created by lizakanitz on 29.12.16.
- */
-
-
-/**
- * window.sessionStorage
- * $.ajaxSetup({headers:{'token' : 'Bearer '+ token? }});
- *
- *
- */
-
-
 //Admin Settings Page:
 
 
@@ -18,21 +5,8 @@
  * This function sets when page is loaded
  */
 $(document).ready(function() {
-
-
-
-
+  //redirect to home when user isnt logged in
   isAuthorized();
-/*
-*This function controls if the user is logged in, if not he will be redirected to the login page.
-*/
-  function valid () {
-    if (sessionStorage.length <= 1) {
-      window.location.href= url + "admin";
-    } else {
-
-    }
-  }
   valid();
 
   var user = JSON.parse(window.sessionStorage.getItem("user"));
@@ -41,12 +15,15 @@ $(document).ready(function() {
   $(".change_passwort").on('click touch', function() {
     changePassWindow();
   });
+
+  //build page
   bildAdminSettingsPageLayout();
   showMail(user.email);
   bindCatalogEvents();
-  //getProductsData();
-  getSecurityTypeData();
-  getCatalogData();
+
+  getResultData();
+  getOptionData();
+  getStatementsData();
 
 
   /**
@@ -60,13 +37,9 @@ $(document).ready(function() {
       $( "<i class='material-icons active_catalog'>check_circle</i>").insertAfter($(this));
 
     }
-    else if($(this).hasClass("active"))
-    {
-
-    }
+    else if($(this).hasClass("active")) {}
     bindCatalogEvents();
   });
-
 
   /**
    * This function add events to set catalogs active/unactive
@@ -80,10 +53,10 @@ $(document).ready(function() {
       }
     });
 
-  $(".catalog_name").mouseleave(function() {
-    $(".unactive_catalog").remove();
-  });
-}
+    $(".catalog_name").mouseleave(function() {
+      $(".unactive_catalog").remove();
+    });
+  }
 
   //Save new Password
   $("#save_pass_button").on('click touch', function (){
@@ -124,6 +97,17 @@ $(document).ready(function() {
 
 
 });
+
+/*
+ *This function controls if the user is logged in, if not he will be redirected to the login page.
+ */
+function valid () {
+  if (sessionStorage.length <= 1) {
+    window.location.href= url + "admin";
+  } else {
+
+  }
+}
 
 /**
  * replaces the default HTML content in tab "Einstellungen", where you can change your e-mail.
@@ -248,14 +232,14 @@ function setEmail(user, newEmail){
 function bildAdminSettingsPageLayout(){
   var layout='<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">' + '<div class="page-content">' + '<!-- Content für Tab Fragenkatalog -->' +
     '<div id="catalog_content" class="mdl-grid">' + '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp">' +
-    '<div class="mdl-card__title">' + '<h2 class="mdl-card__title-text title_card">Übersicht der Fragenkataloge</h2>' +
+    '<div class="mdl-card__title">' + '<h2 class="mdl-card__title-text title_card">Übersicht der Checkliste</h2>' +
     '</div>' + '<div class="mdl-card__actions mdl-card--border settings_frame">' +
-    '<div id="catalogs_container" class="mdl-grid">' + '' + '</div>' + '</div>' + '</div>' +
+    '<div id="checklist" class="mdl-grid">' + '' + '</div>' + '</div>' + '</div>' +
     '</div>' + '</div>' + '</section>' + '<!-- Tab Produkt -->' +
     '<section class="mdl-layout__tab-panel" id="scroll-tab-2">' + '<div class="page-content">' +
     '<!-- Content für Tab Produkt -->' + '<div id="product_content" class="mdl-grid">' +
     '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp">' + '<div class="mdl-card__title">' +
-    '<h2 class="mdl-card__title-text title_card">Übersicht der Produkte</h2>' + '</div>' +
+    '<h2 class="mdl-card__title-text title_card">Übersicht der Ergebnisse</h2>' + '</div>' +
     '<div class="mdl-card__actions mdl-card--border settings_frame">' +
     '<div id="products_container" class="mdl-grid">' + '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp catalog">' +
     '<div id="product_container" class="mdl-card__actions mdl-card--border">' + '</div>' + '</div>' + '</div>' + '</div>' +
@@ -263,7 +247,7 @@ function bildAdminSettingsPageLayout(){
     '<section class="mdl-layout__tab-panel" id="scroll-tab-3">' + '<div class="page-content">' +
     '<!-- Content für Tab Sectype -->' + '<div id="security_type_content" class="mdl-grid">' +
     '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp">' + '<div class="mdl-card__title">' +
-    '<h2 class="mdl-card__title-text title_card">Übersicht der Sicherheitstypen</h2>' + '</div>' +
+    '<h2 class="mdl-card__title-text title_card">Übersicht der Optionen</h2>' + '</div>' +
     '<div class="mdl-card__actions mdl-card--border settings_frame">' +
     '<div id="security_type_container" class="mdl-grid">' + '</div>' + '</div>' + '</div>' +
     '</div>' + '</div>' + '</section>' + '<!-- Tab Admin Einstellungen -->' +

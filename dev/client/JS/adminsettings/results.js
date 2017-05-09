@@ -1,25 +1,18 @@
-var products;
+var results;
 
 /**
  *  Lade Produkte per HTTP GET-Request und speichere in globaler variable products
  */
-function getProductsData() {
+function getResultData() {
 
   // Lade Produkte und speichere in products
-  var reqProducts = new XMLHttpRequest();
-  reqProducts.open("GET", base_url + "produkte",true);
-  setHeader(reqProducts);
-  reqProducts.send();
-  reqProducts.onreadystatechange = function(){
+  var reqResults = new XMLHttpRequest();
+  reqResults.open("GET", base_url + "results",true);
+  setHeader(reqResults);
+  reqResults.send();
+  reqResults.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200){
-      products = JSON.parse(this.responseText);
-      products.sort(function(a,b){
-        return a.titel - b.titel;
-      });
-      if(security_type != undefined) {
-        $("#security_type_container").html(buildHTMLSecurityType());
-      }
-      $("#product_container").html(buildProductListHTML());
+      results = JSON.parse(this.responseText);
     }
   };
 
@@ -105,7 +98,7 @@ function buildProductListHTML(){
   html +=
     '<!-- Button Produkt hinzufügen-->'+
     '<div class="mdl-card__actions mdl-card--border add_question_frame">'+
-      '<button onclick="newProduct()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_question">'+
+      '<button onclick="newResult()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_question">'+
         '<i class="material-icons">add</i>'+
       '</button>'+
       'Produkt hinzufügen'+
@@ -123,16 +116,16 @@ function buildProductListHTML(){
  * Gebe JSON von passendem Produkt zurück
  * @returns {*}
  */
-function getProductById(id) {
-  return $.grep(products, function (e) {
-    return e._id === id;
+function getResultById(id) {
+  return $.grep(results, function (r) {
+    return r._id === id;
   })[0];
 }
 
 /**
  * Speichere neues Produkt in Datenbank per HTTP-POST-Request
  */
-function newProduct(){
+function newResult(){
   params = {
     titel: "Produkt Namen einfügen",
     beschreibung: "Beschreibung einfügen",

@@ -3,8 +3,8 @@
  */
 
 
-let url = location.protocol + '//' + location.host+'/';
-//let url = 'http://localhost:4000/'; //for loacal access
+//let url = location.protocol + '//' + location.host+'/';
+let url = 'http://localhost:4000/'; //for loacal access
 let base_url = url + 'api/'; // for local testing
 //let url = 'http://10.1.88.8:4000/ // REST-Api deployment server
 //let base_url = 'http://10.1.88.8:3001/api/'; // REST-Api deployment server

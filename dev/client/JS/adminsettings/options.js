@@ -1,18 +1,18 @@
-var security_type;
+var options;
 
-/* This Function gets all security types from the database.
+/* This Function gets all options from the database.
  * @returns{array} security_type security types as array
  */
-function getSecurityTypeData() {
+function getOptionData() {
 
   var reqsecurity_type = new XMLHttpRequest();
-  reqsecurity_type.open("GET", base_url + "sicherheitstypen",true);
+  reqsecurity_type.open("GET", base_url + "options",true);
   setHeader(reqsecurity_type);
   reqsecurity_type.send();
   reqsecurity_type.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200){
-      security_type = JSON.parse(this.responseText);
-      getProductsData();
+      options = JSON.parse(this.responseText);
+      getResultData();
     }
   };
 }
