@@ -41,7 +41,7 @@ Result.find({}).remove()
   },{
     _id: '617364617364616473736465',
     result_text: 'Bad!'
-  },,{
+  },{
     _id: '617364617364616473736468',
     result_text: 'Whatever!'
   });
