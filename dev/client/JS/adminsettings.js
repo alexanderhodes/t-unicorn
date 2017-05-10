@@ -11,6 +11,9 @@ $(document).ready(function() {
 
   var user = JSON.parse(window.sessionStorage.getItem("user"));
 
+  //load data
+  getOptionData();
+  getResultData();
 
   $(".change_passwort").on('click touch', function() {
     changePassWindow();
@@ -21,8 +24,6 @@ $(document).ready(function() {
   showMail(user.email);
   bindCatalogEvents();
 
-  getResultData();
-  getOptionData();
   getStatementsData();
 
 
@@ -230,27 +231,36 @@ function setEmail(user, newEmail){
  * This function creates DOM elements for admin settings layout and adds them to the page
  */
 function bildAdminSettingsPageLayout(){
-  var layout='<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">' + '<div class="page-content">' + '<!-- Content für Tab Fragenkatalog -->' +
+  var layout='<section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">' + '<div class="page-content">' +
+
+    '<!-- Content für Tab Fragenkatalog -->' +
     '<div id="catalog_content" class="mdl-grid">' + '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp">' +
     '<div class="mdl-card__title">' + '<h2 class="mdl-card__title-text title_card">Übersicht der Checkliste</h2>' +
     '</div>' + '<div class="mdl-card__actions mdl-card--border settings_frame">' +
     '<div id="checklist" class="mdl-grid">' + '' + '</div>' + '</div>' + '</div>' +
-    '</div>' + '</div>' + '</section>' + '<!-- Tab Produkt -->' +
+    '</div>' + '</div>' + '</section>' +
+
+    '<!-- Tab Produkt -->' +
     '<section class="mdl-layout__tab-panel" id="scroll-tab-2">' + '<div class="page-content">' +
     '<!-- Content für Tab Produkt -->' + '<div id="product_content" class="mdl-grid">' +
     '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp">' + '<div class="mdl-card__title">' +
     '<h2 class="mdl-card__title-text title_card">Übersicht der Ergebnisse</h2>' + '</div>' +
     '<div class="mdl-card__actions mdl-card--border settings_frame">' +
-    '<div id="products_container" class="mdl-grid">' + '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp catalog">' +
-    '<div id="product_container" class="mdl-card__actions mdl-card--border">' + '</div>' + '</div>' + '</div>' + '</div>' +
-    '</div>' + '</div>' + '</div>' + '</section>' + '<!-- Tab Sicherheitstyp -->' +
+    '<div id="results_container" class="mdl-grid">' + '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp catalog">' +
+    '<div id="result_container" class="mdl-card__actions mdl-card--border">' + '</div>' + '</div>' + '</div>' + '</div>' +
+    '</div>' + '</div>' + '</div>' + '</section>' +
+
+    '<!-- Tab Optionen -->' +
     '<section class="mdl-layout__tab-panel" id="scroll-tab-3">' + '<div class="page-content">' +
     '<!-- Content für Tab Sectype -->' + '<div id="security_type_content" class="mdl-grid">' +
     '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp">' + '<div class="mdl-card__title">' +
     '<h2 class="mdl-card__title-text title_card">Übersicht der Optionen</h2>' + '</div>' +
     '<div class="mdl-card__actions mdl-card--border settings_frame">' +
-    '<div id="security_type_container" class="mdl-grid">' + '</div>' + '</div>' + '</div>' +
-    '</div>' + '</div>' + '</section>' + '<!-- Tab Admin Einstellungen -->' +
+    '<div id="options_container" class="mdl-grid">' + '<div class="mdl-cell--12-col mdl-card mdl-shadow--2dp catalog">' +
+    '<div id="option_container" class="mdl-card__actions mdl-card--border">' + '</div>' + '</div>' + '</div>' + '</div>' +
+    '</div>' + '</div>' + '</div>' + '</section>' +
+
+    '<!-- Tab Admin Einstellungen -->' +
     '<section class="mdl-layout__tab-panel" id="scroll-tab-4">' + '<div class="page-content">' +
     '<!-- Content für Tab Admin Einstellungen -->' + '<div id="settings_content" class="mdl-grid">' +
     '<!-- Karte "Email ändern" -->' + '<div class="mdl-cell--4-col mdl-card mdl-shadow--2dp settings_cards">' +

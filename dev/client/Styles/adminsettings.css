@@ -6,12 +6,6 @@
   padding-left: 0px !important;
 }
 
-/*.admin_tabs, .tab_ap{
-  background: #FFFFFF !important;
-  color:#616161 !important;
-}
-*/
-
 .admin_menu{
   position: absolute;
   z-index: 9999 !important;
@@ -51,14 +45,14 @@
   list-style-type:none;
 }
 
-.questiontext{
+.statementtext{
   padding:16px !important;
   font-size: 20px !important;
 }
 
-.questionEdit{
-  margin-top: -39px;
-  margin-bottom: -80px;
+.statementEdit{
+  margin-top: -33px;
+  margin-bottom: -83px;
 }
 
 .answerEdit {
@@ -70,46 +64,45 @@
   margin-left: 55px;
 }
 
-.question_buttons, .answer_buttons, .security_type_buttons, .product_buttons{
+.statement_buttons, .answer_buttons, .security_type_buttons, .result_buttons{
   right:0px !important;
   top:0px !important;
   position: absolute;
   display: block;
 }
 
-.question_title, .answer_list, .answer_text{
+.statement_title, .answer_list, .answer_text{
   display: block !important;
   position: relative !important;
 }
 
 
-.questiontext, .question_title, .answer_list, .add_question_frame{
+.statementtext, .statement_title, .answer_list, .add_statement_frame{
   font-size: 22px !important;
-  font-family: 'telegrotesk_halfbold' !important;
   line-height: 40px !important;
 }
 
 
-.answer_text{
+.option_text{
   padding-left:60px !important;
 }
 
-.answer_text:hover{
+.option_text:hover{
   background: #F5F5F5 !important;
 }
 
 
-.active_catalog{
+.active_checklist{
   color:#4caf50 !important;
   font-size: 30px !important;
   cursor: pointer;
   padding-left:10px !important;
 }
-.catalog_name:hover{
+.checklist_name:hover{
   cursor: pointer;
 }
 
-.unactive_catalog{
+.unactive_checklist{
   color:#BDBDBD !important;
   cursor: pointer;
   font-size: 30px !important;
@@ -117,12 +110,12 @@
 }
 
 
-.answer_text{
+.option_text{
   cursor: pointer;
 }
 
 
-.add_product_to_answer{
+.add_result_to_option{
   border: 1px solid grey;
   padding:5px;
 
@@ -161,7 +154,7 @@ height: auto !important;
 }
 
 
-.answer_rang{
+.option_rang{
   padding-bottom: 20px !important;
   padding-left: 60px !important;
 }
@@ -207,53 +200,66 @@ height: auto !important;
 
 .show {display:block;}
 
-.product_points_text{
+.result_points_text{
   margin-left: 25px;
 }
 
-.product_points{
+.result_points{
   margin-left: 50px;
 }
 
-.productsForAnswer_title{
+.resultsForOption_title{
   margin-left: 60px;
 }
 
-.addProduct_font_size{
+.addResults_font_size{
   font-size: 18px;
   width: 300px;
 }
 
-.productsForAnswer {
-  margin-left: 25px;
+.resultsForOptions {
+  margin-left: 90px;
 }
+
 .edit_data{
   font-family: 'telegrotesk_halfbold' !important;
-  width: 1200px;
+  width: 68vw;
 }
-.edit_catalog_name{
+
+.edit_checklist_name{
   padding-top: 10px;
 }
-.addProduct_SecType{
+
+.addResults_SecType{
   margin-top: 20px;
 }
-.dropdown_content_catalogs{
+
+.dropdown_content_checklist{
   z-index:20 !important;
   position: fixed !important;
 
 }
-.dropdown_catalogs{
+
+.dropdown_checklist{
   position: absolute !important;
   right: 0px;
   top: 0px;
 }
 
-.catalog_hide{
+.checklist_hide{
   display: none !important;
 }
+
 .show_content {
   right: 0px;
   margin-top: 5px;
   display: inline-block;
 }
 
+.simple_with_animation{
+  width: 75vw;
+}
+
+.statement_button_points{
+  float: right;
+}

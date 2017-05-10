@@ -13,95 +13,53 @@ function getResultData() {
   reqResults.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200){
       results = JSON.parse(this.responseText);
+      $("#result_container").html(buildResultListHTML());
     }
+
   };
 
 }
 
 /**
- * Erstelle für jedes Produkt in products eine HTML-Card
+ * Erstelle für jedes Result eine HTML-Card
  *
  * Gibt HTML-Cards aller Produkte als String zurück
  * @returns {string}
  */
-function buildProductListHTML(){
+function buildResultListHTML(){
   let html = '';
 
-  products.forEach(function (product) {
+  results.forEach(function (result) {
     html +=
-      '<!-- Produkttext -->'+
-      '<div class="question_title">'+
-        '<span id="product_titel'+product._id+'" class="questiontext">' +
-          '<b>Ergebnis: </b>' + product.titel +
+      '<!-- Resulttext -->'+
+      '<div class="statement_title">'+
+        '<span id="result_text'+result._id+'" class="statementtext">' +
+          '<b>Ergebnis: </b>' + result.result_text +
         '</span>'+
 
-        '<!-- Buttons für das erste Produkt -->'+
-        '<span class="question_buttons">'+
+        '<!-- Buttons für das erste Result -->'+
+        '<span class="statement_buttons">'+
 
           '<!-- Button Produkt 1 ändern-->'+
-          '<button onclick="setNameProduct(\''+product._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-          '<i id="product_edit'+product._id+'" class="material-icons">mode_edit</i>'+
+          '<button onclick="setResultText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+          '<i id="result_edit'+result._id+'" class="material-icons">mode_edit</i>'+
           '</button>'+
 
           '<!-- Button Produkt 1 löschen-->'+
-          '<button onclick="deleteProduct(\''+product._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+          '<button onclick="deleteResult(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
             '<i class="material-icons">delete</i>'+
           '</button>'+
         '</span>'+
-      '</div>'+
-
-      '<!-- Attribute für das Produkt-->'+
-      '<div class="answer_list">'+
-
-        '<!-- Beschreibung -->'+
-        '<div class="answer_text">'+
-          '<span id="product_description'+product._id+'">'+
-          '<b>Beschreibung: </b>' + product.beschreibung+
-          '</span>'+
-
-          '<!-- Button Beschreibung ändern-->'+
-          '<span class="answer_buttons">'+
-            '<button onclick="setDescriptionProduct(\''+product._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-            '<i id="desc_edit'+product._id+'" class="material-icons">mode_edit</i>'+
-            '</button>'+
-          '</span>'+
-        '</div>'+
-
-        '<!-- Produktlogo -->'+
-        '<div class="answer_text">'+
-          '<span id="product_logo'+product._id+'">'+
-            '<b>Produktbild: </b>' + product.uri_logo+
-          '</span>'+
-            '<!-- Button Produktlogo ändern-->'+
-          '<span class="answer_buttons">'+
-            '<button onclick="setLogoProduct(\''+product._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-            '<i id="logo_edit'+product._id+'" class="material-icons">mode_edit</i>'+
-            '</button>'+
-          '</span>'+
-        '</div>'+
-
-        '<!-- Produktlink -->'+
-        '<div class="answer_text">'+
-          '<span id="product_link'+product._id+'">'+
-            '<b>Produktlink: </b>' + product.link+
-          '</span>'+
-            '<!-- Button Produktlink ändern-->'+
-            '<span class="answer_buttons">'+
-            '<button onclick="setLinkProduct(\''+product._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-              '<i  id="link_edit'+product._id+'" class="material-icons">mode_edit</i>'+
-            '</button>'+
-          '</span>'+
-        '</div>'+
       '</div>';
   });
 
   html +=
-    '<!-- Button Produkt hinzufügen-->'+
-    '<div class="mdl-card__actions mdl-card--border add_question_frame">'+
-      '<button onclick="newResult()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_question">'+
+    '<!-- Button Result hinzufügen-->'+
+    '<div class="mdl-card__actions mdl-card--border add_statement_frame">'+
+      '<button onclick="newResult()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_statement">'+
         '<i class="material-icons">add</i>'+
       '</button>'+
-      'Produkt hinzufügen'+
+      'Ergebnis hinzufügen'+
     '</div>';
 
   return html;
@@ -117,9 +75,11 @@ function buildProductListHTML(){
  * @returns {*}
  */
 function getResultById(id) {
-  return $.grep(results, function (r) {
-    return r._id === id;
-  })[0];
+  for(var i = 0; i<results.length; i++){
+    if(results[i]._id == id){
+      return results[i];
+    }
+  }
 }
 
 /**
@@ -127,153 +87,74 @@ function getResultById(id) {
  */
 function newResult(){
   params = {
-    titel: "Produkt Namen einfügen",
-    beschreibung: "Beschreibung einfügen",
-    uri_logo: "Link zum Produktbild einfügen",
-    link: "Link zum Produkt einfügen."
+    result_text: "Neuen Ergebnistext einfügen!"
   };
 
   $.ajax({
     type: "POST",
-    url: base_url + "produkte/",
+    url: base_url + "results/",
     data: params,
     beforeSend: setHeader,
     success: function (response) {
-      getCatalogData()
-    },
-    error: function (response) {
+      getResultData();
+      getStatementsData();
     }
   });
 }
 
 /**
- * Losche Produkt anhand der produkt_id aus der Datenbank per HTTP-DELETE-Request
- * @param product_id {string}
+ * Lösche Result anhand der result_id aus der Datenbank per HTTP-DELETE-Request
+ * @param result_id {string}
  */
-function deleteProduct(product_id){
+function deleteResult(result_id){
   $.ajax({
     type: "DELETE",
-    url: base_url + "produkte/"+product_id,
+    url: base_url + "results/"+result_id,
     beforeSend: setHeader,
     success: function (response) {
-      getCatalogData();
+      getResultData();
+      getStatementsData();
     },
     error: function (response) {
     }
   });
-
-  //delete productId in sicherheitstyp
-  for(var i = 0; i < security_type.length; i++){
-    deleteProductSecurityType(security_type[i]._id, product_id);
-  }
-
 }
 
 /**
  * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
- * @param product_id {string}
+ * @param result_id {string}
  */
-function setNameProduct(product_id){
-  let p = getProductById(product_id);
-  if($('#product_edit'+product_id).html()=='mode_edit'){
-    $('#product_edit'+product_id).html('save');
+function setResultText(result_id){
+  let r = getResultById(result_id);
+  if($('#result_edit'+result_id).html()=='mode_edit'){
+    $('#result_edit'+result_id).html('save');
 
     inputField =
       '<div class="group">'+
-      '<input type="text" id="newProductName'+product_id+'" required value="'+ p.titel +'">'+
-      '<label>Gib einen neuen Titel ein.</label>'+
+      '<input type="text" id="newResultText'+result_id+'" required value="'+ r.result_text +'">'+
+      '<label>Gib einen neuen Text ein.</label>'+
       '</div>';
 
-    $('#product_titel'+product_id).html(inputField);
+    $('#result_text'+result_id).html(inputField);
   } else {
-    p.titel = $('#newProductName'+product_id).val();
-    saveProduct(p);
+    r.result_text = $('#newResultText'+result_id).val();
+    saveResult(r);
   }
 }
 
 /**
- * Ändere Produktbeschreibung anhand der produkt_id via HTTP-PUT-Request
- * @param product_id {string}
+ * Überschreibe ein Result in der DB mit dem mitgeschickten Result in JSON-Form
+ * @param result {*}
  */
-function setDescriptionProduct(product_id){
-  let p = getProductById(product_id);
-  if($('#desc_edit'+product_id).html()=='mode_edit'){
-    $('#desc_edit'+product_id).html('save');
-
-    inputField =
-      '<div class="group">'+
-      '<input type="text" class="edit_data" id="newDescription'+product_id+'" required value="'+ p.beschreibung +'">'+
-      '<label>Gib eine neue Beschreibung ein.</label>'+
-      '</div>';
-
-    $('#product_description'+product_id).html(inputField);
-  } else {
-
-    p.beschreibung = $('#newDescription'+product_id).val();
-    saveProduct(p);
-  }
-}
-
-/**
- * Ändere Produktlogo anhand der produkt_id via HTTP-PUT-Request
- * @param product_id {string}
- */
-function setLogoProduct(product_id){
-  let p = getProductById(product_id);
-  if($('#logo_edit'+product_id).html()=='mode_edit'){
-    $('#logo_edit'+product_id).html('save');
-
-    inputField =
-      '<div class="group">'+
-      '<input type="text" class="edit_data" id="newLogo'+product_id+'" required value="'+ p.uri_logo +'">'+
-      '<label>Gib eine neue URL zum Produktlogo ein.</label>'+
-      '</div>';
-
-    $('#product_logo'+product_id).html(inputField);
-  } else {
-
-    p.uri_logo = $('#newLogo'+product_id).val();
-    saveProduct(p);
-  }
-}
-
-/**
- * Ändere Produktlink anhand der produkt_id via HTTP-PUT-Request
- * @param product_id {string}
- */
-function setLinkProduct(product_id){
-  let p = getProductById(product_id);
-  if($('#link_edit'+product_id).html()=='mode_edit'){
-    $('#link_edit'+product_id).html('save');
-
-    inputField =
-      '<div class="group">'+
-      '<input type="text" class="edit_data" id="newLink'+product_id+'" required value="'+ p.link +'">'+
-      '<label>Gib eine neue Produkt-URL ein.</label>'+
-      '</div>';
-
-    $('#product_link'+product_id).html(inputField);
-  } else {
-
-    p.link = $('#newLink'+product_id).val();
-    saveProduct(p);
-  }
-}
-
-/**
- * Überschreibe ein Produkt in der DB mit dem mitgeschickten Produkt in JSON-Form
- * @param product {*}
- */
-function saveProduct(product) {
+function saveResult(result) {
   $.ajax({
     type: "PUT",
-    url: base_url + "produkte/" + product._id,
-    data: product,
+    url: base_url + "results/" + result._id,
+    data: result,
     beforeSend: setHeader,
     success: function (response) {
-      getCatalogData();
-    },
-    error: function (response) {
+      getResultData();
+      getStatementsData();
     }
   });
 }

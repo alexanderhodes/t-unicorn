@@ -39,7 +39,6 @@ function newStatement(){
  * @returns {String}
  */
 function buildHTMLChecklist() {
-  console.log("buildHTMLChecklist");
   var html='';
 
   let card_checklist = '<div id="statementsInChecklist"></div>'+

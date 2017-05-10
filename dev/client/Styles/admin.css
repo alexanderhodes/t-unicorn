@@ -1,8 +1,17 @@
 /* form starting stylings ------------------------------- */
 .group 			  {
-  position:relative;
-  margin-bottom:45px;
+  position: relative;
+  margin-bottom: -34px;
+  margin-top: -26px;
+  margin-left: 15px;
 }
+
+.group_login {
+  position: relative;
+  margin-bottom: 31px;
+}
+
+
 input 				{
   font-size:18px;
   padding:10px 10px 10px 5px;
