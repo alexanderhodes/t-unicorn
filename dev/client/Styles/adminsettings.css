@@ -263,3 +263,11 @@ height: auto !important;
 .statement_button_points{
   float: right;
 }
+
+.statement_options{
+  margin-left: 85px;
+}
+
+.statement_points{
+  margin-left: 12px;
+}

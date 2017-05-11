@@ -1,28 +1,6 @@
-/**
- * Created by vladimirdoroch on 02.01.17.
- */
 var statements;
 
-// Methode zum Abruf von Statements
-function getStatementsData() {
-
-  // Lade Fragen und speichere in questions
-  var reqStatements = new XMLHttpRequest();
-  reqStatements.open("GET", base_url + "statements", true);
-  setHeader(reqStatements);
-  reqStatements.send();
-  reqStatements.onreadystatechange = function(){
-    if (this.readyState == 4 && this.status == 200){
-      statements = JSON.parse(this.responseText);
-      statements.sort(function(a,b){
-        return a.statement_rank - b.statement_rank;
-      });
-      setHTMLForChecklist();//setHTMLforEachCatalog();
-      finilizeDragAndDrop();
-    }
-  };
-
-}
+//###################################### functions for calculations ######################################
 
 /**
  *  get statement by ID
@@ -44,12 +22,79 @@ function getResultOfStatementOptionByIds(statementId, optionsId){
   for(var i = 0; i < s.options.length; i++){
     if(s.options[i].option_id === optionsId){
       var r = getResultById(s.options[i].result_id);
-      console.log("getResult");
-      console.log(r);
       return r;
     }
   }
 }
+
+//###################################### ajax requests ###################################################
+
+/**
+ * Methode zum Abruf von Statements und speicher in statements variable
+  */
+function getStatementsData() {
+
+  var reqStatements = new XMLHttpRequest();
+  reqStatements.open("GET", base_url + "statements", true);
+  setHeader(reqStatements);
+  reqStatements.send();
+  reqStatements.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200){
+      statements = JSON.parse(this.responseText);
+      statements.sort(function(a,b){
+        return a.statement_rank - b.statement_rank;
+      });
+      setHTMLForChecklist();
+      finilizeDragAndDrop();
+    }
+  };
+}
+
+/**
+ *  delete Statement
+ * @param statementId
+ */
+function deleteStatement(statementId){
+
+  //delete Question
+  $.ajax({
+    type: "DELETE",
+    url: base_url + "statements/"+statementId,
+    beforeSend: setHeader,
+    success: function (response) {
+      getStatementsData();
+    }
+  });
+}
+
+/**
+ *  saves the product of an answer
+ * @param product_id
+ * @param statement_id
+ * @param answer_id
+ * @param bool
+ */
+function newResultOption (result_id, statementId, optionsId, bool){
+  let params = getStatementByID(statementId);
+  for(var i = 0; i < params.options.length; i++){
+    if(params.options[i].option_id === optionsId){
+      params.options[i].result_id = result_id;
+    }
+  }
+  $.ajax({
+    type: "PUT",
+    url: base_url + "statements/"+statementId,
+    data: params,
+    beforeSend: setHeader,
+    success: function (response) {
+      if(!bool){
+        getStatementsData();
+      }
+    }
+  });
+}
+
+//###################################### change HTML content #############################################
 
 /**
  *  edit statement text
@@ -64,7 +109,7 @@ function editStatementText(statementId) {
     $('#button_iconStatement' + statementId).html('save');
 
     inputField =
-      '<div class="group">' +
+      '<div class="group_statement">' +
       '<input type="text" class="statementEdit edit_data" id="newStatementText" required value="' + s.statement_text + '">' +
       '<label>Gib einen neuen Text ein.</label>' +
       '</div>';
@@ -101,7 +146,7 @@ function editStatementPoints(statementId){
     $('#button_iconStatement_points'+statementId).html('save');
 
     inputField =
-      '<div class="group">'+
+      '<div class="group_statement">'+
       '<input type="text" class="statementEdit edit_data" id="newStatementText" required value="' + s.points + '">'+
       '<label>Gib einen neue Punktzahl ein.</label>'+
       '</div>';
@@ -129,45 +174,12 @@ function editStatementPoints(statementId){
 }
 
 /**
- *  delete Statement
- * @param statementId
- */
-function deleteStatement(statementId){
-
-  //delete Question
-  $.ajax({
-    type: "DELETE",
-    url: base_url + "statements/"+statementId,
-    beforeSend: setHeader,
-    success: function (response) {
-      getStatementsData();
-    }
-  });
-}
-
-/**
  *  builds the html content of adminsettings catalog part
  */
 function setHTMLForChecklist() {
   $("#checklist").html(buildHTMLChecklist());
   $("#statementsInChecklist").html(buildHTMLStatements());
   finilizeDragAndDrop();
-
-  //Methode die alle Antworten anklickbar macht und klappt die Liste von Produkten auf
-  //AnswerProductsFoldOut(); //TODO
-  //optionResultsFoldOut();
-
-}
-
-/**
- *  load question By Id
- * @param id - questionID
- * @returns {Array}
- */
-function loadQuestionByID(id) {
-  return $.grep(questions, function (e) {
-    return e._id === id;
-  });
 }
 
 /**
@@ -185,47 +197,47 @@ function buildHTMLStatements() {
         '<!-- Statement '+'i'+'-->'+
 
 
-            '<!-- statementtext --><li id="'+s._id+'">'+
-            '<div  class="statement_title"><span class="statement_rang">'+s.statement_rank+'</span>'+
-              '<span id="statementTitle'+s._id+'" class="statementtext">'+s.statement_text+
-              '</span>'+
+        '<!-- statementtext --><li id="'+s._id+'">'+
+        '<div  class="statement_title"><span class="statement_rang">'+s.statement_rank+'</span>'+
+        '<span id="statementTitle'+s._id+'" class="statementtext">'+s.statement_text+
+        '</span>'+
 
-              '<!-- Buttons für die '+i+'. Frage -->'+
-              '<span class="statement_buttons">'+
+        '<!-- Buttons für die '+i+'. Frage -->'+
+        '<span class="statement_buttons">'+
 
-                '<!-- Button Statement '+i+' ändern-->'+
-                '<button id="button_edit'+s._id+'" value="set" onclick="editStatementText(\''+s._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-                '<i id="button_iconStatement'+s._id+'" class="material-icons">mode_edit</i>'+
-                '</button>'+
-                '<!-- Button Frage '+i+' löschen-->'+
-                '<button onclick="deleteStatement(\''+s._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-                '<i  class="material-icons">delete</i>'+
-                '</button>'+
-              '</span>'+
-            '</div>'+
+        '<!-- Button Statement '+i+' ändern-->'+
+        '<button id="button_edit'+s._id+'" value="set" onclick="editStatementText(\''+s._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+        '<i id="button_iconStatement'+s._id+'" class="material-icons">mode_edit</i>'+
+        '</button>'+
+        '<!-- Button Frage '+i+' löschen-->'+
+        '<button onclick="deleteStatement(\''+s._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+        '<i  class="material-icons">delete</i>'+
+        '</button>'+
+        '</span>'+
+        '</div>'+
 
-            '<!-- statement points -->' +
-            '<div  class="statement_points">'+
-            '<span id="statementPoints'+s._id+'" class="statementtext">'+ "Punktzahl: " +  s.points +
-            '</span>'+
+        '<!-- statement points -->' +
+        '<div  class="statement_points">'+
+        '<span id="statementPoints'+s._id+'" class="statementtext">'+ "Punktzahl: " +  s.points +
+        '</span>'+
 
-              '<!-- Buttons für die Punkte des '+i+'.  Statements -->'+
-              '<span class="statement_button_points">'+
+        '<!-- Buttons für die Punkte des '+i+'.  Statements -->'+
+        '<span class="statement_button_points">'+
 
-              '<!-- Button Statement '+i+' ändern-->'+
-              '<button id="button_edit_points'+s._id+'" value="set" onclick="editStatementPoints(\''+s._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-                '<i id="button_iconStatement_points'+s._id+'" class="material-icons">mode_edit</i>'+
-              '</button>'+
-              '</span>'+
-            '</div>'+
+        '<!-- Button Statement '+i+' ändern-->'+
+        '<button id="button_edit_points'+s._id+'" value="set" onclick="editStatementPoints(\''+s._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+        '<i id="button_iconStatement_points'+s._id+'" class="material-icons">mode_edit</i>'+
+        '</button>'+
+        '</span>'+
+        '</div>'+
 
-            buildHTMLOptions(s) +
+        buildHTMLOptions(s) +
 
-          '</li>';
+        '</li>';
 
     }
   }
-html+="</ul></div>";
+  html+="</ul></div>";
   return html;
 }
 
@@ -287,125 +299,42 @@ function optionResultsFoldOut(optionsId, statementId, index) {
  * @returns {string} - html content
  */
 function getListOfResultsForOption(statementId, optionsId){
-    let statement = getStatementByID(statementId);
-    let html = '';
+  let statement = getStatementByID(statementId);
+  let html = '';
 
-    html += '<div id="resultsForOptions" class="resultsForOptions">';
-    html += '<span class="resultsForOptions_title"><b>Ergebnis zu dieser Option:</b></span>';
+  html += '<div id="resultsForOptions" class="resultsForOptions">';
+  html += '<span class="resultsForOptions_title"><b>Ergebnis zu dieser Option:</b></span>';
 
-    let r = getResultOfStatementOptionByIds(statementId, optionsId);
+  let r = getResultOfStatementOptionByIds(statementId, optionsId);
 
-    html +=
-        '<!-- Result -->'+
+  html +=
+    '<!-- Result -->'+
 
-        '<div class="statement_title">'+
-        '<span class="result_points_text option_text" id="result_titel'+ r._id +'" class="statementtext">' + r.result_text +
-        '</span>'+
+    '<div class="statement_title">'+
+    '<span class="result_points_text option_text" id="result_titel'+ r._id +'" class="statementtext">' + r.result_text +
+    '</span>'+
 
-        '<!-- Buttons für das erste Produkt -->'+
-        '<span class="statement_buttons">'+
+    '<!-- Buttons für das erste Produkt -->'+
+    '<span class="statement_buttons">'+
 
-     //   '<!-- Button Result 1 löschen-->'+
-     //   '<button onclick="removeResultOption(\''+statementId+'\',\''+optionsId+'\',\''+r._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-     //   '<i class="material-icons">delete</i>'+
-     //   '</button>'+
-        '</span>'+
-        '</div>';
+    '</span>'+
+    '</div>';
 
-        //'</div>';
+  var dropdown_string = setDropdown(statementId, optionsId);
 
-    var dropdown_string = setDropdown(statementId, optionsId);
+  html += '<!-- Button Produkt hinzufügen-->'+
+    '<div class="dropwdown resultsForOption_title addResult_font_size">' +
+    '<button onclick="dropdownResults(\'' + optionsId + '\')" ' +
+    'class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_statement dropdown">' +
+    '<i class="material-icons">mode_edit</i></button>' + 'Ergebnis ändern' +
+    '<div id="myDropdown'+optionsId+'" class="dropdown-content">' +
+    '<input type="text" placeholder="Suche..." id="myInput" onkeyup="filterFunctionResults(\'' + optionsId + '\')">' +
+    dropdown_string +
+    '</div>' +
+    '</div>' +
+    '</div>';
 
-    html += '<!-- Button Produkt hinzufügen-->'+
-      '<div class="dropwdown resultsForOption_title addResult_font_size">' +
-      '<button onclick="dropdownResults(\'' + optionsId + '\')" ' +
-      'class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_statement dropdown">' +
-      '<i class="material-icons">mode_edit</i></button>' + 'Ergebnis ändern' +
-      '<div id="myDropdown'+optionsId+'" class="dropdown-content">' +
-      '<input type="text" placeholder="Suche..." id="myInput" onkeyup="filterFunctionResults(\'' + optionsId + '\')">' +
-      dropdown_string +
-      '</div>' +
-      '</div>' +
-      '</div>';
-
-    return html;
-}
-
-
-/**
- * load dropdown html content (used for choosing a result)
- * @param prods
- * @param statementId
- * @param index
- * @returns {string} - html content
- */
-function setDropdown(statementId, optionsId){
-  var dropdown_string ='';
-  var s = getStatementByID(statementId);
-  var resultOfOption = getResultOfStatementOptionByIds(statementId, optionsId);
-  results.forEach ( function (r_all) {
-    var flag = 0;
-    for(var i = 0; i < s.options.length; i++){
-      if(r_all._id === resultOfOption._id) {
-        flag++;
-      }
-    }
-
-    if(flag === 0){
-      dropdown_string += '<a href="javascript:newResultOption(\'' + r_all._id + '\',\'' + statementId + '\',\'' + optionsId + '\', 0 );">' + r_all.result_text + '</a>';
-    }
-    flag = 0;
-  });
-
-  return dropdown_string;
-}
-
-/**
- *  saves the product of an answer
- * @param product_id
- * @param statement_id
- * @param answer_id
- * @param bool
- */
-function newResultOption (result_id, statementId, optionsId, bool){
-  let params = getStatementByID(statementId);
-  for(var i = 0; i < params.options.length; i++){
-    if(params.options[i].option_id === optionsId){
-        params.options[i].result_id = result_id;
-    }
-  }
-  $.ajax({
-    type: "PUT",
-    url: base_url + "statements/"+statementId,
-    data: params,
-    beforeSend: setHeader,
-    success: function (response) {
-      if(!bool){
-        getStatementsData();
-      }
-    }
-  });
-}
-
-/**
- *  removes a product from an answer
- * @param question_id
- * @param answer_id
- * @param product_id
- * @param bool
- */
-function removeProductAnswer(question_id, answer_id, product_id, bool) {
-  //delete QuestionId in Catalog
-  let params = {productId: product_id, questionId: question_id, answerId: answer_id};
-  $.ajax({
-    type: "DELETE",
-    url: base_url + "fragen/"+question_id+"/antwort/"+answer_id+"/produkte/"+product_id,
-    data: params,
-    beforeSend: setHeader,
-    success: function (response) {
-      if(!bool){getCatalogData();}
-    }
-  });
+  return html;
 }
 
 /**
@@ -435,5 +364,30 @@ function filterFunctionResults(optionsId) {
   }
 }
 
+/**
+ * load dropdown html content (used for choosing a result)
+ * @param prods
+ * @param statementId
+ * @param index
+ * @returns {string} - html content
+ */
+function setDropdown(statementId, optionsId){
+  var dropdown_string ='';
+  var s = getStatementByID(statementId);
+  var resultOfOption = getResultOfStatementOptionByIds(statementId, optionsId);
+  results.forEach ( function (r_all) {
+    var flag = 0;
+    for(var i = 0; i < s.options.length; i++){
+      if(r_all._id === resultOfOption._id) {
+        flag++;
+      }
+    }
 
+    if(flag === 0){
+      dropdown_string += '<a href="javascript:newResultOption(\'' + r_all._id + '\',\'' + statementId + '\',\'' + optionsId + '\', 0 );">' + r_all.result_text + '</a>';
+    }
+    flag = 0;
+  });
 
+  return dropdown_string;
+}

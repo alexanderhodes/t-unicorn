@@ -1,5 +1,26 @@
 var results;
 
+//###################################### functions for calculations ######################################
+
+/**
+ * Lade result aus globaler variable results anhand der ID
+ *
+ * result ID
+ * @param id {string}
+ *
+ * Gebe JSON von passendem result zurück
+ * @returns {*}
+ */
+function getResultById(id) {
+  for(var i = 0; i<results.length; i++){
+    if(results[i]._id == id){
+      return results[i];
+    }
+  }
+}
+
+//###################################### ajax requests ###################################################
+
 /**
  *  Lade Produkte per HTTP GET-Request und speichere in globaler variable products
  */
@@ -15,85 +36,18 @@ function getResultData() {
       results = JSON.parse(this.responseText);
       $("#result_container").html(buildResultListHTML());
     }
-
   };
-
 }
 
 /**
- * Erstelle für jedes Result eine HTML-Card
- *
- * Gibt HTML-Cards aller Produkte als String zurück
- * @returns {string}
+ * Überschreibe ein Result in der DB mit dem mitgeschickten Result in JSON-Form
+ * @param result {*}
  */
-function buildResultListHTML(){
-  let html = '';
-
-  results.forEach(function (result) {
-    html +=
-      '<!-- Resulttext -->'+
-      '<div class="statement_title">'+
-        '<span id="result_text'+result._id+'" class="statementtext">' +
-          '<b>Ergebnis: </b>' + result.result_text +
-        '</span>'+
-
-        '<!-- Buttons für das erste Result -->'+
-        '<span class="statement_buttons">'+
-
-          '<!-- Button Produkt 1 ändern-->'+
-          '<button onclick="setResultText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-          '<i id="result_edit'+result._id+'" class="material-icons">mode_edit</i>'+
-          '</button>'+
-
-          '<!-- Button Produkt 1 löschen-->'+
-          '<button onclick="deleteResult(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-            '<i class="material-icons">delete</i>'+
-          '</button>'+
-        '</span>'+
-      '</div>';
-  });
-
-  html +=
-    '<!-- Button Result hinzufügen-->'+
-    '<div class="mdl-card__actions mdl-card--border add_statement_frame">'+
-      '<button onclick="newResult()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_statement">'+
-        '<i class="material-icons">add</i>'+
-      '</button>'+
-      'Ergebnis hinzufügen'+
-    '</div>';
-
-  return html;
-}
-
-/**
- * Lade Produkt aus globaler variable products anhand der ID
- *
- * Produkt ID
- * @param id {string}
- *
- * Gebe JSON von passendem Produkt zurück
- * @returns {*}
- */
-function getResultById(id) {
-  for(var i = 0; i<results.length; i++){
-    if(results[i]._id == id){
-      return results[i];
-    }
-  }
-}
-
-/**
- * Speichere neues Produkt in Datenbank per HTTP-POST-Request
- */
-function newResult(){
-  params = {
-    result_text: "Neuen Ergebnistext einfügen!"
-  };
-
+function saveResult(result) {
   $.ajax({
-    type: "POST",
-    url: base_url + "results/",
-    data: params,
+    type: "PUT",
+    url: base_url + "results/" + result._id,
+    data: result,
     beforeSend: setHeader,
     success: function (response) {
       getResultData();
@@ -121,6 +75,73 @@ function deleteResult(result_id){
 }
 
 /**
+ * Speichere neues Produkt in Datenbank per HTTP-POST-Request
+ */
+function newResult(){
+  params = {
+    result_text: "Neuen Ergebnistext einfügen!"
+  };
+
+  $.ajax({
+    type: "POST",
+    url: base_url + "results/",
+    data: params,
+    beforeSend: setHeader,
+    success: function (response) {
+      getResultData();
+      getStatementsData();
+    }
+  });
+}
+
+//###################################### change HTML content #############################################
+
+/**
+ * Erstelle für jedes Result eine HTML-Card
+ *
+ * Gibt HTML-Cards aller Produkte als String zurück
+ * @returns {string}
+ */
+function buildResultListHTML(){
+  let html = '';
+
+  results.forEach(function (result) {
+    html +=
+      '<!-- Resulttext -->'+
+      '<div class="statement_title">'+
+      '<span id="result_text'+result._id+'" class="statementtext">' +
+      '<b>Ergebnis: </b>' + result.result_text +
+      '</span>'+
+
+      '<!-- Buttons für das erste Result -->'+
+      '<span class="statement_buttons">'+
+
+      '<!-- Button Produkt 1 ändern-->'+
+      '<button onclick="setResultText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+      '<i id="result_edit'+result._id+'" class="material-icons">mode_edit</i>'+
+      '</button>'+
+
+      '<!-- Button Produkt 1 löschen-->'+
+      '<button onclick="deleteResult(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+      '<i class="material-icons">delete</i>'+
+      '</button>'+
+      '</span>'+
+      '</div>';
+  });
+
+  html +=
+    '<!-- Button Result hinzufügen-->'+
+    '<div class="mdl-card__actions mdl-card--border add_statement_frame">'+
+    '<button onclick="newResult()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_statement">'+
+    '<i class="material-icons">add</i>'+
+    '</button>'+
+    'Ergebnis hinzufügen'+
+    '</div>';
+
+  return html;
+}
+
+/**
  * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
  * @param result_id {string}
  */
@@ -130,7 +151,7 @@ function setResultText(result_id){
     $('#result_edit'+result_id).html('save');
 
     inputField =
-      '<div class="group">'+
+      '<div class="group_edit">'+
       '<input type="text" id="newResultText'+result_id+'" required value="'+ r.result_text +'">'+
       '<label>Gib einen neuen Text ein.</label>'+
       '</div>';
@@ -141,21 +162,3 @@ function setResultText(result_id){
     saveResult(r);
   }
 }
-
-/**
- * Überschreibe ein Result in der DB mit dem mitgeschickten Result in JSON-Form
- * @param result {*}
- */
-function saveResult(result) {
-  $.ajax({
-    type: "PUT",
-    url: base_url + "results/" + result._id,
-    data: result,
-    beforeSend: setHeader,
-    success: function (response) {
-      getResultData();
-      getStatementsData();
-    }
-  });
-}
-
