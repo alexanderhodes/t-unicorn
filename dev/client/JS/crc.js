@@ -4,14 +4,15 @@
 
 
 //let url = location.protocol + '//' + location.host+'/';
-let url = 'http://localhost:4000/'; //for loacal access
-let base_url = url + 'api/'; // for local testing
+var url = 'http://localhost:4000/'; //for loacal access
+var base_url = url + 'api/'; // for local testing
 //let url = 'http://10.1.88.8:4000/ // REST-Api deployment server
 //let base_url = 'http://10.1.88.8:3001/api/'; // REST-Api deployment server
 
 /*
  *This function activates the start button if 'Enter' is pressed.
  */
+
 $(document).on('keyup',function(e){
   if (e.which == 13){
     $("#btn_start_check").click();
@@ -33,13 +34,15 @@ $(document).ready(function() {
    */
   $("#btn_start_check").on('click touch', function() {
     //setSession
+
+
     sessionStorage.clear();
     window.sessionStorage.setItem('options','');
     options = "";
     getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
-    $( "#slider" ).slider();
+   // $( "#slider" ).slider();
   });
 
 
@@ -72,8 +75,6 @@ $(document).ready(function() {
 
         if(currentStatement.options[i].option_id==ops[j].option_id)
         {
-         // card_options +="<div class=\"mdl-card__actions mdl-card--border option_card\" id='"+option_id+"'>"+
-         //   ops[j].option_text+"</div>";
           card_options+=ops[j].option_text+", "
           break;
         }
