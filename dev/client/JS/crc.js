@@ -39,6 +39,7 @@ $(document).ready(function() {
     getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
+    $( "#slider" ).slider();
   });
 
 
@@ -64,21 +65,21 @@ $(document).ready(function() {
     var card_options = "";
 
     for (var i = 0; i < currentStatement.options.length; i++) {
-
+      card_options+="<div class=\"slider\"></div>";
       var option_id = i + 1;
       for (var j=0; j<ops.length; j++)
       {
+
         if(currentStatement.options[i].option_id==ops[j].option_id)
         {
-          card_options +="<div class=\"mdl-card__actions mdl-card--border option_card\" id='"+option_id+"'>"+
-            ops[j].option_text+"</div>";
+         // card_options +="<div class=\"mdl-card__actions mdl-card--border option_card\" id='"+option_id+"'>"+
+         //   ops[j].option_text+"</div>";
+          card_options+=ops[j].option_text+", "
           break;
         }
       }
 
     }
-   // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
-    //     "rz-slider-options=\"slider.options\"></rzslider></div>";
 
 
     var card_grid_end = "<div class='option_back'></div></div></div>";
@@ -165,50 +166,4 @@ $(document).ready(function() {
 });
 
 
-
-
-
-
-/*unction putSliderIn(){
-  angular.module('crc', [])
-  .controller('ArticlesCtrl', function($scope){
-    $scope.slider = {
-  value: 5,
-  options: {
-    showTicksValues: true,
-    stepsArray: [
-      {value: 1, legend: 'Very poor'},
-      {value: 2},
-      {value: 3, legend: 'Fair'},
-      {value: 4},
-      {value: 5, legend: 'Average'},
-      {value: 6},
-      {value: 7, legend: 'Good'},
-      {value: 8},
-      {value: 9, legend: 'Excellent'}
-    ]
-  }
-};
-  });
-}
-*/
-function AppController($scope) {
-$scope.slider = {
-  value: 5,
-  options: {
-    showTicksValues: true,
-    stepsArray: [
-      {value: 1, legend: 'Trifft nicht zu'},
-      {value: 2},
-      {value: 3, legend: 'Trifft eher zu'},
-      {value: 4},
-      {value: 5, legend: 'Ich bin mir nicht sicher'},
-      {value: 6},
-      {value: 7, legend: 'Trifft eher nicht zu'},
-      {value: 8},
-      {value: 9, legend: 'Trifft nicht zu'}
-    ]
-  }
-};
-}
 
