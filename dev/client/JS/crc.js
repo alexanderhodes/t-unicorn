@@ -35,6 +35,7 @@ $(document).ready(function() {
   $("#btn_start_check").on('click touch', function() {
     //setSession
 
+   // console.log("TEST");
 
     sessionStorage.clear();
     window.sessionStorage.setItem('options','');
@@ -42,7 +43,7 @@ $(document).ready(function() {
     getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
-   // $( "#slider" ).slider();
+   $(".slider").slider();
   });
 
 
@@ -57,7 +58,6 @@ $(document).ready(function() {
     //var progress_circles;
     //progress_circles = setProgressCircles(q.length, currentStatement.rang);
 
-
     var card_layout;
     var card_grid_definition = "<div class=\"mdl-grid\">" +
       "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
@@ -65,27 +65,26 @@ $(document).ready(function() {
       + currentStatement.rang + "/"+statements.length+"</h2></div>" +
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
-    var card_options = "";
 
-    for (var i = 0; i < currentStatement.options.length; i++) {
-      card_options+="<div class=\"slider\"></div>";
-      var option_id = i + 1;
+    var slider_for_options = "<div class=\"slider\">";
+   // for (var i = 0; i < currentStatement.options.length; i++)
+  //  {
+ //  var option_id = i + 1;
       for (var j=0; j<ops.length; j++)
       {
-
-        if(currentStatement.options[i].option_id==ops[j].option_id)
-        {
-          card_options+=ops[j].option_text+", "
-          break;
-        }
+slider_for_options+= ops[j].option_text+", ";
+       // if(currentStatement.options[i].option_id==ops[j].option_id)
+        //{
+         // break;
+        //}
       }
 
-    }
+  //  }
 
-
+    slider_for_options+="</div>";
     var card_grid_end = "<div class='option_back'></div></div></div>";
 
-    card_layout = card_grid_definition + card_statement + card_options + card_grid_end;
+    card_layout = card_grid_definition + card_statement + slider_for_options + card_grid_end;
 
     $("#main_content").html(card_layout);
 
