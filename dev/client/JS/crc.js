@@ -37,8 +37,8 @@ $(document).ready(function() {
     sessionStorage.clear();
     window.sessionStorage.setItem('options','');
     options = "";
-    loadResults();
-  //  getStatementsLayout(statements[0]);
+    //loadResults();
+    getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
   });
@@ -112,7 +112,7 @@ $(document).ready(function() {
         $(".option_card[id='" + last_option + "']").html($(".option_card[id='" + last_option + "']").html() + "<i class=\"material-icons done_icon\">done</i>");
       }, 200);
     });
- 
+
 
     $(".option_card").one('click touch', function () {
       //(id_option ins sessionStorage bei der Optionauswahl speichern)
