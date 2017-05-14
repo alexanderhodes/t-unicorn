@@ -318,3 +318,8 @@ tr {
   text-shadow: 5px 8px 8px #757575;
   font-weight: 700;
 }
+
+
+.welcome_center_logo:hover{
+  cursor: pointer;
+}
