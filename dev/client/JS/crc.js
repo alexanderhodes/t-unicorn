@@ -43,7 +43,7 @@ $(document).ready(function() {
     getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
-   $("#slider").slider({step:25});
+   $("#slider").slider({step:25, change: function( event, ui ) {sliderChangedValue()} });
   });
 
 
@@ -66,15 +66,24 @@ $(document).ready(function() {
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
 
-    var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div>";
+    var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
    // for (var i = 0; i < currentStatement.options.length; i++)
   //  {
  //  var option_id = i + 1;
     var option_step=0;
+    var padding_from_left;
       for (var j=0; j<ops.length; j++)
       {
-
-slider_for_options+= "<span id='option_with_step_"+option_step+"' class='option_text'>"+ops[j].option_text+" </span>";
+padding_from_left=getActualPaddingFromLeft(j);
+slider_for_options+= "<span id='option_with_step_"+option_step+"' option_id='"+ops[j].option_id+"' style='padding-left: "+padding_from_left+"'";
+if(j==0)
+{
+  slider_for_options+="class='option_with_step selected_option'>";
+}
+else{
+  slider_for_options+="class='option_with_step'>";
+}
+slider_for_options+=ops[j].option_text+" </span>";
 option_step+=100/(ops.length-1);
        // if(currentStatement.options[i].option_id==ops[j].option_id)
         //{
@@ -84,12 +93,14 @@ option_step+=100/(ops.length-1);
 
   //  }
 
-    slider_for_options+="</div>";
+    slider_for_options+="</div></div>";
     var card_grid_end = "<div class='option_back'></div></div></div>";
 
     card_layout = card_grid_definition + card_statement + slider_for_options + card_grid_end;
 
     $("#main_content").html(card_layout);
+
+
 
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
@@ -113,6 +124,19 @@ option_step+=100/(ops.length-1);
         $(".option_card[id='" + last_option + "']").addClass("option_clicked");
         $(".option_card[id='" + last_option + "']").html($(".option_card[id='" + last_option + "']").html() + "<i class=\"material-icons done_icon\">done</i>");
       }, 200);
+    });
+
+
+    $(".option_with_step").on('click touch', function () {
+      var newvalue = $(this).attr("id").split('_')[3];
+      //  $( "#slider" ).slider( "value" );
+      var selected_option=$(this);
+
+      // Slider Value Setter
+      $( "#slider" ).slider( "option", "value", newvalue );
+
+      $('.option_with_step').removeClass("selected_option");
+      selected_option.addClass("selected_option");
     });
 
 
@@ -168,5 +192,17 @@ option_step+=100/(ops.length-1);
 
 });
 
+function sliderChangedValue(){
+  var selection = $( "#slider" ).slider( "value" );
+  var selected_option=$('.option_with_step[id=option_with_step_'+selection+']');
+  $('.option_with_step').removeClass("selected_option");
+  selected_option.addClass("selected_option");
+}
 
-
+function getActualPaddingFromLeft(option_index)
+{
+  var actualPadding;
+  var allWidth=$(".slider_area").css(width);
+  actualPadding=(allWidth/ops.length)*option_index;
+  return actualPadding;
+}
