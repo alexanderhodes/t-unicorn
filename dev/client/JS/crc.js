@@ -71,11 +71,11 @@ $(document).ready(function() {
   //  {
  //  var option_id = i + 1;
     var option_step=0;
-    var padding_from_left;
+
       for (var j=0; j<ops.length; j++)
       {
-padding_from_left=getActualPaddingFromLeft(j);
-slider_for_options+= "<span id='option_with_step_"+option_step+"' option_id='"+ops[j].option_id+"' style='padding-left: "+padding_from_left+"'";
+
+slider_for_options+= "<span id='option_with_step_"+option_step+"' option_id='"+ops[j].option_id+"' ";
 if(j==0)
 {
   slider_for_options+="class='option_with_step selected_option'>";
@@ -100,7 +100,11 @@ option_step+=100/(ops.length-1);
 
     $("#main_content").html(card_layout);
 
+    $(".option_with_step").each(function(){
+      var padding_from_left= getActualPaddingFromLeft($(this).attr("option_id"));
+      $(this).css("padding-left", padding_from_left)
 
+    });
 
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
@@ -129,7 +133,8 @@ option_step+=100/(ops.length-1);
 
     $(".option_with_step").on('click touch', function () {
       var newvalue = $(this).attr("id").split('_')[3];
-      //  $( "#slider" ).slider( "value" );
+
+
       var selected_option=$(this);
 
       // Slider Value Setter
@@ -193,7 +198,7 @@ option_step+=100/(ops.length-1);
 });
 
 function sliderChangedValue(){
-  var selection = $( "#slider" ).slider( "value" );
+  var selection = $("#slider").slider("value");
   var selected_option=$('.option_with_step[id=option_with_step_'+selection+']');
   $('.option_with_step').removeClass("selected_option");
   selected_option.addClass("selected_option");
@@ -202,7 +207,16 @@ function sliderChangedValue(){
 function getActualPaddingFromLeft(option_index)
 {
   var actualPadding;
-  var allWidth=$(".slider_area").css(width);
-  actualPadding=(allWidth/ops.length)*option_index;
+  var allWidth=$(".slider_area").width();
+  //var last_padding=0;
+  if(option_index==1)
+  {
+    actualPadding=0;
+    //last_padding=$(".slider_area").find("[id_option='"+option_index+"']").width();
+  } else {
+    actualPadding=parseInt(allWidth/ops.length);
+  }
+  //actualPadding=parseInt((allWidth/ops.length)*(option_index-1))-parseInt(last_padding);
+
   return actualPadding;
 }
