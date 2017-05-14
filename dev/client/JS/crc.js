@@ -145,14 +145,15 @@ $(document).ready(function () {
       var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
 
 
-      if ($(".show_result").length == 0) {
+      if ($(".show_result").length == 0 || (currentStatement.rang == statements.length && sessionStorage.options.split('~').length<statements.length)) {
         if (sessionStorage.options != "") {
           //trennzeichen zum splitten
           sessionStorage.options += "~";
         }
-        sessionStorage.options += $(this).attr("id");
+        sessionStorage.options += $(this).attr("option_id");
 
       }
+
       if (currentStatement.rang < ops.length) {
 
         setTimeout(function () {
