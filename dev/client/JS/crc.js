@@ -43,7 +43,7 @@ $(document).ready(function() {
     getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
-   $(".slider").slider();
+   $("#slider").slider({step:25});
   });
 
 
@@ -66,13 +66,16 @@ $(document).ready(function() {
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
 
-    var slider_for_options = "<div class=\"slider\">";
+    var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div>";
    // for (var i = 0; i < currentStatement.options.length; i++)
   //  {
  //  var option_id = i + 1;
+    var option_step=0;
       for (var j=0; j<ops.length; j++)
       {
-slider_for_options+= ops[j].option_text+", ";
+
+slider_for_options+= "<span id='option_with_step_"+option_step+"' class='option_text'>"+ops[j].option_text+" </span>";
+option_step+=100/(ops.length-1);
        // if(currentStatement.options[i].option_id==ops[j].option_id)
         //{
          // break;

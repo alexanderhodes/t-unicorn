@@ -1,4 +1,8 @@
 
+.slider_area{
+  padding: 30px;
+}
+
 .ui-helper-hidden {
   display: none;
 }
