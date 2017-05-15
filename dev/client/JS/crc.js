@@ -119,7 +119,7 @@ $(document).ready(function() {
 
       var next_statement = currentStatement.rang;
 
-      if($(".show_result").length()==0) {
+      if($(".show_result").length==0) {
         if (sessionStorage.options != "") {
           //trennzeichen zum splitten
           sessionStorage.options += "~";
@@ -222,7 +222,7 @@ function loadResults() {
 
       r = JSON.parse(this.responseText);
       r.sort(function(a,b){
-        return a.rang - b.rang;
+        return a._id - b._id;
       });
       show_result(r);
     }
