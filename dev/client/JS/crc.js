@@ -6,27 +6,26 @@
 //let url = location.protocol + '//' + location.host+'/';
 var url = 'http://localhost:4000/'; //for loacal access
 var base_url = url + 'api/'; // for local testing
-//let url = 'http://10.1.88.8:4000/ // REST-Api deployment server
-//let base_url = 'http://10.1.88.8:3001/api/'; // REST-Api deployment server
+var r;
+
 var elem_width = 0;
 
 
 /*
  *This function activates the start button if 'Enter' is pressed.
  */
-
-$(document).on('keyup', function (e) {
-  if (e.which == 13) {
+$(document).on('keyup',function(e){
+  if (e.which == 13){
     $("#btn_start_check").click();
   }
-
 });
+
 
 
 /**
  * This function sets events when page is loaded
  */
-$(document).ready(function () {
+$(document).ready(function() {
 
 
   $("span[class='mdl-button__ripple-container']").height(36);
@@ -34,17 +33,16 @@ $(document).ready(function () {
   /**
    * This function sets events for Start-Button
    */
-  $("#btn_start_check").on('click touch', function () {
+  $("#btn_start_check").on('click touch', function() {
     //setSession
     sessionStorage.clear();
-    window.sessionStorage.setItem('options', '');
+    window.sessionStorage.setItem('options','');
     options = "";
+    //loadResults();
     getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
-
   });
-
 
 
 
@@ -57,7 +55,6 @@ $(document).ready(function () {
   function getStatementsLayout(currentStatement) {
     //var progress_circles;
     //progress_circles = setProgressCircles(q.length, currentStatement.rang);
-
 
 
     var card_layout;
@@ -84,6 +81,8 @@ $(document).ready(function () {
       option_step += 100 / (ops.length - 1);
 
     }
+   // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
+    //     "rz-slider-options=\"slider.options\"></rzslider></div>";
 
 
     slider_for_options += "</div></div>";
@@ -201,4 +200,48 @@ function getActualPaddingFromLeft(option_index) {
   //actualPadding=parseInt((allWidth/ops.length)*(option_index-1))-parseInt(last_padding);
 
   return actualPadding;
+}
+
+function loadResults() {
+  var req = new XMLHttpRequest();
+  req.open("GET", base_url + "results", true);
+  req.send();
+  req.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200){
+
+      r = JSON.parse(this.responseText);
+      r.sort(function(a,b){
+        return a.rang - b.rang;
+      });
+      show_result(r);
+    }
+  };
+};
+
+function show_result(r){
+  var percentage = '75';
+
+  var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
+  var result = "";
+  result += '<div class="bigbox">';
+  var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
+  for (var i = 0; i < 3; i++) {
+    if (r[i] == undefined){
+      //next element
+    } else {
+      var Text = r[i].result_text;
+      var lfdNr = i + 1;
+      box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+    }}
+  box1 += '</div>';
+  var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
+  for ( i = 0; i < 3; i++) {
+    var lfdNr = i + 1;
+    box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">Das ist ein Risiko.</div></div>';
+    box2 += '<br><br>';
+  }
+  result += box1 + box2 + '</div></div>';
+
+  $("#main_content").html(result_percent+result);
+  document.getElementById ("result_perc").style.height = percentage*2 + 'px';
 }
