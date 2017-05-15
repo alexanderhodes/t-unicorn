@@ -20,15 +20,15 @@ Option.find({}).remove()
   {
     _id: '617364617364616473736461',
     option_text: 'Supergeil.',
-    valuation: 123
+    valuation: 1
   },{
   _id: '617364617364616473736462',
   option_text: 'Superkacke.',
-  valuation: 15
+  valuation: 3
   },{
     _id: '617364617364616473736469',
     option_text: 'Superegal.',
-    valuation: 14
+    valuation: 2
   });
 });
 

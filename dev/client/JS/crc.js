@@ -123,6 +123,7 @@ $(document).ready(function() {
       }, 200);
       var options = sessionStorage.options.split('~');
       var last_option = options[options.length - 1];
+      if (currentStatement.statement_rank==1) {sessionStorage.options=""};
       sessionStorage.options = sessionStorage.options.substr(0, sessionStorage.options.length - last_option.length - 1);
 
 
@@ -150,8 +151,8 @@ $(document).ready(function() {
           //trennzeichen zum splitten
           sessionStorage.options += "~";
         }
-        sessionStorage.options += $(this).attr("option_id");
-
+        sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id"));
+        console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
       }
 
       if (currentStatement.statement_rank < ops.length) {
@@ -204,6 +205,7 @@ function getActualPaddingFromLeft(option_index) {
 }
 
 function load_Results() {
+  loadResultsByIdFromSessionStorage();
   var req = new XMLHttpRequest();
   req.open("GET", base_url + "results", true);
   req.send();
