@@ -39,9 +39,10 @@ $(document).ready(function() {
     window.sessionStorage.setItem('options','');
     options = "";
     //loadResults();
-    getStatementsLayout(statements[0]);
+    load_Options();
+    load_Statements(getStatementsLayout);
     $(".mdl-layout__content").addClass("light_blue_background");
-
+    //getStatementsLayout(statements[0]);
   });
 
 
@@ -60,8 +61,8 @@ $(document).ready(function() {
     var card_layout;
     var card_grid_definition = "<div class=\"mdl-grid\">" +
       "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
-    var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_id + "'><h2 class=\"mdl-card__title-text statement_number\"> "
-      + currentStatement.rang + "/" + statements.length + "</h2></div>" +
+    var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_rank+ "'><h2 class=\"mdl-card__title-text statement_number\"> "
+      + currentStatement.statement_rank + "/" + statements.length + "</h2></div>" +
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
 
@@ -70,7 +71,7 @@ $(document).ready(function() {
 
     for (var j = 0; j < ops.length; j++) {
 
-      slider_for_options += "<span id='option_with_step_" + option_step + "' option_id='" + ops[j].option_id + "' ";
+      slider_for_options += "<span id='option_with_step_" + option_step + "' option_id='" + ops[j]._id + "' ";
       if (j == 0) {
         slider_for_options += "class='option_with_step selected_option'>";
       }
@@ -102,13 +103,13 @@ $(document).ready(function() {
 
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
-    if (currentStatement.rang > 1 && currentStatement.rang <= statements.length) {
-      $(".option_back").html("<button class=\"mdl-button mdl-js-button mdl-button--raised statement_back\" goto=\"" + (currentStatement.rang - 1) + "\">" +
+    if (currentStatement.statement_rank > 1 && currentStatement.statement_rank <= statements.length) {
+      $(".option_back").html("<button class=\"mdl-button mdl-js-button mdl-button--raised statement_back\" goto=\"" + (currentStatement.statement_rank - 1) + "\">" +
         "<i class=\"material-icons arrow_back\">arrow_back</i>Zurück " +
         "</button>");
     }
-    if (currentStatement.rang == statements.length) {
-      $(".option_back").html($(".option_back").html() + "<button class=\"mdl-button mdl-js-button mdl-button--raised show_result\" >" +
+    if (currentStatement.statement_rank == statements.length) {
+      $(".option_back").html($(".option_back").html() + "<button onclick='load_Results()' class=\"mdl-button mdl-js-button mdl-button--raised show_result\" >" +
         "<i class=\"material-icons arrow_forward\">arrow_forward</i>Zum Ergebnis " +
         "</button>");
     }
@@ -144,7 +145,7 @@ $(document).ready(function() {
       var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
 
 
-      if ($(".show_result").length == 0 || (currentStatement.rang == statements.length && sessionStorage.options.split('~').length<statements.length)) {
+      if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
         if (sessionStorage.options != "") {
           //trennzeichen zum splitten
           sessionStorage.options += "~";
@@ -153,7 +154,7 @@ $(document).ready(function() {
 
       }
 
-      if (currentStatement.rang < ops.length) {
+      if (currentStatement.statement_rank < ops.length) {
 
         setTimeout(function () {
           getStatementsLayout(statements[next_statement]);
@@ -202,7 +203,7 @@ function getActualPaddingFromLeft(option_index) {
   return actualPadding;
 }
 
-function loadResults() {
+function load_Results() {
   var req = new XMLHttpRequest();
   req.open("GET", base_url + "results", true);
   req.send();

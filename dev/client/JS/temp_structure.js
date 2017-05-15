@@ -71,7 +71,38 @@ var result3={
   "result_id": "3",
   "result_text": "text"
 };
-var statements=[statement1, statement2, statement3];
-var ops=[option1, option2, option3, option4, option5];
+var statements;//=[statement1, statement2, statement3];
+var ops;//=[option1, option2, option3, option4, option5];
 var results=[result1, result2, result3];
 
+function load_Statements(callback) {
+  var req = new XMLHttpRequest();
+  req.open("GET", base_url + "statements", true);
+  req.send();
+  req.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200){
+
+      statements = JSON.parse(this.responseText);
+      statements.sort(function(a,b){
+        return a.statement_rank - b.statement_rank;
+      });
+      callback(statements[0]);
+    }
+  };
+};
+
+function load_Options() {
+  var req = new XMLHttpRequest();
+  req.open("GET", base_url + "options", true);
+  req.send();
+  req.onreadystatechange = function(){
+    if (this.readyState == 4 && this.status == 200){
+
+      ops = JSON.parse(this.responseText);
+      ops.sort(function(a,b){
+        return a.valuation - b.valuation;
+
+      });
+    }
+  };
+};
