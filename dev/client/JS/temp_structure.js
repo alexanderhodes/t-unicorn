@@ -5,16 +5,20 @@
 var statements;
 var ops;
 var res;
+var r = [];
 
 function loadResultsByIdFromSessionStorage() {
   res = sessionStorage.options.split('~');
+  index2 = 0;
   for (index = 0; index < res.length; index++){
     var req = new XMLHttpRequest();
     req.open("GET", base_url + "results/" + res[index], true);
     req.send();
     req.onreadystatechange = function(){
       if (this.readyState == 4 && this.status == 200){
-        res[index] = JSON.parse(this.responseText);
+        r.push(JSON.parse(this.responseText));
+        index2 = index2 +1;
+        if (index2 == res.length) {show_result(r)}
       }
     };
   }

@@ -4,12 +4,7 @@
  */
 
 'use strict';
-//import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
-//import Frage from '../api/frage/frage.model';
-//import Produkt from '../api/produkt/produkt.model';
-//import Katalog from '../api/katalog/katalog.model';
-//import Sicherheitstyp from '../api/sicherheitstyp/sicherheitstyp.model';
 import Option from '../api/option/option.model';
 import Statement from '../api/statement/statement.model';
 import Result from '../api/result/result.model';

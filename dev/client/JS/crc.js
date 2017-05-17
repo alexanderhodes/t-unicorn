@@ -109,7 +109,7 @@ $(document).ready(function() {
         "</button>");
     }
     if (currentStatement.statement_rank == statements.length) {
-      $(".option_back").html($(".option_back").html() + "<button onclick='load_Results()' class=\"mdl-button mdl-js-button mdl-button--raised show_result\" >" +
+      $(".option_back").html($(".option_back").html() + "<button onclick='loadResultsByIdFromSessionStorage()' class=\"mdl-button mdl-js-button mdl-button--raised show_result\" >" +
         "<i class=\"material-icons arrow_forward\">arrow_forward</i>Zum Ergebnis " +
         "</button>");
     }
@@ -155,7 +155,7 @@ $(document).ready(function() {
         console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
       }
 
-      if (currentStatement.statement_rank < ops.length) {
+      if (currentStatement.statement_rank < statements.length) {
 
         setTimeout(function () {
           getStatementsLayout(statements[next_statement]);
@@ -228,20 +228,25 @@ function show_result(r){
   var result = "";
   result += '<div class="bigbox">';
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < r.length; i++) {
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = r[i].result_text;
-      var lfdNr = i + 1;
-      box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+      var Text = r[i].risk_text;
+      if (Text != "") {
+        var lfdNr = i + 1;
+        box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+      }
     }}
   box1 += '</div>';
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
-  for ( i = 0; i < 3; i++) {
-    var lfdNr = i + 1;
-    box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">Das ist ein Risiko.</div></div>';
-    box2 += '<br><br>';
+  for ( i = 0; i < r.length; i++) {
+    var Text = r[i].risk_text;
+    if (Text != "") {
+      var lfdNr = i + 1;
+     box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
+     box2 += '<br><br>';
+    }
   }
   result += box1 + box2 + '</div></div>';
 
