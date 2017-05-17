@@ -143,7 +143,7 @@ Result.find({}).remove()
     _id: '617364617364616473736400',
     risk_text: [''],
     chance_text: ['']
-  }
+  });
 });
 
 Statement.find({}).remove()
