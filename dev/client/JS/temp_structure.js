@@ -34,13 +34,13 @@ var statement3={
   "points": "2",
   "rang": "3"
 };
-var option1={
-  "option_id": "1",
+var option5={
+  "option_id": "5",
   "option_text": "Trifft zu",
   "valuation": "100"
 };
-var option2={
-  "option_id": "2",
+var option4={
+  "option_id": "4",
   "option_text": "Trifft eher zu",
   "valuation": "65"
 };
@@ -49,13 +49,13 @@ var option3={
   "option_text": "Trifft eher nicht zu",
   "valuation": "35"
 };
-var option4={
-  "option_id": "4",
+var option2={
+  "option_id": "2",
   "option_text": "Trifft nicht zu",
   "valuation": "0"
 };
-var option5={
-  "option_id": "5",
+var option1={
+  "option_id": "1",
   "option_text": "Keine Angabe"
 };
 
