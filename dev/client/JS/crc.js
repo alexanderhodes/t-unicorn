@@ -228,22 +228,24 @@ function show_result(r){
   var result = "";
   result += '<div class="bigbox">';
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
+  var lfdNr = 0;
   for (var i = 0; i < r.length; i++) {
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = r[i].risk_text;
+      var Text = r[i].chance_text;
       if (Text != "") {
-        var lfdNr = i + 1;
+        lfdNr += 1;
         box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
       }
     }}
   box1 += '</div>';
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
+  lfdNr = 0;
   for ( i = 0; i < r.length; i++) {
     var Text = r[i].risk_text;
     if (Text != "") {
-      var lfdNr = i + 1;
+      lfdNr += 1;
      box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
      box2 += '<br><br>';
     }
