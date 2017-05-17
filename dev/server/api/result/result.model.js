@@ -3,7 +3,8 @@
 import mongoose from 'mongoose';
 
 var ResultSchema = new mongoose.Schema({
-  result_text: String
+  risk_text: [String],
+  chance_text: [String]
 });
 
 export default mongoose.model('Result', ResultSchema);

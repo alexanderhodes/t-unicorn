@@ -19,16 +19,16 @@ Option.find({}).remove()
     Option.create(
   {
     _id: '617364617364616473736461',
-    option_text: 'Supergeil.',
+    option_text: 'Trifft zu',
     valuation: 1
   },{
   _id: '617364617364616473736462',
-  option_text: 'Superkacke.',
-  valuation: 3
+  option_text: 'Trifft nicht zu',
+  valuation: 2
   },{
     _id: '617364617364616473736469',
-    option_text: 'Superegal.',
-    valuation: 2
+    option_text: 'Weiß ich nicht',
+    valuation: 3
   });
 });
 
