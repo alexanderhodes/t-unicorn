@@ -53,8 +53,8 @@ $(document).ready(function() {
    */
 
   function getStatementsLayout(currentStatement) {
-    //var progress_circles;
-    //progress_circles = setProgressCircles(q.length, currentStatement.rang);
+    var progress_circles;
+    progress_circles = setProgressCircles(statements.length, currentStatement.rang);
 
 
     var card_layout;
@@ -88,7 +88,7 @@ $(document).ready(function() {
     slider_for_options += "</div></div>";
     var card_grid_end = "<div class='option_back'></div></div></div>";
 
-    card_layout = card_grid_definition + card_statement + slider_for_options + card_grid_end;
+    card_layout =  progress_circles + card_grid_definition + card_statement + slider_for_options + card_grid_end;
 
     $("#main_content").html(card_layout);
 
