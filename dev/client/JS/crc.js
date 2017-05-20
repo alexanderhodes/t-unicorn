@@ -38,8 +38,8 @@ $(document).ready(function() {
     sessionStorage.clear();
     window.sessionStorage.setItem('options','');
     options = "";
-    //loadResults();
-    getStatementsLayout(statements[0]);
+    loadResults();
+    //getStatementsLayout(statements[0]);
     $(".mdl-layout__content").addClass("light_blue_background");
 
   });
@@ -221,27 +221,27 @@ function loadResults() {
 function show_result(r){
   var percentage = '75';
 
-  var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
+  //var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
   var result = "";
   result += '<div class="bigbox">';
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < 5; i++) {
     if (r[i] == undefined){
       //next element
     } else {
       var Text = r[i].result_text;
       var lfdNr = i + 1;
-      box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+      box1 += '<div class="data"><div class="bild"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
     }}
   box1 += '</div>';
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
-  for ( i = 0; i < 3; i++) {
+  for ( i = 0; i < 5; i++) {
     var lfdNr = i + 1;
-    box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">Das ist ein Risiko.</div></div>';
+    box2 += '<div class="data"><div class="bild"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">Das ist ein Risiko.</div></div>';
     box2 += '<br><br>';
   }
   result += box1 + box2 + '</div></div>';
 
-  $("#main_content").html(result_percent+result);
+  $("#main_content").html(result);
   document.getElementById ("result_perc").style.height = percentage*2 + 'px';
 }
