@@ -44,8 +44,7 @@ function getStatementsData() {
       statements.sort(function(a,b){
         return a.statement_rank - b.statement_rank;
       });
-      setHTMLForChecklist();
-      finilizeDragAndDrop();
+      getOptionData();
     }
   };
 }
