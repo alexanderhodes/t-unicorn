@@ -150,7 +150,7 @@ Statement.find({}).remove()
     options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736463'},
               {option_id: '617364617364616473736461', result_id:'617364617364616473736464'},
               {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-    points: 6
+    points: 1
   },{
   _id: '617364617364616473736483',
   statement_text: 'Die Nutzer benötigen einen mobilen Zugriff auf die Anwendung.',
@@ -158,7 +158,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736465'},
             {option_id: '617364617364616473736461', result_id:'617364617364616473736466'},
             {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 1
 },{
   _id: '617364617364616473736484',
   statement_text: 'Ich verspreche mir durch die Auslagerung in die Cloud einen Zuwachs an Flexibilität.',
@@ -166,7 +166,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736467'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736468'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 2
 },{
   _id: '617364617364616473736485',
   statement_text: 'Es bestehen Schnittstellen zu anderen Applikationen.',
@@ -174,7 +174,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736469'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736470'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 2
 },{
   _id: '617364617364616473736486',
     statement_text: 'Ich bin zufrieden mit der aktuellen Situation im Hinblick auf Monitoring und Support.',
@@ -182,7 +182,7 @@ Statement.find({}).remove()
     options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736471'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736472'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-    points: 6
+    points: 1
 },{
   _id: '617364617364616473736487',
   statement_text: 'Eine Integration der Cloud in die Geschäftsprozesse ist für mich ohne Probleme möglich.',
@@ -190,7 +190,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736473'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736474'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 2
 },{
   _id: '617364617364616473736488',
   statement_text: 'Ich bin habe rechtliche Bedenken hinsichtlich der Auslagerung der Daten in die Cloud.',
@@ -198,7 +198,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736473'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736474'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 2
 },{
   _id: '617364617364616473736489',
   statement_text: 'Es bestehen Bedenken hinsichtlich der Verfügbarkeit von Ressourcen für eine Migration.',
@@ -206,7 +206,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736477'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736400'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 1
 },{
   _id: '617364617364616473736490',
   statement_text: 'Die Hard- und Software unserer IT, die eingesetzt wird, ist bereits amortisiert.',
@@ -214,7 +214,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736478'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736479'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 1
 },{
   _id: '617364617364616473736491',
   statement_text: 'Der Geschäftserfolg hängt von der betrachteten Applikation ab.',
@@ -222,7 +222,7 @@ Statement.find({}).remove()
   options: [{option_id: '617364617364616473736460', result_id:'617364617364616473736480'},
     {option_id: '617364617364616473736461', result_id:'617364617364616473736481'},
     {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
-  points: 6
+  points: 2
 });
 });
 
