@@ -132,7 +132,7 @@ $(document).ready(function() {
 
     $(".option_with_step").on('click touch', function () {
       var newvalue = $(this).attr("id").split('_')[3];
-
+      currentStatement.score = currentStatement.points * (newvalue / 100);
 
       var selected_option = $(this);
 
@@ -222,7 +222,20 @@ function load_Results() {
 };
 
 function show_result(r){
-  var percentage = '75';
+
+  var percentage = 0;
+  var statements_sum_points = 0;
+
+  //calculate max. points
+  for (index = 0; index < statements.length;index++){
+    statements_sum_points += statements[index].points
+  }
+  //calculate score
+  for (index = 0; index < statements.length;index++){
+    percentage += (statements[index].score / statements_sum_points);
+  }
+
+  percentage = Math.round(percentage*100);
 
   var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
   var result = "";
