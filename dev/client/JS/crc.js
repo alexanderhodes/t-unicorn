@@ -68,10 +68,11 @@ $(document).ready(function() {
 
     var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
     var option_step = 0;
+    var score = [100,65,35,0,-1];
 
     for (var j = 0; j < ops.length; j++) {
 
-      slider_for_options += "<span id='option_with_step_" + option_step + "' option_id='" + ops[j]._id + "' ";
+      slider_for_options += "<span id='option_with_step_" + score[j] + "' option_id='" + ops[j]._id + "' ";
       if (j == 0) {
         slider_for_options += "class='option_with_step selected_option'>";
       }
@@ -79,7 +80,7 @@ $(document).ready(function() {
         slider_for_options += "class='option_with_step'>";
       }
       slider_for_options += ops[j].option_text + " </span>";
-      option_step += 100 / (ops.length - 1);
+      option_step = score[j];//100 / (ops.length - 1);
 
     }
    // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
@@ -228,11 +229,11 @@ function show_result(r){
 
   //calculate max. points
   for (index = 0; index < statements.length;index++){
-    statements_sum_points += statements[index].points
+    if(statements[index].score>=0){statements_sum_points += statements[index].points;}
   }
   //calculate score
   for (index = 0; index < statements.length;index++){
-    percentage += (statements[index].score / statements_sum_points);
+    if(statements[index].score>=0){percentage += (statements[index].score / statements_sum_points);}
   }
 
   percentage = Math.round(percentage*100);
