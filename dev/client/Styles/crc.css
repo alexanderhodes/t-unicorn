@@ -349,13 +349,15 @@ tr {
   cursor: pointer;
 }
 .Thumbs{
-  height: 70px;
-  width: 70px;
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+  float: left;
 }
 .box1{
   background-color:#FFFFFF;
   width:500px;
-  height:1200px;
+  height:650px;
   float: left;
   margin: 10px;
   margin-left: 8% !important;
@@ -365,7 +367,7 @@ tr {
 .box2{
   background-color:#989898 !important;
   width:500px!important;
-  height:1200px;
+  height:650px;
   float:right;
   margin: 10px;
   margin-right: 8% !important;
@@ -385,7 +387,7 @@ tr {
   margin: 10px;
   text-align: center;
   color: #FFFFFF !important;
-  height: 75px;
+  height: 60px;
   vertical-align: middle;
   padding-top: 20px;
   line-height: 100%;
@@ -397,42 +399,44 @@ tr {
   margin: 10px;
   text-align: center;
   color: #989898;
-  height: 75px;
+  height: 60px;
   padding-top: 20px;
   line-height: 100%;
+
 }
 .data
 {
   margin: 10px;
-  height: 150px;
+  height: 75px;
+  float: right;
 
 }
 .dataheader1{
   border-bottom-style: solid;
   border-bottom-color: #989898;
-  float:left;
-  width:350px;
-  margin:5px;
+  width:400px;
+  margin:10px;
   font-size: 25px;
+  float: left;
 }
 .dataheader2{
   border-bottom-style: solid;
   border-bottom-color: #FFFFFF;
   float:left;
-  width:350px;
-  margin:5px;
+  width:400px;
+  margin:10px;
   font-size: 25px;
 }
-.bild{
-  width:75px;
-  height: 75px;
+.thumb_icon{
+  width:50px;
+  height: 50px;
   vertical-align: middle;
   float:left;
 }
 .datatext{
   float: left;
   width:250px;
-  margin:5px;
+  margin:10px;
 }
 
 .resultbackground{
