@@ -167,7 +167,7 @@ $(document).ready(function() {
 
 
     $("#slider").slider({
-      step: 25, change: function (event, ui) {
+      step: 50, change: function (event, ui) {
         sliderChangedValue()
       }
     });
