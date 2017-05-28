@@ -247,8 +247,11 @@ function show_result(r){
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = r[i].chance_text;
-      if (Text != "") {
+      var Text = '<p><dfn class="tooltip1"> Flexibilität' +
+      '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
+      '</dfn>' +
+      '</p>';
+    if (r[i].chance_text != "") {
         lfdNr += 1;
         box1 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
       }
@@ -257,15 +260,138 @@ function show_result(r){
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
   lfdNr = 0;
   for ( i = 0; i < 5; i++) {
-    var Text = r[i].risk_text;
-    if (Text != "") {
+    Text = '<p><dfn class="tooltip2"> Flexibilität' +
+      '<span rel="tooltip2">' + r[i].risk_text + '</span>' +
+      '</dfn>' +
+      '</p>';
+
+    if (r[i].risk_text != "") {
       lfdNr += 1;
      box2 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
-      box2 += '<br><br>';
+
 
     }
   }
+ var pie_chart = '<canvas id="myCanvas">Hallo</canvas>';
   result += box1 + box2 + '</div></div>';
+  var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
+  $("#main_content").html(result + buttons_atresult);
 
-  $("#main_content").html(result_percent + result);
+
+
+
+
+
+  var myCanvas = document.getElementById("myCanvas");
+  myCanvas.width = 300;
+  myCanvas.height = 300;
+
+  var _ctx = myCanvas.getContext("2d");
+
+//  drawLine(_ctx,100,100,200,200);
+ // drawArc(_ctx, 150,150,150, 0, Math.PI/3);
+ // drawPieSlice(_ctx, 150,150,150, Math.PI/2, Math.PI/2 + Math.PI/4, '#ff0000');
+  var myVinyls = {
+    "Classical music": 10,
+    "Alternative rock": 14,
+    "Pop": 2,
+    "Jazz": 12
+  };
+
+  var Piechart = function(options){
+    this.options = options;
+    this.canvas = options.canvas;
+    this.ctx = this.canvas.getContext("2d");
+    this.colors = options.colors;
+
+    this.draw = function(){
+      var total_value = 0;
+      var color_index = 0;
+      for (var categ in this.options.data){
+        var val = this.options.data[categ];
+        total_value += val;
+      }
+
+      var start_angle = 0;
+      for (categ in this.options.data){
+        val = this.options.data[categ];
+        var slice_angle = 2 * Math.PI * val / total_value;
+
+        drawPieSlice(
+          this.ctx,
+          this.canvas.width/2,
+          this.canvas.height/2,
+          Math.min(this.canvas.width/2,this.canvas.height/2),
+          start_angle,
+          start_angle+slice_angle,
+          this.colors[color_index%this.colors.length]
+        );
+
+        start_angle += slice_angle;
+        color_index++;
+      }
+
+    }
+  }
+  var myPiechart = new Piechart(
+    {
+      canvas:myCanvas,
+      data:myVinyls,
+      colors:["#fde23e","#f16e23", "#57d9ff","#937e88"]
+    }
+  );
+  myPiechart.draw();
+}
+
+function drawLine(ctx, startX, startY, endX, endY){
+  ctx.beginPath();
+  ctx.moveTo(startX,startY);
+  ctx.lineTo(endX,endY);
+  ctx.stroke();
+}
+function drawArc(ctx, centerX, centerY, radius, startAngle, endAngle){
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+  ctx.stroke();
+}
+function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color ){
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(centerX,centerY);
+  ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+  ctx.closePath();
+  ctx.fill();
+}
+
+
+
+
+
+
+
+
+
+
+function answer_mailto(){
+  var divider ="-----------------------------------------------------------------------------------";
+  var mail_body = divider+'\nVorteile:\n'+divider+'\n\n';
+  var mail_info = "mailto:" + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
+  var mail_advantages;
+  var mail_risks = '\n'+divider+'\nRisiken:\n'+divider+'\n\n';
+  for(var i=0; i<r.length; i++)
+  {
+    if(r[i].chance_text != "") {
+      mail_advantages += r[i].chance_text + '\n';
+    }
+    if(r[i].risk_text != "") {
+      mail_risks += r[i].risk_text + '\n';
+    }
+  }
+
+
+  mail_body = encodeURIComponent(mail_body) + encodeURIComponent(mail_advantages)+ encodeURIComponent(mail_risks);
+  var mail_total;
+  mail_total = mail_info + mail_body;
+
+  window.location.href = mail_total;
 }
