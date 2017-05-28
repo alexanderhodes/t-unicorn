@@ -375,7 +375,7 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
 function answer_mailto(){
   var divider ="-----------------------------------------------------------------------------------";
   var mail_body = divider+'\nVorteile:\n'+divider+'\n\n';
-  var mail_info = "mailto:" + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
+  var mail_info = "mailto: " + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
   var mail_advantages;
   var mail_risks = '\n'+divider+'\nRisiken:\n'+divider+'\n\n';
   for(var i=0; i<r.length; i++)
@@ -394,4 +394,22 @@ function answer_mailto(){
   mail_total = mail_info + mail_body;
 
   window.location.href = mail_total;
+}
+function sendMail() {
+  $.ajax({
+    type: "GET",
+    url: base_url + "users/contact",
+    success: function (response) {
+      var mail = response[0].email;
+
+      var link = "mailto:"+mail
+          +"?subject=Anfrage zu CloudReadinessCheck"
+          +"&body=Sehr geehrte Damen und Herren,"+
+          encodeURIComponent("\n\n bitte nehmen Sie Kontakt mit mir auf. Ich möchte mich genauer über eine Cloudlösung informieren. \n\n Vielen Dank")
+        ;
+      window.location.href = link;
+    },
+    error: function (response) {
+    }
+  });
 }
