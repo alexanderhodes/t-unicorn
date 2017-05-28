@@ -407,7 +407,12 @@ tr {
   width:250px;
   margin:5px;
 }
-
+.Thumbs{
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+  float: left;
+}
 #result_background{
   width:100%;
   height: 200px;
