@@ -260,7 +260,7 @@ function show_result(r){
     var Text = r[i].risk_text;
     if (Text != "") {
       lfdNr += 1;
-     box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
+     box2 += '<div class="data"><div class="bild"><img src="Images\Thumb_Down.png" alt="Daumen runter"></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
      box2 += '<br><br>';
     }
   }
