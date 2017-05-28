@@ -238,12 +238,12 @@ function show_result(r){
 
   percentage = Math.round(percentage*100);
 
-  var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
+  var result_percent = '<div class="result_background">' + percentage +' %</div>';
   var result = "";
   result += '<div class="bigbox">';
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
   var lfdNr = 0;
-  for (var i = 0; i < r.length; i++) {
+  for (var i = 0; i < 5; i++) {
     if (r[i] == undefined){
       //next element
     } else {
@@ -256,7 +256,7 @@ function show_result(r){
   box1 += '</div>';
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
   lfdNr = 0;
-  for ( i = 0; i < r.length; i++) {
+  for ( i = 0; i < 5; i++) {
     var Text = r[i].risk_text;
     if (Text != "") {
       lfdNr += 1;
@@ -266,6 +266,5 @@ function show_result(r){
   }
   result += box1 + box2 + '</div></div>';
 
-  $("#main_content").html(result_percent+result);
-  document.getElementById ("result_perc").style.height = percentage*2 + 'px';
+  $("#main_content").html(result_percent + result);
 }

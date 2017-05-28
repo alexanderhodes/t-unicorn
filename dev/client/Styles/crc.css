@@ -349,6 +349,7 @@ tr {
   width:100%;
   height: 100%;
   background-color: #303F9F;
+  font-family:sans-serif !important;
 }
 .header1{
   background-color: #989898 !important;
@@ -407,12 +408,13 @@ tr {
   margin:5px;
 }
 
-.resultbackground{
+#result_background{
   width:100%;
   height: 200px;
   background-color: #303F9F;
   font-size: 2em;
-
+  text-align: center;
+  vertical-align: middle;
   position: relative;
 }
 #result_perc{
@@ -428,3 +430,31 @@ tr {
   vertical-align: middle;
   line-height: 100%;
 }
+.tooltip {
+  color: #c32e04;
+  text-decoration: underline;
+  cursor: help;
+  position: relative;
+
+}
+
+.tooltip span[rel=tooltip] {
+  display:none;
+
+}
+
+.tooltip:hover span[rel=tooltip] {
+  display: block;
+  position: absolute;
+  bottom: 1em;
+  left: -6em;
+  width: 15em;
+  padding: 0.5em;
+  z-index: 100;
+  color: #000;
+  background-color: #ffebe6;
+  border: solid 1px #c32e04;
+  border-radius: 0.2em;
+
+}
+
