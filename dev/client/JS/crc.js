@@ -68,7 +68,7 @@ $(document).ready(function() {
 
     var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
     var option_step = 0;
-    var score = [100,65,35,0,-1];
+    var score = [100,0,-1];
 
     for (var j = 0; j < ops.length; j++) {
 
