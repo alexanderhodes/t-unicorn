@@ -238,7 +238,6 @@ function show_result(r){
 
   percentage = Math.round(percentage*100);
 
-  var result_percent = '<div class="result_background">' + percentage +' %</div>';
   var result = "";
   result += '<div class="bigbox">';
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
@@ -272,15 +271,16 @@ function show_result(r){
 
     }
   }
-  result += box1 + box2 + '</div></div>';
+  var result_percent="<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
+  result += box1 +result_percent+ box2 + '</div></div>';
   var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
   $("#main_content").html(result + buttons_atresult);
 
 
   //Liza:Beschreibung vom Kuchendiagramm (überschreibe die Werte von Tobi)
-  result_percent="<canvas id='myChart' width='400' height='400'></canvas>";
 
-  $("#main_content").html(result_percent+result);
+
+  $("#main_content").html(result);
   //document.getElementById ("result_perc").style.height = percentage*2 + 'px';
 
 
@@ -295,7 +295,7 @@ function show_result(r){
     datasets: [{
       data: [percentage, 100-percentage],
       label: "%-Bereitschaft",
-      backgroundColor: ["#00FF00", "#ff0000"]
+      backgroundColor: ["#FFFFFF", "#9E9E9E"]
     }]
   };
 
@@ -305,11 +305,68 @@ function show_result(r){
     type: 'pie',
     data: data,
     options: {
+      legend: {
+        display: false
+      },
       title: {
         display: true,
         text: 'Sie sind zu '+percentage+'% bereit für die Cloud ',
-        //
-        fontSize: 100
+        fontSize: 100,
+        fontColor: 'white'
+      },
+      animation: {
+        duration: 0,
+        onComplete: function () {
+          var self = this,
+            chartInstance = this.chart,
+            ctx = chartInstance.ctx;
+
+          ctx.font = '18px Arial';
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#303F9F";
+
+          Chart.helpers.each(self.data.datasets.forEach((dataset, datasetIndex) => {
+            var meta = self.getDatasetMeta(datasetIndex),
+              total = 0, //total values to compute fraction
+              labelxy = [],
+              offset = Math.PI / 2, //start sector from top
+              radius,
+              centerx,
+              centery,
+              lastend = 0; //prev arc's end line: starting with 0
+
+            for (var val of dataset.data) { total += val; }
+
+            Chart.helpers.each(meta.data.forEach((element, index) => {
+              radius = 0.9 * element._model.outerRadius - element._model.innerRadius;
+              centerx = element._model.x;
+              centery = element._model.y;
+              var thispart = dataset.data[index],
+                arcsector = Math.PI * (2 * thispart / total);
+              if (element.hasValue() && dataset.data[index] > 0) {
+                labelxy.push(lastend + arcsector / 2 + Math.PI + offset);
+              }
+              else {
+                labelxy.push(-1);
+              }
+              lastend += arcsector;
+            }), self)
+
+            var lradius = radius * 3 / 4;
+            for (var idx in labelxy) {
+              if (labelxy[idx] === -1) continue;
+              var langle = labelxy[idx],
+                dx = centerx + lradius * Math.cos(langle),
+                dy = centery + lradius * Math.sin(langle),
+                val = Math.round(dataset.data[idx] / total * 100);
+
+                ctx.fillText(val + '%', dx, dy);
+
+
+            }
+
+          }), self);
+        }
       }
     }
   });
