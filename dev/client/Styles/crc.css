@@ -328,7 +328,8 @@ tr {
 
 .box1{
   background-color:#FFFFFF;
-  width:350px;
+  width:400px;
+  height: 550px;
   float:left;
   /*width:25%;
   height:550px;
@@ -341,7 +342,8 @@ tr {
 }
 .box2{
   background-color:#9E9E9E !important;
-  width:350px;
+  width:400px;
+  height: 550px;
   /*
   height:550px;
   float:right;
@@ -398,27 +400,30 @@ tr {
   border-right-style: solid;
   border-right-color: #9E9E9E;
   float:left;
-  width:100px;
+  width:75px;
   margin:5px;
-  font-size: 25px;
+  font-size: 14pt;
+
 }
 .dataheader2{
   border-right-style: solid;
   border-right-color: #FFFFFF;
   float:left;
-  width:100px;
+  width:75px;
   margin:5px;
-  font-size: 25px;
+  font-size: 14pt;
+
 }
 
 .datatext{
   float: left;
-  width:150px;
+  width:200px;
   margin:5px;
+
 }
 .Thumbs{
-  height: 40px;
-  width: 40px;
+  height: 25px;
+  width: 25px;
 
   float: left;
 }
@@ -433,10 +438,10 @@ tr {
   line-height: 100%;
 }
 .thumb_icon{
-  width:40px;
-  height: 40px;
+  width:25px;
+  height: 25px;
   vertical-align: middle;
-  margin-right: 20px;
+  margin-right: 10px;
   float:left;
 }
 
@@ -445,6 +450,7 @@ tr {
   text-decoration: underline;
   cursor: help;
   position: relative;
+  font-size: 20pt;
 
 }
 
@@ -457,8 +463,8 @@ tr {
   display: block;
   position: absolute;
   bottom: -2em;
-  left: 5em;
-  width: 250px;
+  left: 8em;
+  width: 300px;
   padding: 0.5em;
   z-index: 100;
   color: #FFFFFF;
@@ -466,12 +472,14 @@ tr {
   border: solid 1px #9E9E9E;
   border-radius: 0.2em;
   box-shadow: 1px 1px 20px #000000;
+  font-size: 12pt;
 }
 .tooltip2 {
   color: #FFFFFF;
   text-decoration: underline;
   cursor: help;
   position: relative;
+  font-size: 20pt;
 
 }
 
@@ -485,7 +493,7 @@ tr {
   position: absolute;
   bottom: -2em;
   left: -20em;
-  width: 250px;
+  width: 300px;
   padding: 0.5em;
   z-index: 100;
   color: #9E9E9E;
@@ -493,6 +501,7 @@ tr {
   border: solid 1px #FFFFFF;
   border-radius: 0.2em;
   box-shadow: 1px 1px 20px #000000;
+  font-size: 12pt;
 }
 #myCanvas{
 

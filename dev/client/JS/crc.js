@@ -280,7 +280,7 @@ function show_result(r){
   //Liza:Beschreibung vom Kuchendiagramm (überschreibe die Werte von Tobi)
 
 
-  $("#main_content").html(result);
+  $("#main_content").html(result + buttons_atresult);
   //document.getElementById ("result_perc").style.height = percentage*2 + 'px';
 
 
