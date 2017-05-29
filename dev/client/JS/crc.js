@@ -279,9 +279,10 @@ function show_result(r){
   var data = {
     // These labels appear in the legend and in the tooltips when hovering different arcs
     labels: [
-      percentage+'% bereit',
-      ''
+      'Bereitschaft',
+      'Risiken'
     ],
+
     datasets: [{
       data: [percentage, 100-percentage],
       label: "%-Bereitschaft",
@@ -297,12 +298,20 @@ function show_result(r){
     options: {
       title: {
         display: true,
-        text: 'Ihre Bereitschaft beträgt: '
+        text: 'Sie sind zu '+percentage+'% bereit für die Cloud ',
+        //
+        fontSize: 100
       }
     }
   });
 
-  $("#myChart").css("width", "330px");
-  $("#myChart").css("height", "330px");
+
+
+
+
+
+  $("#myChart").css("width", "400px");
+  $("#myChart").css("height", "400px");
+  $("#myChart").css("font-size", "32px inportant!");
 
 }
