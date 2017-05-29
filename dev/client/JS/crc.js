@@ -238,34 +238,86 @@ function show_result(r){
 
   percentage = Math.round(percentage*100);
 
-  var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
+  var result_percent = '<div class="result_background">' + percentage +' %</div>';
   var result = "";
   result += '<div class="bigbox">';
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
   var lfdNr = 0;
-  for (var i = 0; i < r.length; i++) {
+  for (var i = 0; i < 5; i++) {
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = r[i].chance_text;
-      if (Text != "") {
+      var Text = '<p><dfn class="tooltip1"> Flexibilität' +
+      '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
+      '</dfn>' +
+      '</p>';
+    if (r[i].chance_text != "") {
         lfdNr += 1;
-        box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+        box1 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
       }
     }}
   box1 += '</div>';
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
   lfdNr = 0;
-  for ( i = 0; i < r.length; i++) {
-    var Text = r[i].risk_text;
-    if (Text != "") {
+  for ( i = 0; i < 5; i++) {
+    Text = '<p><dfn class="tooltip2"> Flexibilität' +
+      '<span rel="tooltip2">' + r[i].risk_text + '</span>' +
+      '</dfn>' +
+      '</p>';
+
+    if (r[i].risk_text != "") {
       lfdNr += 1;
-     box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
-     box2 += '<br><br>';
+     box2 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
+
+
     }
   }
+ var pie_chart = '<canvas id="myCanvas">Hallo</canvas>';
   result += box1 + box2 + '</div></div>';
+  var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
+  $("#main_content").html(result + buttons_atresult);
 
-  $("#main_content").html(result_percent+result);
-  document.getElementById ("result_perc").style.height = percentage*2 + 'px';
+}
+
+
+function answer_mailto(){
+  var divider ="-----------------------------------------------------------------------------------";
+  var mail_body = divider+'\nVorteile:\n'+divider+'\n\n';
+  var mail_info = "mailto: " + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
+  var mail_advantages;
+  var mail_risks = '\n'+divider+'\nRisiken:\n'+divider+'\n\n';
+  for(var i=0; i<r.length; i++)
+  {
+    if(r[i].chance_text != "") {
+      mail_advantages += r[i].chance_text + '\n';
+    }
+    if(r[i].risk_text != "") {
+      mail_risks += r[i].risk_text + '\n';
+    }
+  }
+
+
+  mail_body = encodeURIComponent(mail_body) + encodeURIComponent(mail_advantages)+ encodeURIComponent(mail_risks);
+  var mail_total;
+  mail_total = mail_info + mail_body;
+
+  window.location.href = mail_total;
+}
+function sendMail() {
+  $.ajax({
+    type: "GET",
+    url: base_url + "users/contact",
+    success: function (response) {
+      var mail = response[0].email;
+
+      var link = "mailto:"+mail
+          +"?subject=Anfrage zu CloudReadinessCheck"
+          +"&body=Sehr geehrte Damen und Herren,"+
+          encodeURIComponent("\n\n bitte nehmen Sie Kontakt mit mir auf. Ich möchte mich genauer über eine Cloudlösung informieren. \n\n Vielen Dank")
+        ;
+      window.location.href = link;
+    },
+    error: function (response) {
+    }
+  });
 }

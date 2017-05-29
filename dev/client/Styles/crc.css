@@ -261,13 +261,15 @@ tr {
   margin-top: 16px;
   margin-right: 15px !important;
   margin-left:15px !important;
-  width: 150px !important;
+  width: 220px !important;
   min-height: 45px !important;
   cursor: pointer;
   color:#9E9E9E !important;
   font-size: 100% !important;
   font-family:sans-serif !important;
   background: #FFFFFF !important;
+  height: 70px;
+  line-height: 100%;
 }
 .mail_buttons:hover{
   background: #303F9F !important;
@@ -326,22 +328,23 @@ tr {
 
 .box1{
   background-color:#FFFFFF;
-  width:500px;
-  height:700px;
+  width:25%;
+  height:550px;
   float: left;
   margin: 10px;
-  margin-left: 15% !important;
-  color: #989898;
+  margin-left: 3% !important;
+  color: #9E9E9E;
   font-family:sans-serif !important;
+  box-shadow: 1px 1px 20px #000000;
 }
 .box2{
-  background-color:#989898 !important;
-  width:500px!important;
-  height:700px;
+  background-color:#9E9E9E !important;
+  width:25%;
+  height:550px;
   float:right;
   margin: 10px;
-  margin-right: 15% !important;
-
+  margin-right: 3% !important;
+  box-shadow: 1px 1px 20px #000000;
   color: #FFFFFF;
   font-family:sans-serif !important;
 }
@@ -349,6 +352,8 @@ tr {
   width:100%;
   height: 100%;
   background-color: #303F9F;
+  font-family:sans-serif !important;
+  margin-top: 20px;
 }
 .header1{
   background-color: #989898 !important;
@@ -356,7 +361,6 @@ tr {
   font-size: 50px;
   margin: 10px;
   text-align: center;
-  color: #FFFFFF !important;
   height: 75px;
   vertical-align: middle;
   padding-top: 20px;
@@ -364,11 +368,10 @@ tr {
 }
 .header2{
   background-color: #FFFFFF;
-  color: #FFFFFF;
   font-size: 50px;
   margin: 10px;
   text-align: center;
-  color: #989898;
+  color: #9E9E9E;
   height: 75px;
   padding-top: 20px;
   line-height: 100%;
@@ -376,55 +379,110 @@ tr {
 .data
 {
   margin: 10px;
-  height: 150px;
+  height: 75px;
 
 }
 .dataheader1{
-  border-bottom-style: solid;
-  border-bottom-color: #989898;
+  border-right-style: solid;
+  border-right-color: #9E9E9E;
   float:left;
-  width:350px;
+  width:100px;
   margin:5px;
   font-size: 25px;
 }
 .dataheader2{
-  border-bottom-style: solid;
-  border-bottom-color: #FFFFFF;
+  border-right-style: solid;
+  border-right-color: #FFFFFF;
   float:left;
-  width:350px;
+  width:100px;
   margin:5px;
   font-size: 25px;
 }
-.bild{
-  width:75px;
-  height: 75px;
-  vertical-align: middle;
-  float:left;
-}
+
 .datatext{
   float: left;
-  width:250px;
+  width:150px;
   margin:5px;
 }
+.Thumbs{
+  height: 40px;
+  width: 40px;
 
-.resultbackground{
+  float: left;
+}
+#result_background{
   width:100%;
   height: 200px;
   background-color: #303F9F;
   font-size: 2em;
-
-  position: relative;
-}
-#result_perc{
-  position: absolute;
-  bottom:0;
-  width: 100%;
-  height: 100px;
-  background-color: #FFFFFF;
-  color: #9E9E9E;
-  font-size: 2em;
-  font-family:sans-serif !important;
   text-align: center;
   vertical-align: middle;
+  position: relative;
   line-height: 100%;
+}
+.thumb_icon{
+  width:40px;
+  height: 40px;
+  vertical-align: middle;
+  margin-right: 20px;
+  float:left;
+}
+
+.tooltip1 {
+  color: #9E9E9E;
+  text-decoration: underline;
+  cursor: help;
+  position: relative;
+
+}
+
+.tooltip1 span[rel=tooltip1] {
+  display:none;
+
+}
+
+.tooltip1:hover span[rel=tooltip1] {
+  display: block;
+  position: absolute;
+  bottom: -2em;
+  left: 5em;
+  width: 250px;
+  padding: 0.5em;
+  z-index: 100;
+  color: #FFFFFF;
+  background-color: #9E9E9E;
+  border: solid 1px #9E9E9E;
+  border-radius: 0.2em;
+  box-shadow: 1px 1px 20px #000000;
+}
+.tooltip2 {
+  color: #FFFFFF;
+  text-decoration: underline;
+  cursor: help;
+  position: relative;
+
+}
+
+.tooltip2 span[rel=tooltip2] {
+  display:none;
+
+}
+
+.tooltip2:hover span[rel=tooltip2] {
+  display: block;
+  position: absolute;
+  bottom: -2em;
+  left: -20em;
+  width: 250px;
+  padding: 0.5em;
+  z-index: 100;
+  color: #9E9E9E;
+  background-color: #FFFFFF;
+  border: solid 1px #FFFFFF;
+  border-radius: 0.2em;
+  box-shadow: 1px 1px 20px #000000;
+}
+#myCanvas{
+
+
 }
