@@ -238,6 +238,7 @@ function show_result(r){
 
   percentage = Math.round(percentage*100);
 
+
   var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
   var result = "";
   result += '<div class="bigbox">';
@@ -266,6 +267,42 @@ function show_result(r){
   }
   result += box1 + box2 + '</div></div>';
 
+
+  //Liza:Beschreibung vom Kuchendiagramm (überschreibe die Werte von Tobi)
+  result_percent="<canvas id='myChart' width='400' height='400'></canvas>";
+
   $("#main_content").html(result_percent+result);
-  document.getElementById ("result_perc").style.height = percentage*2 + 'px';
+  //document.getElementById ("result_perc").style.height = percentage*2 + 'px';
+
+
+
+  var data = {
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      percentage+'% bereit',
+      ''
+    ],
+    datasets: [{
+      data: [percentage, 100-percentage],
+      label: "%-Bereitschaft",
+      backgroundColor: ["#00FF00", "#ff0000"]
+    }]
+  };
+
+  //Aktivierung vom Kuchendiagramm
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx,{
+    type: 'pie',
+    data: data,
+    options: {
+      title: {
+        display: true,
+        text: 'Ihre Bereitschaft beträgt: '
+      }
+    }
+  });
+
+  $("#myChart").css("width", "330px");
+  $("#myChart").css("height", "330px");
+
 }
