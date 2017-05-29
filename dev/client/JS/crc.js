@@ -272,10 +272,56 @@ function show_result(r){
 
     }
   }
- var pie_chart = '<canvas id="myCanvas">Hallo</canvas>';
   result += box1 + box2 + '</div></div>';
   var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
   $("#main_content").html(result + buttons_atresult);
+
+
+  //Liza:Beschreibung vom Kuchendiagramm (überschreibe die Werte von Tobi)
+  result_percent="<canvas id='myChart' width='400' height='400'></canvas>";
+
+  $("#main_content").html(result_percent+result);
+  //document.getElementById ("result_perc").style.height = percentage*2 + 'px';
+
+
+
+  var data = {
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Bereitschaft',
+      'Risiken'
+    ],
+
+    datasets: [{
+      data: [percentage, 100-percentage],
+      label: "%-Bereitschaft",
+      backgroundColor: ["#00FF00", "#ff0000"]
+    }]
+  };
+
+  //Aktivierung vom Kuchendiagramm
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx,{
+    type: 'pie',
+    data: data,
+    options: {
+      title: {
+        display: true,
+        text: 'Sie sind zu '+percentage+'% bereit für die Cloud ',
+        //
+        fontSize: 100
+      }
+    }
+  });
+
+
+
+
+
+
+  $("#myChart").css("width", "400px");
+  $("#myChart").css("height", "400px");
+  $("#myChart").css("font-size", "32px inportant!");
 
 }
 
