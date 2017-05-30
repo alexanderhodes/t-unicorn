@@ -61,7 +61,7 @@ tr {
 }
 
 .welcome_center_slogan {
-  font-size: 34px;
+  font-size: 44px;
   line-height: 40px;
   margin-top: 50px;
 }
@@ -506,4 +506,11 @@ tr {
 #myCanvas{
 
 
+}
+
+.welcome_slogan_text{
+  font-size: 28px;
+  line-height: 40px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
