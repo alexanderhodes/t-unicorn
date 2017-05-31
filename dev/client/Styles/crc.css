@@ -516,3 +516,22 @@ tr {
   margin-top: 20px;
   margin-bottom: 30px;
 }
+
+
+.percent_text_red{
+  color:red;
+}
+
+.percent_text_yellow{
+  color:yellow;
+}
+
+.percent_text_green{
+  color:green;
+}
+
+
+#result_in_percent{
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}

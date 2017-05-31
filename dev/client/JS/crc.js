@@ -244,7 +244,8 @@ function show_result(r){
 
   //Beginn NEU
   result_card_begin += "<div class=\"mdl-grid\"><div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
-  result_card_begin +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text\"> RESULT</h2></div>" ;
+  result_card_begin +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
+  result_card_begin +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
   result_card_begin +=  "<div class=\"mdl-card__supporting-text\">";
   //Ende NEU
 
@@ -289,8 +290,24 @@ function show_result(r){
 
 
   $("#main_content").html(result_card + buttons_atresult);
+$("#result_in_percent").html(+percentage+'%');
 
 
+switch (true){
+  case (parseInt(percentage)<30):
+    //red
+    $("#result_in_percent").addClass("percent_text_red");
+        break;
+  case (parseInt(percentage)<70):
+    //yellow
+    $("#result_in_percent").addClass("percent_text_yellow");
+        break;
+  default:
+    //green
+    $("#result_in_percent").addClass("percent_text_green");
+        break;
+
+}
 
 
 
@@ -317,12 +334,12 @@ function show_result(r){
       legend: {
         display: false
       },
-      title: {
+      /*title: {
         display: true,
         text: 'Sie sind zu '+percentage+'% bereit für die Cloud ',
         fontSize: 100,
         fontColor: 'white'
-      },
+      },*/
       animation: {
         duration: 0,
         onComplete: function () {
