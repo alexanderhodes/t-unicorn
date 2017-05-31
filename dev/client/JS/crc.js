@@ -238,8 +238,16 @@ function show_result(r){
 
   percentage = Math.round(percentage*100);
 
-  var result = "";
-  result += '<div class="bigbox">';
+  var result_card="", result_card_begin = "", result_card_end="";
+  //result += '<div class="bigbox">';
+
+
+  //Beginn NEU
+  result_card_begin += "<div class=\"mdl-grid\"><div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
+  result_card_begin +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text\"> RESULT</h2></div>" ;
+  result_card_begin +=  "<div class=\"mdl-card__supporting-text\">";
+  //Ende NEU
+
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
   var lfdNr = 0;
   for (var i = 0; i < 5; i++) {
@@ -268,20 +276,21 @@ function show_result(r){
       lfdNr += 1;
      box2 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
 
-
     }
+
   }
+  box2+="</div>";
   var result_percent="<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
-  result += box1 +result_percent+ box2 + '</div></div>';
+  result_card_end="</div></div></div>";
+  result_card +=result_card_begin+ box1 +result_percent+ box2 + result_card_end;
+
+
   var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
-  $("#main_content").html(result + buttons_atresult);
 
 
-  //Liza:Beschreibung vom Kuchendiagramm (überschreibe die Werte von Tobi)
+  $("#main_content").html(result_card + buttons_atresult);
 
 
-  $("#main_content").html(result + buttons_atresult);
-  //document.getElementById ("result_perc").style.height = percentage*2 + 'px';
 
 
 
