@@ -15,6 +15,7 @@ Option.find({}).remove()
   {
     _id: '617364617364616473736458',
     option_text: 'Trifft zu',
+    rank: 1,
     valuation: 1
   },/*{
   _id: '617364617364616473736459',
@@ -27,10 +28,12 @@ Option.find({}).remove()
   },*/{
     _id: '617364617364616473736461',
     option_text: 'Trifft nicht zu',
+    rank: 2,
     valuation: 0
   },{
     _id: '617364617364616473736462',
     option_text: 'Keine Angabe',
+    rank: 3,
     valuation: 0
   });
 });
