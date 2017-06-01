@@ -69,8 +69,24 @@ $(document).ready(function() {
     var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
     var option_step = 0;
     var score = [100,0,-1];
-
+    slider_for_options += "<table class='options_table'><tr>";
     for (var j = 0; j < ops.length; j++) {
+      switch(j)
+      {
+      case 0:
+        slider_for_options += "<td class='option_cell_first'>";
+        break;
+        case ops.length-1:
+          slider_for_options += "<td class='option_cell_last'>";
+          break;
+        default:
+          slider_for_options += "<td class='option_cell'>";
+          break;
+
+      }
+
+
+
 
       slider_for_options += "<span id='option_with_step_" + score[j] + "' option_rang='"+ops[j].rank+"' option_id='" + ops[j]._id+ "' ";
       if (j == 0) {
@@ -79,11 +95,13 @@ $(document).ready(function() {
       else {
         slider_for_options += "class='option_with_step'>";
       }
-      slider_for_options += ops[j].option_text + " </span>";
+      slider_for_options += ops[j].option_text + " </span></td>";
       option_step = score[j];//100 / (ops.length - 1);
 
 
     }
+    slider_for_options+="</tr></table>";
+
    // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
     //     "rz-slider-options=\"slider.options\"></rzslider></div>";
 
@@ -97,11 +115,11 @@ $(document).ready(function() {
 
 
 
-    $(".option_with_step").each(function () {
+   /* $(".option_with_step").each(function () {
       var padding_from_left = getActualPaddingFromLeft($(this).attr("option_rang"));
       $(this).css("padding-left", padding_from_left)
 
-    });
+    });*/
 
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
@@ -198,7 +216,7 @@ function getActualPaddingFromLeft(option_index) {
     //last_padding=;
   }
   else {
-    actualPadding = parseInt(allWidth / ops.length - elem_width);
+    actualPadding = parseInt(allWidth / ops.length);// - elem_width
   }
   elem_width = $(".option_with_step[option_rang='" + option_index + "']").width();
 
