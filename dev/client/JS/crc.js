@@ -72,7 +72,7 @@ $(document).ready(function() {
 
     for (var j = 0; j < ops.length; j++) {
 
-      slider_for_options += "<span id='option_with_step_" + score[j] + "' option_id='" + ops[j]._id + "' ";
+      slider_for_options += "<span id='option_with_step_" + score[j] + "' option_rang='"+ops[j].rank+"' option_id='" + ops[j]._id+ "' ";
       if (j == 0) {
         slider_for_options += "class='option_with_step selected_option'>";
       }
@@ -81,6 +81,7 @@ $(document).ready(function() {
       }
       slider_for_options += ops[j].option_text + " </span>";
       option_step = score[j];//100 / (ops.length - 1);
+
 
     }
    // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
@@ -97,7 +98,7 @@ $(document).ready(function() {
 
 
     $(".option_with_step").each(function () {
-      var padding_from_left = getActualPaddingFromLeft($(this).attr("option_id"));
+      var padding_from_left = getActualPaddingFromLeft($(this).attr("option_rang"));
       $(this).css("padding-left", padding_from_left)
 
     });
@@ -188,6 +189,7 @@ function sliderChangedValue() {
 }
 
 function getActualPaddingFromLeft(option_index) {
+
   var actualPadding;
   var allWidth = $(".slider_area").width();
 
@@ -198,7 +200,7 @@ function getActualPaddingFromLeft(option_index) {
   else {
     actualPadding = parseInt(allWidth / ops.length - elem_width);
   }
-  elem_width = $(".option_with_step[option_id='" + option_index + "']").width();
+  elem_width = $(".option_with_step[option_rang='" + option_index + "']").width();
 
   //actualPadding=parseInt((allWidth/ops.length)*(option_index-1))-parseInt(last_padding);
 
