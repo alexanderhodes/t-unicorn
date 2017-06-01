@@ -28,7 +28,7 @@ $(document).on('keyup',function(e){
 $(document).ready(function() {
 
 
-
+  window.sessionStorage.setItem('options','');
 
   $("span[class='mdl-button__ripple-container']").height(36);
 
@@ -38,7 +38,6 @@ $(document).ready(function() {
   $("#btn_start_check").on('click touch', function() {
     //setSession
     sessionStorage.clear();
-    window.sessionStorage.setItem('options','');
     options = "";
     //loadResults();
     load_Options();
@@ -53,161 +52,166 @@ $(document).ready(function() {
    */
 
 
+  function getStatementsLayout(currentStatement) {
+    //var progress_circles;
+    //progress_circles = setProgressCircles(q.length, currentStatement.rang);
+
+
+    var card_layout;
+    var card_grid_definition = "<div class=\"mdl-grid\">" +
+      "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
+    var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_rank+ "'><h2 class=\"mdl-card__title-text statement_number\"> "
+      + currentStatement.statement_rank + "/" + statements.length + "</h2></div>" +
+      "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
+
+
+    var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
+    var option_step = 0;
+    var score = [100,0,-1];
+    slider_for_options += "<table class='options_table'><tr>";
+    for (var j = 0; j < ops.length; j++) {
+      switch(j)
+      {
+        case 0:
+          slider_for_options += "<td class='option_cell_first'>";
+          break;
+        case ops.length-1:
+          slider_for_options += "<td class='option_cell_last'>";
+          break;
+        default:
+          slider_for_options += "<td class='option_cell'>";
+          break;
+
+      }
+
+      slider_for_options += "<span step='"+option_step+"' id='option_with_step_" + score[j] + "' option_rang='"+ops[j].rank+"' option_id='" + ops[j]._id+ "' ";
+      if (j == 0) {
+        slider_for_options += "class='option_with_step selected_option'>";
+      }
+      else {
+        slider_for_options += "class='option_with_step'>";
+      }
+      slider_for_options += ops[j].option_text + " </span></td>";
+      option_step += 100 / (ops.length - 1);//score[j];
+
+
+    }
+    slider_for_options+="</tr></table>";
+
+    // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
+    //     "rz-slider-options=\"slider.options\"></rzslider></div>";
+
+
+    slider_for_options += "</div></div>";
+    var card_grid_end = "<div class='option_back'></div></div></div>";
+
+    card_layout = card_grid_definition + card_statement + slider_for_options + card_grid_end;
+
+    $("#main_content").html(card_layout);
+
+
+
+    /* $(".option_with_step").each(function () {
+     var padding_from_left = getActualPaddingFromLeft($(this).attr("option_rang"));
+     $(this).css("padding-left", padding_from_left)
+
+     });*/
+
+    $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
+
+    if (currentStatement.statement_rank > 1 && currentStatement.statement_rank <= statements.length) {
+      $(".option_back").html("<button class=\"mdl-button mdl-js-button mdl-button--raised statement_back\" goto=\"" + (currentStatement.statement_rank - 1) + "\">" +
+        "<i class=\"material-icons arrow_back\">arrow_back</i>Zurück " +
+        "</button>");
+    }
+    if (currentStatement.statement_rank == statements.length) {
+      $(".option_back").html($(".option_back").html() + "<button onclick='loadResultsByIdFromSessionStorage()' class=\"mdl-button mdl-js-button mdl-button--raised show_result\" >" +
+        "<i class=\"material-icons arrow_forward\">arrow_forward</i>Zum Ergebnis " +
+        "</button>");
+    }
+
+
+    $(".statement_back").on('click touch', function () {
+
+      var previousNumber = $(this).attr("goto");
+      setTimeout(function () {
+        getStatementsLayout(statements[previousNumber - 1]);
+      }, 200);
+      var options = sessionStorage.options.split('~');
+      var last_option = options[options.length - 1];
+      if (currentStatement.statement_rank==1) {sessionStorage.options=""};
+      sessionStorage.options = sessionStorage.options.substr(0, sessionStorage.options.length - last_option.length - 1);
+
+
+    });
+
+
+
+
+    $(".option_with_step").on('click touch', function () {
+      var newvalue = $(this).attr("step");//.split('_')[3]
+      sliderChangedValue(currentStatement, newvalue);
+    });
+
+
+
+    $("#slider").slider({
+      step: 50, change: function (event, ui) {
+       /*var newvalue = $(this).val();
+       sliderChangedValue(currentStatement, newvalue);
+        var newvalue = $("#slider").slider("value");
+        $(".option_with_step[step='"+newvalue+"']").click();*/
+
+       }
+    });
+
+
+  }
+
+
+  function sliderChangedValue(currentStatement, newvalue) {
+    var selection = $("#slider").slider("value");
+
+    var selected_option = $(".option_with_step[step='" + newvalue + "']");
+    var newscore=$(".option_with_step[step='" + newvalue + "']").attr("id").split('_')[3];
+
+
+    currentStatement.score = currentStatement.points * (newscore / 100);
+
+
+
+    // Slider Value Setter
+    $("#slider").slider("option", "value", newvalue);
+
+    $('.option_with_step').removeClass("selected_option");
+    selected_option.addClass("selected_option");
+
+
+    var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
+
+
+    if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
+      if (sessionStorage.options != "") {
+        //trennzeichen zum splitten
+        sessionStorage.options += "~";
+      }
+      sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id"));
+      console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
+    }
+
+    if (currentStatement.statement_rank < statements.length) {
+
+      setTimeout(function () {
+        getStatementsLayout(statements[next_statement]);
+      }, 300);
+    }
+
+
+  }
 
 });
 
 
-function getStatementsLayout(currentStatement) {
-  //var progress_circles;
-  //progress_circles = setProgressCircles(q.length, currentStatement.rang);
-
-
-  var card_layout;
-  var card_grid_definition = "<div class=\"mdl-grid\">" +
-    "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
-  var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_rank+ "'><h2 class=\"mdl-card__title-text statement_number\"> "
-    + currentStatement.statement_rank + "/" + statements.length + "</h2></div>" +
-    "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
-
-
-  var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
-  var option_step = 0;
-  var score = [100,0,-1];
-  slider_for_options += "<table class='options_table'><tr>";
-  for (var j = 0; j < ops.length; j++) {
-    switch(j)
-    {
-      case 0:
-        slider_for_options += "<td class='option_cell_first'>";
-        break;
-      case ops.length-1:
-        slider_for_options += "<td class='option_cell_last'>";
-        break;
-      default:
-        slider_for_options += "<td class='option_cell'>";
-        break;
-
-    }
-
-    slider_for_options += "<span step='"+option_step+"' id='option_with_step_" + score[j] + "' option_rang='"+ops[j].rank+"' option_id='" + ops[j]._id+ "' ";
-    if (j == 0) {
-      slider_for_options += "class='option_with_step selected_option'>";
-    }
-    else {
-      slider_for_options += "class='option_with_step'>";
-    }
-    slider_for_options += ops[j].option_text + " </span></td>";
-    option_step += 100 / (ops.length - 1);//score[j];
-
-
-  }
-  slider_for_options+="</tr></table>";
-
-  // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
-  //     "rz-slider-options=\"slider.options\"></rzslider></div>";
-
-
-  slider_for_options += "</div></div>";
-  var card_grid_end = "<div class='option_back'></div></div></div>";
-
-  card_layout = card_grid_definition + card_statement + slider_for_options + card_grid_end;
-
-  $("#main_content").html(card_layout);
-
-
-
-  /* $(".option_with_step").each(function () {
-   var padding_from_left = getActualPaddingFromLeft($(this).attr("option_rang"));
-   $(this).css("padding-left", padding_from_left)
-
-   });*/
-
-  $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
-
-  if (currentStatement.statement_rank > 1 && currentStatement.statement_rank <= statements.length) {
-    $(".option_back").html("<button class=\"mdl-button mdl-js-button mdl-button--raised statement_back\" goto=\"" + (currentStatement.statement_rank - 1) + "\">" +
-      "<i class=\"material-icons arrow_back\">arrow_back</i>Zurück " +
-      "</button>");
-  }
-  if (currentStatement.statement_rank == statements.length) {
-    $(".option_back").html($(".option_back").html() + "<button onclick='loadResultsByIdFromSessionStorage()' class=\"mdl-button mdl-js-button mdl-button--raised show_result\" >" +
-      "<i class=\"material-icons arrow_forward\">arrow_forward</i>Zum Ergebnis " +
-      "</button>");
-  }
-
-
-  $(".statement_back").on('click touch', function () {
-
-    var previousNumber = $(this).attr("goto");
-    setTimeout(function () {
-      getStatementsLayout(statements[previousNumber - 1]);
-    }, 200);
-    var options = sessionStorage.options.split('~');
-    var last_option = options[options.length - 1];
-    if (currentStatement.statement_rank==1) {sessionStorage.options=""};
-    sessionStorage.options = sessionStorage.options.substr(0, sessionStorage.options.length - last_option.length - 1);
-
-
-  });
-
-
-
-
-  $(".option_with_step").on('click touch', function () {
-    var newvalue = $(this).attr("step");//.split('_')[3]
-    sliderChangedValue(currentStatement, newvalue);
-  });
-
-
-
-  $("#slider").slider({
-    step: 50/*, change: function (event, ui) {
-     var newvalue = $(this).val();
-     sliderChangedValue(currentStatement, newvalue);
-     }*/
-  });
-
-
-}
-function sliderChangedValue(currentStatement, newvalue) {
-  var selection = $("#slider").slider("value");
-
-  var selected_option = $(".option_with_step[step='" + newvalue + "']");
-var newscore=$(".option_with_step[step='" + newvalue + "']").attr("id").split('_')[3];
-
-
-  currentStatement.score = currentStatement.points * (newscore / 100);
-
-
-
-  // Slider Value Setter
-  $("#slider").slider("option", "value", newvalue);
-
-  $('.option_with_step').removeClass("selected_option");
-  selected_option.addClass("selected_option");
-
-
-  var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
-
-
-  if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
-    if (sessionStorage.options != "") {
-      //trennzeichen zum splitten
-      sessionStorage.options += "~";
-    }
-    sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id"));
-    console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
-  }
-
-  if (currentStatement.statement_rank < statements.length) {
-
-    setTimeout(function () {
-      getStatementsLayout(statements[next_statement]);
-    }, 300);
-  }
-
-
-}
 
 function getActualPaddingFromLeft(option_index) {
 
