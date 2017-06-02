@@ -28,6 +28,8 @@ $(document).on('keyup',function(e){
 $(document).ready(function() {
 
 
+  window.sessionStorage.setItem('options','');
+
   $("span[class='mdl-button__ripple-container']").height(36);
 
   /**
@@ -36,7 +38,6 @@ $(document).ready(function() {
   $("#btn_start_check").on('click touch', function() {
     //setSession
     sessionStorage.clear();
-    window.sessionStorage.setItem('options','');
     options = "";
     //loadResults();
     load_Options();
@@ -45,13 +46,11 @@ $(document).ready(function() {
     //getStatementsLayout(statements[0]);
   });
 
-
-
-
   /**
    * This function creates DOM Elements for Statement layout and adds them to the page.
    * @param{Object} currentStatement
    */
+
 
   function getStatementsLayout(currentStatement) {
     //var progress_circles;
@@ -68,21 +67,38 @@ $(document).ready(function() {
 
     var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
     var option_step = 0;
-
+    var score = [100,0,-1];
+    slider_for_options += "<table class='options_table'><tr>";
     for (var j = 0; j < ops.length; j++) {
+      switch(j)
+      {
+        case 0:
+          slider_for_options += "<td class='option_cell_first'>";
+          break;
+        case ops.length-1:
+          slider_for_options += "<td class='option_cell_last'>";
+          break;
+        default:
+          slider_for_options += "<td class='option_cell'>";
+          break;
 
-      slider_for_options += "<span id='option_with_step_" + option_step + "' option_id='" + ops[j]._id + "' ";
+      }
+
+      slider_for_options += "<span step='"+option_step+"' id='option_with_step_" + score[j] + "' option_rang='"+ops[j].rank+"' option_id='" + ops[j]._id+ "' ";
       if (j == 0) {
         slider_for_options += "class='option_with_step selected_option'>";
       }
       else {
         slider_for_options += "class='option_with_step'>";
       }
-      slider_for_options += ops[j].option_text + " </span>";
-      option_step += 100 / (ops.length - 1);
+      slider_for_options += ops[j].option_text + " </span></td>";
+      option_step += 100 / (ops.length - 1);//score[j];
+
 
     }
-   // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
+    slider_for_options+="</tr></table>";
+
+    // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
     //     "rz-slider-options=\"slider.options\"></rzslider></div>";
 
 
@@ -95,11 +111,11 @@ $(document).ready(function() {
 
 
 
-    $(".option_with_step").each(function () {
-      var padding_from_left = getActualPaddingFromLeft($(this).attr("option_id"));
-      $(this).css("padding-left", padding_from_left)
+    /* $(".option_with_step").each(function () {
+     var padding_from_left = getActualPaddingFromLeft($(this).attr("option_rang"));
+     $(this).css("padding-left", padding_from_left)
 
-    });
+     });*/
 
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
@@ -130,63 +146,76 @@ $(document).ready(function() {
     });
 
 
+
+
     $(".option_with_step").on('click touch', function () {
-      var newvalue = $(this).attr("id").split('_')[3];
-
-
-      var selected_option = $(this);
-
-      // Slider Value Setter
-      $("#slider").slider("option", "value", newvalue);
-
-      $('.option_with_step').removeClass("selected_option");
-      selected_option.addClass("selected_option");
-
-
-      var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
-
-
-      if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
-        if (sessionStorage.options != "") {
-          //trennzeichen zum splitten
-          sessionStorage.options += "~";
-        }
-        sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id"));
-        console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
-      }
-
-      if (currentStatement.statement_rank < statements.length) {
-
-        setTimeout(function () {
-          getStatementsLayout(statements[next_statement]);
-        }, 300);
-      }
-
+      var newvalue = $(this).attr("step");//.split('_')[3]
+      sliderChangedValue(currentStatement, newvalue, $(this).attr("option_id"));
     });
-
-
 
 
 
     $("#slider").slider({
-      step: 25, change: function (event, ui) {
-        sliderChangedValue()
-      }
+      step: 50, change: function (event, ui) {
+       /*var newvalue = $(this).val();
+       sliderChangedValue(currentStatement, newvalue);
+        var newvalue = $("#slider").slider("value");
+        $(".option_with_step[step='"+newvalue+"']").click();*/
+
+       }
     });
+
+
+  }
+
+
+  function sliderChangedValue(currentStatement, newvalue, optionId) {
+    var selection = $("#slider").slider("value");
+
+    var selected_option = $(".option_with_step[step='" + newvalue + "']");
+    var newscore=$(".option_with_step[step='" + newvalue + "']").attr("id").split('_')[3];
+
+
+    currentStatement.score = currentStatement.points * (newscore / 100);
+
+
+
+    // Slider Value Setter
+    $("#slider").slider("option", "value", newvalue);
+
+    $('.option_with_step').removeClass("selected_option");
+    selected_option.addClass("selected_option");
+
+
+    var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
+
+
+    if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
+      if (sessionStorage.options != "" && sessionStorage.options != undefined) {
+        //trennzeichen zum splitten
+        sessionStorage.options += "~";
+      } else {
+        sessionStorage.options = "";
+      }
+      sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id, optionId);
+    }
+
+    if (currentStatement.statement_rank < statements.length) {
+
+      setTimeout(function () {
+        getStatementsLayout(statements[next_statement]);
+      }, 300);
+    }
 
 
   }
 
 });
 
-function sliderChangedValue() {
-  var selection = $("#slider").slider("value");
-  var selected_option = $('.option_with_step[id=option_with_step_' + selection + ']');
-  $('.option_with_step').removeClass("selected_option");
-  selected_option.addClass("selected_option");
-}
+
 
 function getActualPaddingFromLeft(option_index) {
+
   var actualPadding;
   var allWidth = $(".slider_area").width();
 
@@ -195,9 +224,9 @@ function getActualPaddingFromLeft(option_index) {
     //last_padding=;
   }
   else {
-    actualPadding = parseInt(allWidth / ops.length - elem_width);
+    actualPadding = parseInt(allWidth / ops.length);// - elem_width
   }
-  elem_width = $(".option_with_step[option_id='" + option_index + "']").width();
+  elem_width = $(".option_with_step[option_rang='" + option_index + "']").width();
 
   //actualPadding=parseInt((allWidth/ops.length)*(option_index-1))-parseInt(last_padding);
 
@@ -222,36 +251,227 @@ function load_Results() {
 };
 
 function show_result(r){
-  var percentage = '75';
 
-  var result_percent = '<div class="resultbackground"><div id="result_perc">' + percentage +' %</div></div>';
-  var result = "";
-  result += '<div class="bigbox">';
+  var percentage = 0;
+  var statements_sum_points = 0;
+
+  //calculate max. points
+  for (index = 0; index < statements.length;index++){
+    if(statements[index].score>=0){statements_sum_points += statements[index].points;}
+  }
+  //calculate score
+  for (index = 0; index < statements.length;index++){
+    if(statements[index].score>=0){percentage += (statements[index].score / statements_sum_points);}
+  }
+
+  percentage = Math.round(percentage*100);
+
+  var result_card="", result_card_begin = "", result_card_end="";
+  //result += '<div class="bigbox">';
+
+
+  //Beginn NEU
+  result_card_begin += "<div class=\"mdl-grid\"><div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
+  result_card_begin +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
+  result_card_begin +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
+  result_card_begin +=  "<div class=\"mdl-card__supporting-text\">";
+  //Ende NEU
+
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
   var lfdNr = 0;
-  for (var i = 0; i < r.length; i++) {
+  for (var i = 0; i < 5; i++) {
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = r[i].chance_text;
-      if (Text != "") {
+      var Text = '<p><dfn class="tooltip1"> Flexibilität' +
+      '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
+      '</dfn>' +
+      '</p>';
+    if (r[i].chance_text != "") {
         lfdNr += 1;
-        box1 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+        box1 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
       }
     }}
   box1 += '</div>';
   var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
   lfdNr = 0;
-  for ( i = 0; i < r.length; i++) {
-    var Text = r[i].risk_text;
-    if (Text != "") {
+  for ( i = 0; i < 5; i++) {
+    Text = '<p><dfn class="tooltip2"> Flexibilität' +
+      '<span rel="tooltip2">' + r[i].risk_text + '</span>' +
+      '</dfn>' +
+      '</p>';
+
+    if (r[i].risk_text != "") {
       lfdNr += 1;
-     box2 += '<div class="data"><div class="bild"><i class="material-icons">pan_tool</i></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
-     box2 += '<br><br>';
+     box2 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
+
+    }
+
+  }
+  box2+="</div>";
+  var result_percent="<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
+  result_card_end="</div></div></div>";
+  result_card +=result_card_begin+ box1 +result_percent+ box2 + result_card_end;
+
+
+  var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
+
+
+  $("#main_content").html(result_card + buttons_atresult);
+  $("#result_in_percent").html(+percentage+'%');
+
+
+switch (true){
+  case (parseInt(percentage)<30):
+    //red
+    $("#result_in_percent").addClass("percent_text_red");
+        break;
+  case (parseInt(percentage)<70):
+    //yellow
+    $("#result_in_percent").addClass("percent_text_yellow");
+        break;
+  default:
+    //green
+    $("#result_in_percent").addClass("percent_text_green");
+        break;
+
+}
+
+
+
+  var data = {
+    // These labels appear in the legend and in the tooltips when hovering different arcs
+    labels: [
+      'Bereitschaft',
+      'Risiken'
+    ],
+
+    datasets: [{
+      data: [percentage, 100-percentage],
+      label: "%-Bereitschaft",
+      backgroundColor: ["#FFFFFF", "#9E9E9E"]
+    }]
+  };
+
+  //Aktivierung vom Kuchendiagramm
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx,{
+    type: 'pie',
+    data: data,
+    options: {
+      legend: {
+        display: false
+      },
+      /*title: {
+        display: true,
+        text: 'Sie sind zu '+percentage+'% bereit für die Cloud ',
+        fontSize: 100,
+        fontColor: 'white'
+      },*/
+      animation: {
+        duration: 0,
+        onComplete: function () {
+          var self = this,
+            chartInstance = this.chart,
+            ctx = chartInstance.ctx;
+
+          ctx.font = '18px Arial';
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#303F9F";
+
+          Chart.helpers.each(self.data.datasets.forEach((dataset, datasetIndex) => {
+            var meta = self.getDatasetMeta(datasetIndex),
+              total = 0, //total values to compute fraction
+              labelxy = [],
+              offset = Math.PI / 2, //start sector from top
+              radius,
+              centerx,
+              centery,
+              lastend = 0; //prev arc's end line: starting with 0
+
+            for (var val of dataset.data) { total += val; }
+
+            Chart.helpers.each(meta.data.forEach((element, index) => {
+              radius = 0.9 * element._model.outerRadius - element._model.innerRadius;
+              centerx = element._model.x;
+              centery = element._model.y;
+              var thispart = dataset.data[index],
+                arcsector = Math.PI * (2 * thispart / total);
+              if (element.hasValue() && dataset.data[index] > 0) {
+                labelxy.push(lastend + arcsector / 2 + Math.PI + offset);
+              }
+              else {
+                labelxy.push(-1);
+              }
+              lastend += arcsector;
+            }), self)
+
+            var lradius = radius * 3 / 4;
+            for (var idx in labelxy) {
+              if (labelxy[idx] === -1) continue;
+              var langle = labelxy[idx],
+                dx = centerx + lradius * Math.cos(langle),
+                dy = centery + lradius * Math.sin(langle),
+                val = Math.round(dataset.data[idx] / total * 100);
+
+                ctx.fillText(val + '%', dx, dy);
+
+
+            }
+
+          }), self);
+        }
+      }
+    }
+  });
+
+  $("#myChart").css("width", "400px");
+  $("#myChart").css("height", "400px");
+  $("#myChart").css("font-size", "32px inportant!");
+
+}
+
+
+function answer_mailto(){
+  var divider ="-----------------------------------------------------------------------------------";
+  var mail_body = divider+'\nVorteile:\n'+divider+'\n\n';
+  var mail_info = "mailto: " + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
+  var mail_advantages;
+  var mail_risks = '\n'+divider+'\nRisiken:\n'+divider+'\n\n';
+  for(var i=0; i<r.length; i++)
+  {
+    if(r[i].chance_text != "") {
+      mail_advantages += r[i].chance_text + '\n';
+    }
+    if(r[i].risk_text != "") {
+      mail_risks += r[i].risk_text + '\n';
     }
   }
-  result += box1 + box2 + '</div></div>';
 
-  $("#main_content").html(result_percent+result);
-  document.getElementById ("result_perc").style.height = percentage*2 + 'px';
+
+  mail_body = encodeURIComponent(mail_body) + encodeURIComponent(mail_advantages)+ encodeURIComponent(mail_risks);
+  var mail_total;
+  mail_total = mail_info + mail_body;
+
+  window.location.href = mail_total;
+}
+
+
+function sendMail() {
+  $.ajax({
+    type: "GET",
+    url: base_url + "users/contact",
+    success: function (response) {
+      var mail = response[0].email;
+
+      var link = "mailto:"+mail
+          +"?subject=Anfrage zu CloudReadinessCheck"
+          +"&body=Sehr geehrte Damen und Herren,"+
+          encodeURIComponent("\n\n bitte nehmen Sie Kontakt mit mir auf. Ich möchte mich genauer über eine Cloudlösung informieren. \n\n Vielen Dank")
+        ;
+      window.location.href = link;
+    },
+    error: function (response) {
+    }
+  });
 }

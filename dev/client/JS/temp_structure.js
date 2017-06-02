@@ -47,6 +47,13 @@ function load_Statements(callback) {
       statements.sort(function(a,b){
         return a.statement_rank - b.statement_rank;
       });
+
+      for (index = 0;index < statements.length;index++){
+        statements[index].options.sort(function (a,b) {
+          return a.option_id - b.option_id;
+        });
+      }
+
       callback(statements[0]);
     }
   };
@@ -61,7 +68,7 @@ function load_Options() {
 
       ops = JSON.parse(this.responseText);
       ops.sort(function(a,b){
-        return a.valuation - b.valuation;
+        return a._id - b._id;
       });
     }
   };
