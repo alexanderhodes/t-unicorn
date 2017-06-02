@@ -246,9 +246,9 @@ function buildHTMLStatements() {
  * @returns {string} - html content
  */
 function buildHTMLOptions(statement){
+  console.log(statement.options.length);
 
   var html = '';
-  //let options =
 
   html += '<!-- Antwortmöglichkeiten für die Frage--><div class="option_list">';
 

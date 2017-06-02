@@ -47,6 +47,7 @@ function getResultData() {
  * @param result {*}
  */
 function saveResult(result) {
+  console.log(result);
   $.ajax({
     type: "PUT",
     url: base_url + "results/" + result._id,
@@ -121,7 +122,6 @@ function buildResultListHTML(){
       '</button>';
 
 
-   // if(result.chance_text[0] != "") {
       html +=
         '<div class="div_parent"><div class="div_text result_text"><p id="result_text' + result._id + '" class="statementtext"><b>+ </b>' + result.chance_text +
         '</p></div>' +
@@ -134,15 +134,12 @@ function buildResultListHTML(){
         '<i id="result_edit' + result._id + '" class="material-icons">mode_edit</i>' +
         '</button>' +
         '</div></div>';
- //   }
 
-   // if(result.risk_text[0] != ''){
       html +=
         '<div class="div_parent"><div class="div_text result_text"><p id="result_text_risk'+result._id+'" class="statementtext"><b>- </b>' +' '+ result.risk_text +
         '</p></div>'+
 
         '<!-- Buttons für das erste Result -->'+
-       // '<span class="statement_buttons">'+
 
         '<!-- Button Produkt 1 ändern-->'+
         '<div class="div_button"><button onclick="setResultRiskText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
@@ -150,7 +147,6 @@ function buildResultListHTML(){
         '</button>'+
 
         '</div></div>';
-   // }
 
     html+= '</div>';
   });
@@ -178,14 +174,15 @@ function setResultChanceText(result_id){
     $('#result_edit'+result_id).html('save');
 
     inputField =
-      '<div class="group_edit">'+
-      '<input type="text" id="newResultText'+result_id+'" required value="'+ r.chance_text +'">'+
-      '<label>Gib einen neuen Text ein.</label>'+
+      '<div style="margin-top: 16px; margin-bottom: 26px;" class="group_edit">'+
+      '<textarea class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"' +
+      'cols="120" rows="3" id="newResultText'+result_id+'" required></textarea>'+
       '</div>';
 
     $('#result_text'+result_id).html(inputField);
+    document.getElementById('newResultText'+result_id+'').innerHTML = r.chance_text;
   } else {
-    r.result_text = $('#newResultText'+result_id).val();
+    r.chance_text = document.getElementById('newResultText'+result_id+'').value;
     saveResult(r);
   }
 }
@@ -196,17 +193,21 @@ function setResultChanceText(result_id){
  */
 function setResultRiskText(result_id){
   let r = getResultById(result_id);
-  if($('#result_edit'+result_id).html()=='mode_edit'){
-    $('#result_edit'+result_id).html('save');
+  if($('#result_edit_risk'+result_id).html()=='mode_edit'){
+    $('#result_edit_risk'+result_id).html('save');
 
     inputField =
-      '<div class="group_edit">'+
-      '<textarea id="newResultText'+result_id+'" required value="'+ r.risk_text +'"></textarea>'+
+      '<div style="margin-top: 16px; margin-bottom: 26px;" class="group_edit">'+
+      '<textarea class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"' +
+      ' cols="120" rows="3" id="newResultText'+result_id+'" required></textarea>'+
       '</div>';
 
-    $('#result_text'+result_id).html(inputField);
+
+
+    $('#result_text_risk'+result_id).html(inputField);
+    document.getElementById('newResultText'+result_id+'').innerHTML = r.risk_text;
   } else {
-    r.result_text = $('#newResultText'+result_id).val();
+    r.risk_text = document.getElementById('newResultText'+result_id+'').value;
     saveResult(r);
   }
 }
