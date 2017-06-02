@@ -150,7 +150,7 @@ $(document).ready(function() {
 
     $(".option_with_step").on('click touch', function () {
       var newvalue = $(this).attr("step");//.split('_')[3]
-      sliderChangedValue(currentStatement, newvalue);
+      sliderChangedValue(currentStatement, newvalue, $(this).attr("option_id"));
     });
 
 
@@ -169,7 +169,7 @@ $(document).ready(function() {
   }
 
 
-  function sliderChangedValue(currentStatement, newvalue) {
+  function sliderChangedValue(currentStatement, newvalue, optionId) {
     var selection = $("#slider").slider("value");
 
     var selected_option = $(".option_with_step[step='" + newvalue + "']");
@@ -191,12 +191,13 @@ $(document).ready(function() {
 
 
     if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
-      if (sessionStorage.options != "") {
+      if (sessionStorage.options != "" && sessionStorage.options != undefined) {
         //trennzeichen zum splitten
         sessionStorage.options += "~";
+      } else {
+        sessionStorage.options = "";
       }
-      sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id"));
-      console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
+      sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id, optionId);
     }
 
     if (currentStatement.statement_rank < statements.length) {
@@ -317,7 +318,7 @@ function show_result(r){
 
 
   $("#main_content").html(result_card + buttons_atresult);
-$("#result_in_percent").html(+percentage+'%');
+  $("#result_in_percent").html(+percentage+'%');
 
 
 switch (true){
@@ -423,11 +424,6 @@ switch (true){
       }
     }
   });
-
-
-
-
-
 
   $("#myChart").css("width", "400px");
   $("#myChart").css("height", "400px");
