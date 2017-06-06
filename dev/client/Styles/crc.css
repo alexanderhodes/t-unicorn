@@ -354,7 +354,7 @@ text-align: right !important;
   margin: 10px;
   margin-left: 3% !important;*/
   color: #9E9E9E;
-  font-family:sans-serif !important;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
   box-shadow: 1px 1px 20px #000000;
 }
 .box2{
@@ -368,7 +368,7 @@ text-align: right !important;
   margin-right: 3% !important;*/
   box-shadow: 1px 1px 20px #000000;
   color: #FFFFFF;
-  font-family:sans-serif !important;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
 
 }
 
@@ -422,30 +422,12 @@ text-align: right !important;
   height: 75px;
 
 }
-.dataheader1{
-  border-right-style: solid;
-  border-right-color: #9E9E9E;
-  float:left;
-  width:75px;
-  margin:5px;
-  font-size: 14pt;
 
-}
-.dataheader2{
-  border-right-style: solid;
-  border-right-color: #FFFFFF;
-  float:left;
-  width:75px;
-  margin:5px;
-  font-size: 14pt;
-
-}
 
 .datatext{
   float: left;
-  width:200px;
   margin:5px;
-
+  width: 80%;
 }
 .Thumbs{
   height: 25px;
@@ -490,7 +472,7 @@ text-align: right !important;
   position: absolute;
   bottom: -2em;
   left: 8em;
-  width: 300px;
+  width: 350px;
   padding: 0.5em;
   z-index: 100;
   color: #FFFFFF;
@@ -518,8 +500,8 @@ text-align: right !important;
   display: block;
   position: absolute;
   bottom: -2em;
-  left: -20em;
-  width: 300px;
+  left: 8em;
+  width: 350px;
   padding: 0.5em;
   z-index: 100;
   color: #9E9E9E;
