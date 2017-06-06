@@ -55,7 +55,10 @@ $(document).ready(function() {
 
     var card_layout;
     var card_grid_definition = "<div class=\"mdl-grid\">" +
-      "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
+
+
+
+     "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
     var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_rank+ "'><h2 class=\"mdl-card__title-text statement_number\"> "
       + currentStatement.statement_rank + "/" + statements.length + "</h2></div>" +
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
@@ -247,13 +250,23 @@ function show_result(r){
   percentage = Math.round(percentage*100);
 
   var result_card="", result_card_begin = "", result_card_end="";
-  result_card_begin += "<div class=\"mdl-grid\"><div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
-  result_card_begin +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
-  result_card_begin +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
-  result_card_begin +=  "<div class=\"mdl-card__supporting-text\">";
+  result_card_begin += "<div class=\"mdl-grid\">";
+var middle_card;
 
 
-  var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
+
+  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
+  middle_card +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
+  middle_card +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
+  middle_card +=  "<div class=\"mdl-card__supporting-text\">";
+  middle_card += "<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
+  middle_card +=  "</div></div>";
+
+  var box1 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  //box1+='<div class="box1">';//<div class="header1">VORTEILE</div>';
+  box1+=  "<div class=\"mdl-card__title box1\"><h2 class=\"mdl-card__title-text \">";
+  box1 +=  "VORTEILE</h2></div>" ;
   var lfdNr = 0;
   for (var i = 0; i < 5; i++) {
     if (r[i] == undefined){
@@ -269,7 +282,13 @@ function show_result(r){
       }
     }}
   box1 += '</div>';
-  var box2 = '<div class="box2"><div class="header2">RISIKEN</div>';
+
+
+
+  var box2 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+ // box2+='<div class="box2">';//<div class="header2">RISIKEN</div>';
+  box2+=  "<div class=\"mdl-card__title box2\"><h2 class=\"mdl-card__title-text \">";
+  box2 +=  "RISIKEN</h2></div>" ;
   lfdNr = 0;
   for ( i = 0; i < 5; i++) {
     Text = '<p><dfn class="tooltip2"> Flexibilität' +
@@ -285,9 +304,9 @@ function show_result(r){
 
   }
   box2+="</div>";
-  var result_percent="<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
-  result_card_end="</div></div></div>";
-  result_card +=result_card_begin+ box1 +result_percent+ box2 + result_card_end;
+
+  result_card_end="</div></div>";
+  result_card +=result_card_begin+ box1 +middle_card+ box2 + result_card_end;
 
 
   var buttons_atresult = "<div class='mail_buttons_div'><button class = 'mail_buttons' onclick=answer_mailto()>Ergebnisse versenden</button>" + "<button class = 'mail_buttons' onclick=sendMail()> Kontaktieren </button></div>";
