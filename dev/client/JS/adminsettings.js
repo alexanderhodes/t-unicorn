@@ -19,10 +19,10 @@ $(document).ready(function() {
     changePassWindow();
   });
 
-  showMail(user.email);
+
   bindCatalogEvents();
   bildAdminSettingsPageLayout();
-
+  showMail(user.email);
 
 
   /**
@@ -114,6 +114,7 @@ function valid () {
  * @param {String} mail the user's e-mail
  */
 function showMail(mail) {
+  console.log("showMail");
   var mail_content = "<div id=\"mail\" class=\"mdl-card__actions mdl-card--border settings_frame grey-font\">" +
     "Aktuelle E-mail Adresse: " +"<span style='color:#303F9F'>"+ mail +"</span>"+
     "<div class=\"new_Email_frame\">" +
@@ -139,6 +140,7 @@ function showMail(mail) {
  */
 function ConnectEventsAufSaveButton(){
   $("#save_email_button").on('click touch', function() {
+    console.log("click");
     var mail =$("#new_email").val();
     var user = window.sessionStorage.getItem("user");
     setEmail(user,mail);
@@ -189,6 +191,7 @@ function setPassword(user, old_pass, new_pass){
  */
 
 function setEmail(user, newEmail){
+  console.log("setEmail");
   let params = {_id: user._id, newEMail: newEmail};
   $.ajax({
     type: "PUT",

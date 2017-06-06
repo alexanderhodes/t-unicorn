@@ -74,15 +74,21 @@ function deleteStatement(statementId){
  * @param bool
  */
 function newResultOption (result_id, statementId, optionsId, bool){
-  let params = getStatementByID(statementId);
+  console.log("newResultOption");
+  /*let params = getStatementByID(statementId);
   for(var i = 0; i < params.options.length; i++){
     if(params.options[i].option_id === optionsId){
       params.options[i].result_id = result_id;
+      console.log("new param");
     }
-  }
+  }*/
+  params = {
+    optionId: optionsId,
+    resultId: result_id
+  };
   $.ajax({
     type: "PUT",
-    url: base_url + "statements/"+statementId,
+    url: base_url + "statements/"+statementId+"/updateResult",
     data: params,
     beforeSend: setHeader,
     success: function (response) {
@@ -256,20 +262,24 @@ function buildHTMLOptions(statement){
     html +=
       '<!-- Option -->' +
       '<div id="option_frame'+statement._id+i+'" class="option_pr_frame"><div class="option_text">' + //
-      '<div id="optionText'+statement._id+i+'" class="option_text_span">'+ options[i].option_text +
+      '<div id="optionText'+statement._id+i+'" class="option_text_span">'+ options[i].option_text;
       //'</div>'+
 
-      '<span class="option_buttons">' +
+    if(options[i].rank != 3){
+      html +=
+        '<span class="option_buttons">' +
 
-      '<!-- Button Options Results ausklappen-->' +
-      '<button id="buttonResults' + statement._id + options[i]._id +'"  value="set"  onclick="optionResultsFoldOut(\'' + options[i]._id + '\',\'' + statement._id + '\',\'' + i + '\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">' +
-      '<i id="buttonProductsIcon' + statement._id +'" class="material-icons">keyboard_arrow_down</i>' +
-      '</button>' +
-      '</span>' +
-      '</div>' +
-      '</div>' +
-      '</div>' +
-      '<div class="divs_chb"></div>';
+        '<!-- Button Options Results ausklappen-->' +
+        '<button id="buttonResults' + statement._id + options[i]._id +'"  value="set"  onclick="optionResultsFoldOut(\'' + options[i]._id + '\',\'' + statement._id + '\',\'' + i + '\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">' +
+        '<i id="buttonProductsIcon' + statement._id +'" class="material-icons">keyboard_arrow_down</i>' +
+        '</button>' +
+        '</span>';
+    }
+
+    html +=   '</div>' +
+              '</div>' +
+              '</div>' +
+              '<div class="divs_chb"></div>';
   }
 
   return html;
@@ -301,21 +311,16 @@ function getListOfResultsForOption(statementId, optionsId){
   let statement = getStatementByID(statementId);
   let html = '';
 
-  html += '<div id="resultsForOptions" class="resultsForOptions">';
-  html += '<span class="resultsForOptions_title"><b>Ergebnis zu dieser Option:</b></span>';
+  html += '<div id="resultsForOptions" class="resultsForOptions">'+
+          '<span class="resultsForOptions_title"><b>Ergebnis zu dieser Option:</b></span>';
 
   let r = getResultOfStatementOptionByIds(statementId, optionsId);
 
   html +=
-    '<!-- Result -->'+
-
     '<div class="statement_title">'+
-    '<span class="result_points_text option_text" id="result_titel'+ r._id +'" class="statementtext">' + r.result_text +
+    '<span class="result_points_text option_text" id="result_titel'+ r._id +'" class="statementtext">' + r.chance_short_text + ' / ' + r.risk_short_text +
     '</span>'+
-
-    '<!-- Buttons für das erste Produkt -->'+
     '<span class="statement_buttons">'+
-
     '</span>'+
     '</div>';
 
@@ -383,7 +388,7 @@ function setDropdown(statementId, optionsId){
     }
 
     if(flag === 0){
-      dropdown_string += '<a href="javascript:newResultOption(\'' + r_all._id + '\',\'' + statementId + '\',\'' + optionsId + '\', 0 );">' + r_all.result_text + '</a>';
+      dropdown_string += '<a href="javascript:newResultOption(\'' + r_all._id + '\',\'' + statementId + '\',\'' + optionsId + '\', 0 );">' + r_all.chance_short_text + ' / ' + r_all.risk_short_text + '</a>';
     }
     flag = 0;
   });

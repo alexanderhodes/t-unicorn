@@ -17,15 +17,7 @@ Option.find({}).remove()
     option_text: 'Trifft zu',
     rank: 1,
     valuation: 1
-  },/*{
-  _id: '617364617364616473736459',
-  option_text: 'Trifft eher zu',
-  valuation: 0.66
   },{
-    _id: '617364617364616473736460',
-    option_text: 'Trifft eher nicht zu',
-    valuation: 0.33
-  },*/{
     _id: '617364617364616473736461',
     option_text: 'Trifft nicht zu',
     rank: 2,
