@@ -479,7 +479,6 @@ text-align: right !important;
   cursor: help;
   position: relative;
   font-size: 20pt;
-z-index: 9999 !important;
 }
 
 .tooltip1 span[rel=tooltip1] {
