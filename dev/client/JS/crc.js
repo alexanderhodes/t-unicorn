@@ -422,7 +422,6 @@ switch (true){
   $("#myChart").css("font-size", "32px inportant!");
 
 }
-
 /**
  * This function opens the local mail client and fill the body with the result.
  */
