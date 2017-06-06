@@ -263,16 +263,16 @@ var middle_card;
   middle_card += "<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
   middle_card +=  "</div></div>";
 
-  var box1 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  var box1 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp box1\">";
   //box1+='<div class="box1">';//<div class="header1">VORTEILE</div>';
-  box1+=  "<div class=\"mdl-card__title box1\"><h2 class=\"mdl-card__title-text \">";
+  box1+=  "<div class=\"mdl-card__title \"><h2 class=\"mdl-card__title-text box1_text\">";
   box1 +=  "VORTEILE</h2></div>" ;
   var lfdNr = 0;
   for (var i = 0; i < 5; i++) {
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = '<p><dfn class="tooltip1"> Flexibilität' +
+      var Text = '<p><dfn class="tooltip1"> Flexibilität' +r[i].risk_short_text+
       '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
       '</dfn>' +
       '</p>';
@@ -285,13 +285,13 @@ var middle_card;
 
 
 
-  var box2 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  var box2 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp box2\">";
  // box2+='<div class="box2">';//<div class="header2">RISIKEN</div>';
-  box2+=  "<div class=\"mdl-card__title box2\"><h2 class=\"mdl-card__title-text \">";
+  box2+=  "<div class=\"mdl-card__title box2\"><h2 class=\"mdl-card__title-text box2_text\">";
   box2 +=  "RISIKEN</h2></div>" ;
   lfdNr = 0;
   for ( i = 0; i < 5; i++) {
-    Text = '<p><dfn class="tooltip2"> Flexibilität' +
+    Text = '<p><dfn class="tooltip2"> ' +r[i].risk_short_text+
       '<span rel="tooltip2">' + r[i].risk_text + '</span>' +
       '</dfn>' +
       '</p>';

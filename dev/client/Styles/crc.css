@@ -371,6 +371,13 @@ text-align: right !important;
   font-family:sans-serif !important;
 
 }
+
+.box1_text{
+  color:#9E9E9E !important;
+}
+.box2_text{
+  color: white !important;
+}
 .bigbox{
   /*width:100%;
   height: 100%;*/
