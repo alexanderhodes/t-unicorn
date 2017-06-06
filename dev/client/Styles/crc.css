@@ -345,10 +345,10 @@ text-align: right !important;
 
 .box1{
   background-color:#FFFFFF;
-  width:400px;
+  /*width:400px;
   height: 550px;
   float:left;
-  /*width:25%;
+  width:25%;
   height:550px;
   float: left;
   margin: 10px;
@@ -359,9 +359,9 @@ text-align: right !important;
 }
 .box2{
   background-color:#9E9E9E !important;
-  width:400px;
+  /*width:400px;
   height: 550px;
-  /*
+
   height:550px;
   float:right;
   margin: 10px;
@@ -369,7 +369,14 @@ text-align: right !important;
   box-shadow: 1px 1px 20px #000000;
   color: #FFFFFF;
   font-family:sans-serif !important;
-  float:left;
+
+}
+
+.box1_text{
+  color:#9E9E9E !important;
+}
+.box2_text{
+  color: white !important;
 }
 .bigbox{
   /*width:100%;
