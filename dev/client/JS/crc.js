@@ -60,7 +60,8 @@ $(document).ready(function() {
 
      "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
     var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_rank+ "'><h2 class=\"mdl-card__title-text statement_number\"> "
-      + currentStatement.statement_rank + "/" + statements.length + "</h2></div>" +
+      //+ currentStatement.statement_rank + "/" + statements.length +
+      "</h2></div>" +
       "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
 
 
@@ -255,10 +256,10 @@ var middle_card;
 
 
 
-  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp middle_card\">";
   // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
   middle_card +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
-  middle_card +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
+  middle_card +=  "Ihre Bereitschaft für die Cloud beträgt: <span id='result_in_percent'></span> </h2></div>" ;
   middle_card +=  "<div class=\"mdl-card__supporting-text\">";
   middle_card += "<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
   middle_card +=  "</div></div>";
@@ -272,7 +273,7 @@ var middle_card;
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = '<p><dfn class="tooltip1"> Flexibilität' +r[i].risk_short_text+
+      var Text = '<p><dfn class="tooltip1"> ' +r[i].chance_short_text+
       '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
       '</dfn>' +
       '</p>';
@@ -316,7 +317,7 @@ var middle_card;
   $("#result_in_percent").html(+percentage+'%');
 
 switch (true){
-  case (parseInt(percentage)<30):
+  case (parseInt(percentage)<40):
     //red
     $("#result_in_percent").addClass("percent_text_red");
         break;
