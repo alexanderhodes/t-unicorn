@@ -96,6 +96,24 @@ export function upsert(req, res) {
     .catch(handleError(res));
 }
 
+export function updateResult(req, res) {
+  let option_id = req.body.optionId;
+  let result_id = req.body.resultId;
+
+  return Statement.findOneAndUpdate(
+    { '_id': q_id,
+      'options.$.option_id': option_id
+    },
+    { $push:
+      {
+        'options.$': { result_id: result_id , option_id: option_id }
+      }
+    },
+    {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
 // Updates an existing Statement in the DB
 export function patch(req, res) {
   if(req.body._id) {

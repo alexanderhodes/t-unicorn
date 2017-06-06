@@ -113,40 +113,47 @@ function buildResultListHTML(){
   results.forEach(function (result) {
     i++;
     html +=
-      '<!-- Resulttext -->'+
+      //Titel
       '<div class="statement_title margin_result">'+
       '<b>'+ i +'. Ergebnis:</b>'+
       '<!-- Button Produkt 1 löschen-->'+
       '<button onclick="deleteResult(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
       '<i class="material-icons">delete</i>'+
-      '</button>';
+      '</button>'+
 
+       //Short-Text
+      '<div class="div_parent"><div class="div_text result_text"><p id="result_text_short' + result._id + '" class="statementtext">' + result.chance_short_text +'<b>:</b>'+
+      '</p></div>' +
+      '<!-- Buttons für das erste Result -->' +
+      '<div class="div_button"><button onclick="setResultChanceShortText(\'' + result._id + '\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">' +
+      '<i id="result_edit_short' + result._id + '" class="material-icons">mode_edit</i>' +
+      '</button>' +
+      '</div></div>'+
 
-      html +=
-        '<div class="div_parent"><div class="div_text result_text"><p id="result_text' + result._id + '" class="statementtext"><b>+ </b>' + result.chance_text +
-        '</p></div>' +
+      //Long Chance Text
+      '<div class="div_parent margin_long"><div class="div_text result_text"><p id="result_text' + result._id + '" class="statementtext"><b>+ </b>' + result.chance_text +
+      '</p></div>' +
+      '<!-- Button Produkt 1 ändern-->' +
+      '<div class="div_button"><button onclick="setResultChanceText(\'' + result._id + '\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">' +
+      '<i id="result_edit' + result._id + '" class="material-icons">mode_edit</i>' +
+      '</button>' +
+      '</div></div>'+
 
-        '<!-- Buttons für das erste Result -->' +
-        //'<span class="statement_buttons">' +
+      //short risk text
+      '<div class="div_parent"><div class="div_text result_text"><p id="result_text_risk_short'+result._id+'" class="statementtext">' +' '+ result.risk_short_text + '<b>:</b>' +
+      '</p></div>'+
+      '<div class="div_button"><button onclick="setResultRiskShortText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+      '<i id="result_edit_risk_short'+result._id+'" class="material-icons">mode_edit</i>'+
+      '</button>'+
+      '</div></div>'+
 
-        '<!-- Button Produkt 1 ändern-->' +
-        '<div class="div_button"><button onclick="setResultChanceText(\'' + result._id + '\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">' +
-        '<i id="result_edit' + result._id + '" class="material-icons">mode_edit</i>' +
-        '</button>' +
-        '</div></div>';
-
-      html +=
-        '<div class="div_parent"><div class="div_text result_text"><p id="result_text_risk'+result._id+'" class="statementtext"><b>- </b>' +' '+ result.risk_text +
-        '</p></div>'+
-
-        '<!-- Buttons für das erste Result -->'+
-
-        '<!-- Button Produkt 1 ändern-->'+
-        '<div class="div_button"><button onclick="setResultRiskText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-        '<i id="result_edit_risk'+result._id+'" class="material-icons">mode_edit</i>'+
-        '</button>'+
-
-        '</div></div>';
+      //long risk text
+      '<div class="div_parent margin_long"><div class="div_text result_text"><p id="result_text_risk'+result._id+'" class="statementtext"><b>- </b>' +' '+ result.risk_text +
+      '</p></div>'+
+      '<div class="div_button"><button onclick="setResultRiskText(\''+result._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
+      '<i id="result_edit_risk'+result._id+'" class="material-icons">mode_edit</i>'+
+      '</button>'+
+      '</div></div>';
 
     html+= '</div>';
   });
@@ -208,6 +215,52 @@ function setResultRiskText(result_id){
     document.getElementById('newResultText'+result_id+'').innerHTML = r.risk_text;
   } else {
     r.risk_text = document.getElementById('newResultText'+result_id+'').value;
+    saveResult(r);
+  }
+}
+
+/**
+ * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
+ * @param result_id {string}
+ */
+function setResultChanceShortText(result_id){
+  let r = getResultById(result_id);
+  if($('#result_edit_short'+result_id).html()=='mode_edit'){
+    $('#result_edit_short'+result_id).html('save');
+
+    inputField =
+      '<div style="margin-top: 16px; margin-bottom: 26px;" class="group_edit">'+
+      '<textarea class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"' +
+      ' cols="120" rows="1" id="newResultText'+result_id+'" required></textarea>'+
+      '</div>';
+
+    $('#result_text_short'+result_id).html(inputField);
+    document.getElementById('newResultText'+result_id+'').innerHTML = r.chance_short_text;
+  } else {
+    r.chance_short_text = document.getElementById('newResultText'+result_id+'').value;
+    saveResult(r);
+  }
+}
+
+/**
+ * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
+ * @param result_id {string}
+ */
+function setResultRiskShortText(result_id){
+  let r = getResultById(result_id);
+  if($('#result_edit_risk_short'+result_id).html()=='mode_edit'){
+    $('#result_edit_risk_short'+result_id).html('save');
+
+    inputField =
+      '<div style="margin-top: 16px; margin-bottom: 26px;" class="group_edit">'+
+      '<textarea class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"' +
+      ' cols="120" rows="1" id="newResultText'+result_id+'" required></textarea>'+
+      '</div>';
+
+    $('#result_text_risk_short'+result_id).html(inputField);
+    document.getElementById('newResultText'+result_id+'').innerHTML = r.risk_short_text;
+  } else {
+    r.risk_short_text = document.getElementById('newResultText'+result_id+'').value;
     saveResult(r);
   }
 }
