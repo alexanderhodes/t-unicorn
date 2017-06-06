@@ -3,7 +3,6 @@
  */
 
 
-//let url = location.protocol + '//' + location.host+'/';
 var url = 'http://localhost:4000/'; //for loacal access
 var base_url = url + 'api/'; // for local testing
 var r;
@@ -22,11 +21,13 @@ $(document).on('keyup',function(e){
 
 
 
-/**
+/*
  * This function sets events when page is loaded
  */
 $(document).ready(function() {
 
+
+  window.sessionStorage.setItem('options','');
 
   $("span[class='mdl-button__ripple-container']").height(36);
 
@@ -36,26 +37,20 @@ $(document).ready(function() {
   $("#btn_start_check").on('click touch', function() {
     //setSession
     sessionStorage.clear();
-    window.sessionStorage.setItem('options','');
     options = "";
-    //loadResults();
     load_Options();
     load_Statements(getStatementsLayout);
     $(".mdl-layout__content").addClass("light_blue_background");
-    //getStatementsLayout(statements[0]);
   });
-
-
 
 
   /**
    * This function creates DOM Elements for Statement layout and adds them to the page.
    * @param{Object} currentStatement
    */
-
   function getStatementsLayout(currentStatement) {
-    //var progress_circles;
-    //progress_circles = setProgressCircles(q.length, currentStatement.rang);
+    var progress_circles;
+    progress_circles = setProgressCircles(statements.length, currentStatement.statement_rank);
 
 
     var card_layout;
@@ -69,38 +64,42 @@ $(document).ready(function() {
     var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
     var option_step = 0;
     var score = [100,0,-1];
-
+    slider_for_options += "<table class='options_table'><tr>";
     for (var j = 0; j < ops.length; j++) {
+      switch(j)
+      {
+        case 0:
+          slider_for_options += "<td class='option_cell_first'>";
+          break;
+        case ops.length-1:
+          slider_for_options += "<td class='option_cell_last'>";
+          break;
+        default:
+          slider_for_options += "<td class='option_cell'>";
+          break;
 
-      slider_for_options += "<span id='option_with_step_" + score[j] + "' option_id='" + ops[j]._id + "' ";
+      }
+
+      slider_for_options += "<span step='"+option_step+"' id='option_with_step_" + score[j] + "' option_rang='"+ops[j].rank+"' option_id='" + ops[j]._id+ "' ";
       if (j == 0) {
         slider_for_options += "class='option_with_step selected_option'>";
       }
       else {
         slider_for_options += "class='option_with_step'>";
       }
-      slider_for_options += ops[j].option_text + " </span>";
-      option_step = score[j];//100 / (ops.length - 1);
+      slider_for_options += ops[j].option_text + " </span></td>";
+      option_step += 100 / (ops.length - 1);//score[j];
+
 
     }
-   // card_options="<div ng-controller=\"AppController\" ><rzslider rz-slider-model=\"slider.value\""+
-    //     "rz-slider-options=\"slider.options\"></rzslider></div>";
-
-
+    slider_for_options+="</tr></table>";
     slider_for_options += "</div></div>";
     var card_grid_end = "<div class='option_back'></div></div></div>";
 
-    card_layout = card_grid_definition + card_statement + slider_for_options + card_grid_end;
+    card_layout = progress_circles+card_grid_definition + card_statement + slider_for_options + card_grid_end;
 
     $("#main_content").html(card_layout);
 
-
-
-    $(".option_with_step").each(function () {
-      var padding_from_left = getActualPaddingFromLeft($(this).attr("option_id"));
-      $(this).css("padding-left", padding_from_left)
-
-    });
 
     $(".mdl-layout").attr("class", "mdl-layout mdl-js-layout mdl-layout--fixed-header  white-layout");
 
@@ -132,76 +131,85 @@ $(document).ready(function() {
 
 
     $(".option_with_step").on('click touch', function () {
-      var newvalue = $(this).attr("id").split('_')[3];
-      currentStatement.score = currentStatement.points * (newvalue / 100);
-
-      var selected_option = $(this);
-
-      // Slider Value Setter
-      $("#slider").slider("option", "value", newvalue);
-
-      $('.option_with_step').removeClass("selected_option");
-      selected_option.addClass("selected_option");
-
-
-      var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
-
-
-      if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
-        if (sessionStorage.options != "") {
-          //trennzeichen zum splitten
-          sessionStorage.options += "~";
-        }
-        sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id"));
-        console.log(getResultIdByStatementIdAndOptionId(currentStatement._id,$(this).attr("option_id")));
-      }
-
-      if (currentStatement.statement_rank < statements.length) {
-
-        setTimeout(function () {
-          getStatementsLayout(statements[next_statement]);
-        }, 300);
-      }
-
+      var newvalue = $(this).attr("step");//.split('_')[3]
+      sliderChangedValue(currentStatement, newvalue, $(this).attr("option_id"));
     });
-
-
 
 
 
     $("#slider").slider({
       step: 50, change: function (event, ui) {
-        sliderChangedValue()
-      }
+
+       }
     });
+
+
+  }
+
+  /**
+   * This function creates DOM Elements for Statement layout and adds them to the page.
+   * @param{Object} currentStatement,
+   * @param{Object} newvalue,
+   * @param{Object} optionId
+   */
+  function sliderChangedValue(currentStatement, newvalue, optionId) {
+    var selection = $("#slider").slider("value");
+
+    var selected_option = $(".option_with_step[step='" + newvalue + "']");
+    var newscore=$(".option_with_step[step='" + newvalue + "']").attr("id").split('_')[3];
+
+
+    currentStatement.score = currentStatement.points * (newscore / 100);
+
+    // Slider Value Setter
+    $("#slider").slider("option", "value", newvalue);
+
+    // Mark Slider Selected Value
+    $('.option_with_step').removeClass("selected_option");
+    selected_option.addClass("selected_option");
+
+
+    var next_statement = parseInt($(".mdl-card__title[statement_id]").attr("statement_id"));
+
+// Save options in Session Storage
+    if ($(".show_result").length == 0 || (currentStatement.statement_rank == statements.length && sessionStorage.options.split('~').length<statements.length)) {
+      if (sessionStorage.options != "" && sessionStorage.options != undefined) {
+        sessionStorage.options += "~";
+      } else {
+        sessionStorage.options = "";
+      }
+      sessionStorage.options += getResultIdByStatementIdAndOptionId(currentStatement._id, optionId);
+    }
+
+    if (currentStatement.statement_rank < statements.length) {
+
+      setTimeout(function () {
+        getStatementsLayout(statements[next_statement]);
+      }, 300);
+    }
 
 
   }
 
 });
 
-function sliderChangedValue() {
-  var selection = $("#slider").slider("value");
-  var selected_option = $('.option_with_step[id=option_with_step_' + selection + ']');
-  $('.option_with_step').removeClass("selected_option");
-  selected_option.addClass("selected_option");
-}
 
+/**
+ * This function calculates the padding value from the left side for each option.
+ * @param{Object} option_index
+ */
 function getActualPaddingFromLeft(option_index) {
+
   var actualPadding;
   var allWidth = $(".slider_area").width();
 
   if (option_index == 1) {
     actualPadding = 0;
-    //last_padding=;
   }
   else {
-    actualPadding = parseInt(allWidth / ops.length - elem_width);
+    actualPadding = parseInt(allWidth / ops.length);// - elem_width
   }
-  elem_width = $(".option_with_step[option_id='" + option_index + "']").width();
-
-  //actualPadding=parseInt((allWidth/ops.length)*(option_index-1))-parseInt(last_padding);
-
+  elem_width = $(".option_with_step[option_rang='" + option_index + "']").width();
   return actualPadding;
 }
 
@@ -239,15 +247,11 @@ function show_result(r){
   percentage = Math.round(percentage*100);
 
   var result_card="", result_card_begin = "", result_card_end="";
-  //result += '<div class="bigbox">';
-
-
-  //Beginn NEU
   result_card_begin += "<div class=\"mdl-grid\"><div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
   result_card_begin +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
   result_card_begin +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
   result_card_begin +=  "<div class=\"mdl-card__supporting-text\">";
-  //Ende NEU
+
 
   var box1 = '<div class="box1"><div class="header1">VORTEILE</div>';
   var lfdNr = 0;
@@ -290,8 +294,7 @@ function show_result(r){
 
 
   $("#main_content").html(result_card + buttons_atresult);
-$("#result_in_percent").html(+percentage+'%');
-
+  $("#result_in_percent").html(+percentage+'%');
 
 switch (true){
   case (parseInt(percentage)<30):
@@ -325,7 +328,7 @@ switch (true){
     }]
   };
 
-  //Aktivierung vom Kuchendiagramm
+  //Diagram activation
   var ctx = document.getElementById("myChart").getContext('2d');
   var myChart = new Chart(ctx,{
     type: 'pie',
@@ -334,12 +337,6 @@ switch (true){
       legend: {
         display: false
       },
-      /*title: {
-        display: true,
-        text: 'Sie sind zu '+percentage+'% bereit für die Cloud ',
-        fontSize: 100,
-        fontColor: 'white'
-      },*/
       animation: {
         duration: 0,
         onComplete: function () {
@@ -397,11 +394,6 @@ switch (true){
     }
   });
 
-
-
-
-
-
   $("#myChart").css("width", "400px");
   $("#myChart").css("height", "400px");
   $("#myChart").css("font-size", "32px inportant!");
@@ -432,6 +424,8 @@ function answer_mailto(){
 
   window.location.href = mail_total;
 }
+
+
 function sendMail() {
   $.ajax({
     type: "GET",

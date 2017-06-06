@@ -12,19 +12,17 @@ $(document).ready(function() {
   var user = JSON.parse(window.sessionStorage.getItem("user"));
 
   //load data
-  getOptionData();
-  getResultData();
+  getStatementsData();
+
 
   $(".change_passwort").on('click touch', function() {
     changePassWindow();
   });
 
-  //build page
-  bildAdminSettingsPageLayout();
   showMail(user.email);
   bindCatalogEvents();
+  bildAdminSettingsPageLayout();
 
-  getStatementsData();
 
 
   /**

@@ -29,7 +29,7 @@ function getOptionData() {
   reqsecurity_type.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200){
       options = JSON.parse(this.responseText);
-      $("#option_container").html(buildHTMLOption());
+      getResultData();
     }
   };
 }
@@ -108,10 +108,10 @@ function buildHTMLOption() {
       '<button onclick="setOptionText(\''+options[i]._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
       '<i id="option_edit'+options[i]._id+'" class="material-icons">mode_edit</i>'+
       '</button>'+
-      '<!-- Button Option 1 löschen-->'+
+      /*'<!-- Button Option 1 löschen-->'+
       '<button onclick="deleteOption(\''+options[i]._id+'\')" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
       '<i class="material-icons">delete</i>'+
-      '</button>'+
+      '</button>'+*/
       '</span>'+
 
       '<!-- Button Option 1 Valuation-->'+
@@ -129,13 +129,13 @@ function buildHTMLOption() {
       '</div>' +
       '</div>';
   }
-  html +=   '<!-- Button Result hinzufügen-->'+
+  /*html +=   '<!-- Button Result hinzufügen-->'+
     '<div class="mdl-card__actions mdl-card--border add_statement_frame">'+
     '<button onclick="newOption()" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect add_statement">'+
     '<i class="material-icons">add</i>'+
     '</button>'+
     'Option hinzufügen'+
-    '</div>';
+    '</div>';*/
 
   return html;
 }

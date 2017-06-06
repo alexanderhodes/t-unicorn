@@ -321,6 +321,23 @@ tr {
   font-weight: 700;
 }
 
+.options_table{
+  table-layout: fixed;
+  width: 100%;
+  vertical-align: top;
+}
+
+.option_cell{
+  text-align: center;
+}
+
+.option_cell_first{
+  text-align: left !important;
+}
+
+.option_cell_last{
+text-align: right !important;
+}
 
 .welcome_center_logo:hover{
   cursor: pointer;
@@ -534,4 +551,5 @@ tr {
 #result_in_percent{
   margin-left: 10px !important;
   margin-right: 10px !important;
+
 }

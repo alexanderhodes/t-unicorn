@@ -44,8 +44,7 @@ function getStatementsData() {
       statements.sort(function(a,b){
         return a.statement_rank - b.statement_rank;
       });
-      setHTMLForChecklist();
-      finilizeDragAndDrop();
+      getOptionData();
     }
   };
 }
@@ -247,9 +246,9 @@ function buildHTMLStatements() {
  * @returns {string} - html content
  */
 function buildHTMLOptions(statement){
+  console.log(statement.options.length);
 
   var html = '';
-  //let options =
 
   html += '<!-- Antwortmöglichkeiten für die Frage--><div class="option_list">';
 
