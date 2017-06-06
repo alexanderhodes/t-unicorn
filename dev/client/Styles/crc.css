@@ -239,7 +239,9 @@ tr {
 #progress_circles li.current {
   background-color: #303F9F;
 }
-
+.middle_card{
+  background-color: #303F9F !important;
+}
 #progress_circles li.open {
   background-color: lightgrey;
 }
@@ -344,7 +346,7 @@ text-align: right !important;
 }
 
 .box1{
-  background-color:#FFFFFF;
+  background-color:#BDBDBD;
   /*width:400px;
   height: 550px;
   float:left;
@@ -373,7 +375,7 @@ text-align: right !important;
 }
 
 .box1_text{
-  color:#9E9E9E !important;
+  color:#757575 !important;
 }
 .box2_text{
   color: white !important;
@@ -459,7 +461,6 @@ text-align: right !important;
   cursor: help;
   position: relative;
   font-size: 20pt;
-
 }
 
 .tooltip1 span[rel=tooltip1] {
@@ -538,5 +539,12 @@ text-align: right !important;
 #result_in_percent{
   margin-left: 10px !important;
   margin-right: 10px !important;
+align-content: center;
+  font-size: 48px !important;
+}
 
+
+#result_as_text
+{
+  color:white !important;
 }
