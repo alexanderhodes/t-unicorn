@@ -241,6 +241,7 @@ tr {
 }
 .middle_card{
   background-color: #303F9F !important;
+  color: white !important;
 }
 #progress_circles li.open {
   background-color: lightgrey;
@@ -460,7 +461,7 @@ text-align: right !important;
   color: #9E9E9E;
   text-decoration: underline;
   cursor: help;
-  position: relative;
+  position: absolute;
   font-size: 20pt;
 }
 
@@ -476,7 +477,7 @@ text-align: right !important;
   left: 8em;
   width: 350px;
   padding: 0.5em;
-  z-index: 100;
+  z-index: 10000;
   color: #FFFFFF;
   background-color: #9E9E9E;
   border: solid 1px #9E9E9E;
@@ -490,6 +491,7 @@ text-align: right !important;
   cursor: help;
   position: relative;
   font-size: 20pt;
+  z-index: 10000;
 
 }
 .tooltip2 span[rel=tooltip2] {
@@ -503,7 +505,7 @@ text-align: right !important;
   left: 8em;
   width: 350px;
   padding: 0.5em;
-  z-index: 100;
+  z-index: 10000;
   color: #9E9E9E;
   background-color: #FFFFFF;
   border: solid 1px #FFFFFF;
@@ -511,6 +513,9 @@ text-align: right !important;
   box-shadow: 1px 1px 20px #000000;
   font-size: 12pt;
 }
+
+
+
 #myCanvas{
 
 

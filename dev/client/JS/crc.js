@@ -260,10 +260,10 @@ var middle_card;
 
 
 
-  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp middle_card\">";
   // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
-  middle_card +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
-  middle_card +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
+  middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
+  middle_card +=  "Ihre Bereitschaft für die Cloud beträgt: <span id='result_in_percent'></span></h2></div>" ;
   middle_card +=  "<div class=\"mdl-card__supporting-text\">";
   middle_card += "<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
   middle_card +=  "</div></div>";
