@@ -264,8 +264,8 @@ var middle_card;
   // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
   middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
   middle_card +=  "Ihre Bereitschaft für die Cloud beträgt: <span id='result_in_percent'></span></h2></div>" ;
-  middle_card +=  "<div class=\"mdl-card__supporting-text\">";
-  middle_card += "<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
+  middle_card +=  "<div class=\"mdl-card__supporting-text id='card_for_chart'\">";
+  middle_card += "<div id='chart_area'><canvas id='myChart' style=\"width='100%';\"></canvas></div>";
   middle_card +=  "</div></div>";
 
   var box1 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp box1\">";
@@ -317,7 +317,9 @@ var middle_card;
 
   $("#main_content").html(result_card + buttons_atresult);
   $("#result_in_percent").html(+percentage+'%');
+ var new_width=$("#main_content").find("#card_for_chart").width();
 
+  $("#myChart").css("width", new_width);
 switch (true){
   case (parseInt(percentage)<30):
     //red

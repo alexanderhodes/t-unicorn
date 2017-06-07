@@ -516,9 +516,9 @@ text-align: right !important;
 
 
 
-#myCanvas{
-
-
+#myChart{
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .welcome_slogan_text{
