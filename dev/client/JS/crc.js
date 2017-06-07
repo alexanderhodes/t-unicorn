@@ -215,7 +215,9 @@ function getActualPaddingFromLeft(option_index) {
   elem_width = $(".option_with_step[option_rang='" + option_index + "']").width();
   return actualPadding;
 }
-
+/**
+ * This function loads the results from database.
+ */
 function load_Results() {
   loadResultsByIdFromSessionStorage();
   var req = new XMLHttpRequest();
@@ -232,7 +234,10 @@ function load_Results() {
     }
   };
 };
-
+/**
+ * This function generates the HTML code for the results page.
+ * @param{Object} r
+ */
 function show_result(r){
 
   var percentage = 0;
@@ -255,12 +260,12 @@ var middle_card;
 
 
 
-  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp\">";
+  middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp middle_card\">";
   // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
-  middle_card +=  "<div class=\"mdl-card__title\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
-  middle_card +=  "Sie sind zu <span id='result_in_percent'></span> bereit für die Cloud</h2></div>" ;
-  middle_card +=  "<div class=\"mdl-card__supporting-text\">";
-  middle_card += "<div id='chart_area'><canvas id='myChart' width='400' height='400'></canvas></div>";
+  middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
+  middle_card +=  "Ihre Bereitschaft für die Cloud beträgt: <span id='result_in_percent'></span></h2></div>" ;
+  middle_card +=  "<div class=\"mdl-card__supporting-text id='card_for_chart'\">";
+  middle_card += "<div id='chart_area'><canvas id='myChart' style=\"width='100%';\"></canvas></div>";
   middle_card +=  "</div></div>";
 
   var box1 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp box1\">";
@@ -272,18 +277,16 @@ var middle_card;
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = '<p><dfn class="tooltip1"> Flexibilität' +r[i].risk_short_text+
+      var Text = '<p><dfn class="tooltip1">'+r[i].chance_short_text+
       '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
       '</dfn>' +
       '</p>';
     if (r[i].chance_text != "") {
         lfdNr += 1;
-        box1 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="dataheader1">' + lfdNr + '.Vorteil</div><div class="datatext">' + Text +  '</div></div>';
+        box1 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="datatext">' + Text +  '</div></div>';
       }
     }}
   box1 += '</div>';
-
-
 
   var box2 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp box2\">";
  // box2+='<div class="box2">';//<div class="header2">RISIKEN</div>';
@@ -291,14 +294,14 @@ var middle_card;
   box2 +=  "RISIKEN</h2></div>" ;
   lfdNr = 0;
   for ( i = 0; i < 5; i++) {
-    Text = '<p><dfn class="tooltip2"> ' +r[i].risk_short_text+
+    Text = '<p><dfn class="tooltip2">' +r[i].risk_short_text+
       '<span rel="tooltip2">' + r[i].risk_text + '</span>' +
       '</dfn>' +
       '</p>';
 
     if (r[i].risk_text != "") {
       lfdNr += 1;
-     box2 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="dataheader2">' + lfdNr + '.Risiko</div><div class="datatext">' + Text + '</div></div>';
+     box2 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Down.png" alt="Daumen runter"</img></div><div class="datatext">' + Text + '</div></div>';
 
     }
 
@@ -314,7 +317,9 @@ var middle_card;
 
   $("#main_content").html(result_card + buttons_atresult);
   $("#result_in_percent").html(+percentage+'%');
+ var new_width=$("#main_content").find("#card_for_chart").width();
 
+  $("#myChart").css("width", new_width);
 switch (true){
   case (parseInt(percentage)<30):
     //red
@@ -330,6 +335,7 @@ switch (true){
         break;
 
 }
+
 
 
 
@@ -418,8 +424,9 @@ switch (true){
   $("#myChart").css("font-size", "32px inportant!");
 
 }
-
-
+/**
+ * This function opens the local mail client and fill the body with the result.
+ */
 function answer_mailto(){
   var divider ="-----------------------------------------------------------------------------------";
   var mail_body = divider+'\nVorteile:\n'+divider+'\n\n';
@@ -435,8 +442,6 @@ function answer_mailto(){
       mail_risks += r[i].risk_text + '\n';
     }
   }
-
-
   mail_body = encodeURIComponent(mail_body) + encodeURIComponent(mail_advantages)+ encodeURIComponent(mail_risks);
   var mail_total;
   mail_total = mail_info + mail_body;
@@ -444,7 +449,9 @@ function answer_mailto(){
   window.location.href = mail_total;
 }
 
-
+/**
+ * This function opens the local mail client, fills the recipient with the mail address of the administrator and fills the body with a contact request.
+ */
 function sendMail() {
   $.ajax({
     type: "GET",

@@ -239,7 +239,10 @@ tr {
 #progress_circles li.current {
   background-color: #303F9F;
 }
-
+.middle_card{
+  background-color: #303F9F !important;
+  color: white !important;
+}
 #progress_circles li.open {
   background-color: lightgrey;
 }
@@ -344,7 +347,7 @@ text-align: right !important;
 }
 
 .box1{
-  background-color:#FFFFFF;
+  background-color:#BDBDBD;
   /*width:400px;
   height: 550px;
   float:left;
@@ -354,7 +357,7 @@ text-align: right !important;
   margin: 10px;
   margin-left: 3% !important;*/
   color: #9E9E9E;
-  font-family:sans-serif !important;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
   box-shadow: 1px 1px 20px #000000;
 }
 .box2{
@@ -368,12 +371,12 @@ text-align: right !important;
   margin-right: 3% !important;*/
   box-shadow: 1px 1px 20px #000000;
   color: #FFFFFF;
-  font-family:sans-serif !important;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
 
 }
 
 .box1_text{
-  color:#9E9E9E !important;
+  color:#757575 !important;
 }
 .box2_text{
   color: white !important;
@@ -422,30 +425,12 @@ text-align: right !important;
   height: 75px;
 
 }
-.dataheader1{
-  border-right-style: solid;
-  border-right-color: #9E9E9E;
-  float:left;
-  width:75px;
-  margin:5px;
-  font-size: 14pt;
 
-}
-.dataheader2{
-  border-right-style: solid;
-  border-right-color: #FFFFFF;
-  float:left;
-  width:75px;
-  margin:5px;
-  font-size: 14pt;
-
-}
 
 .datatext{
   float: left;
-  width:200px;
   margin:5px;
-
+  width: 80%;
 }
 .Thumbs{
   height: 25px;
@@ -465,19 +450,19 @@ text-align: right !important;
 }
 .thumb_icon{
   width:25px;
-  height: 25px;
+  height: 30px;
   vertical-align: middle;
   margin-right: 10px;
   float:left;
+  padding-top: 5px;
 }
 
 .tooltip1 {
   color: #9E9E9E;
   text-decoration: underline;
   cursor: help;
-  position: relative;
+  position: absolute;
   font-size: 20pt;
-
 }
 
 .tooltip1 span[rel=tooltip1] {
@@ -490,9 +475,9 @@ text-align: right !important;
   position: absolute;
   bottom: -2em;
   left: 8em;
-  width: 300px;
+  width: 350px;
   padding: 0.5em;
-  z-index: 100;
+  z-index: 10000;
   color: #FFFFFF;
   background-color: #9E9E9E;
   border: solid 1px #9E9E9E;
@@ -506,22 +491,21 @@ text-align: right !important;
   cursor: help;
   position: relative;
   font-size: 20pt;
+  z-index: 10000;
 
 }
-
 .tooltip2 span[rel=tooltip2] {
   display:none;
-
 }
 
 .tooltip2:hover span[rel=tooltip2] {
   display: block;
   position: absolute;
   bottom: -2em;
-  left: -20em;
-  width: 300px;
+  left: 8em;
+  width: 350px;
   padding: 0.5em;
-  z-index: 100;
+  z-index: 10000;
   color: #9E9E9E;
   background-color: #FFFFFF;
   border: solid 1px #FFFFFF;
@@ -529,9 +513,12 @@ text-align: right !important;
   box-shadow: 1px 1px 20px #000000;
   font-size: 12pt;
 }
-#myCanvas{
 
 
+
+#myChart{
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .welcome_slogan_text{
@@ -558,5 +545,12 @@ text-align: right !important;
 #result_in_percent{
   margin-left: 10px !important;
   margin-right: 10px !important;
+align-content: center;
+  font-size: 48px !important;
+}
 
+
+#result_as_text
+{
+  color:white !important;
 }
