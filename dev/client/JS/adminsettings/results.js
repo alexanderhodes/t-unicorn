@@ -83,7 +83,10 @@ function deleteResult(result_id){
  */
 function newResult(){
   params = {
-    result_text: "Neuen Ergebnistext einfügen!"
+    risk_text: "Neuen Risiko Kurztext eingeben",
+    risk_short_text: "Neuen Risiko Text eingeben",
+    chance_text: "Neuen Chance Kurztext eingeben",
+    chance_short_text: "Neuen Chance Text eingeben"
   };
 
   $.ajax({

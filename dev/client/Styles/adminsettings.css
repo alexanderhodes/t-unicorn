@@ -51,7 +51,12 @@
 }
 
 .statementEdit{
-  margin-top: -33px;
+  margin-top: 18px;
+  margin-bottom: -50px;
+}
+
+.pointEdit{
+  margin-top: -34px;
   margin-bottom: -83px;
 }
 
@@ -277,7 +282,7 @@ height: auto !important;
 }
 
 .margin_result{
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .div_text{

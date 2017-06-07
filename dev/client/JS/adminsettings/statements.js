@@ -152,7 +152,7 @@ function editStatementPoints(statementId){
 
     inputField =
       '<div class="group_statement">'+
-      '<input type="text" class="statementEdit edit_data" id="newStatementText" required value="' + s.points + '">'+
+      '<input type="text" class="pointEdit edit_data" id="newStatementText" required value="' + s.points + '">'+
       '<label>Gib einen neue Punktzahl ein.</label>'+
       '</div>';
 
@@ -204,7 +204,7 @@ function buildHTMLStatements() {
 
         '<!-- statementtext --><li id="'+s._id+'">'+
         '<div  class="statement_title"><span class="statement_rang">'+s.statement_rank+'</span>'+
-        '<span id="statementTitle'+s._id+'" class="statementtext">'+s.statement_text+
+        '<span id="statementTitle'+s._id+'" style="padding-right: 55px !important; display: block; margin-top: -55px; margin-left: 15px;" class="statementtext">'+s.statement_text+
         '</span>'+
 
         '<!-- Buttons für die '+i+'. Frage -->'+

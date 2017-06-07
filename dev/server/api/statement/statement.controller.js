@@ -97,16 +97,20 @@ export function upsert(req, res) {
 }
 
 export function updateResult(req, res) {
+  console.log("test updateResult");
+
   let option_id = req.body.optionId;
   let result_id = req.body.resultId;
+  console.log(option_id);
+  console.log(result_id);
 
   return Statement.findOneAndUpdate(
-    { '_id': q_id,
-      'options.$.option_id': option_id
+    {
+      'options.option_id': option_id
     },
-    { $push:
+    { $set:
       {
-        'options.$': { result_id: result_id , option_id: option_id }
+        'options.$.result_id': result_id
       }
     },
     {upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
