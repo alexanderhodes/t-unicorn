@@ -463,6 +463,7 @@ text-align: right !important;
   cursor: help;
   position: absolute;
   font-size: 20pt;
+  overflow: visible;
 }
 
 .tooltip1 span[rel=tooltip1] {
@@ -484,6 +485,7 @@ text-align: right !important;
   border-radius: 0.2em;
   box-shadow: 1px 1px 20px #000000;
   font-size: 12pt;
+  overflow: visible;
 }
 .tooltip2 {
   color: #FFFFFF;
@@ -492,6 +494,7 @@ text-align: right !important;
   position: relative;
   font-size: 20pt;
   z-index: 10000;
+  overflow: visible;
 
 }
 .tooltip2 span[rel=tooltip2] {
@@ -512,6 +515,7 @@ text-align: right !important;
   border-radius: 0.2em;
   box-shadow: 1px 1px 20px #000000;
   font-size: 12pt;
+  overflow: visible;
 }
 
 

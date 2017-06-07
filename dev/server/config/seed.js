@@ -50,8 +50,8 @@ Result.find({}).remove()
     risk_short_text: ['Dauerhafte Verbindung'],
     chance_short_text: ['Zuverlässigkeit'],
     risk_text: ['Dauerhafte Verbindung zwischen Endgerät und Anwendung besteht, wodurch Mitarbeiter überwacht werden könnten'],
-    chance_text: ['Zuverlässigkeit der Daten steigt',
-                  'Verbesserung der Datenspeicherung und Erhöhung der Prozessorleistung',
+    chance_text: ['Zuverlässigkeit der Daten steigt, ' +
+                  'Verbesserung der Datenspeicherung und Erhöhung der Prozessorleistung, ' +
                   'Mobiler/ geographisch verteilter Zugriff wird erleichtert']
   },{
     _id: '617364617364616473736466',
@@ -64,7 +64,7 @@ Result.find({}).remove()
     risk_short_text: ['Unerwartete Kosten'],
     chance_short_text: ['Schnelle Reaktion'],
     risk_text: [''],
-    chance_text: ['Durch höhere Flexibilität in SaaS Anwendung kann Unternehmen schneller auf Änderungen des Marktes reagieren und seine Strategie dynamischer anpassen',
+    chance_text: ['Durch höhere Flexibilität in SaaS Anwendung kann Unternehmen schneller auf Änderungen des Marktes reagieren und seine Strategie dynamischer anpassen, ' +
                   'Vorteil gegenüber anderen Unternehmen erwachsen, die kein SaaS nutzen']
   },{
     _id: '617364617364616473736468',
@@ -76,9 +76,9 @@ Result.find({}).remove()
     _id: '617364617364616473736469',
     risk_short_text: ['Fehlerquellenpotential steigt'],
     chance_short_text: ['Kosteneinsparungen'],
-    risk_text: ['Fehlerquellen-Potential steigt mit Anzahl der Schnittstellen',
-                'unktionsfähigkeit der Schnittstellen durch Cloud Migration beeinträchtigt'],
-    chance_text: ['Auslagerung aller Applikationen in die Cloud ermöglicht Kosteneinsparung',
+    risk_text: ['Fehlerquellen-Potential steigt mit Anzahl der Schnittstellen, ' +
+                'Funktionsfähigkeit der Schnittstellen durch Cloud Migration beeinträchtigt'],
+    chance_text: ['Auslagerung aller Applikationen in die Cloud ermöglicht Kosteneinsparung, ' +
                   'Standardisierung der Anwendungen']
   },{
     _id: '617364617364616473736470',
@@ -90,32 +90,32 @@ Result.find({}).remove()
     _id: '617364617364616473736471',
     risk_short_text: ['Hohe Kosten'],
     chance_short_text: ['Keine Abhängigkeiten'],
-    risk_text: ['Hohe Kosten durch großen Aufwand',
-                'Kein ausreichendes Know-How',
-                'Große Ressourcenbindung',
+    risk_text: ['Hohe Kosten durch großen Aufwand, ' +
+                'Kein ausreichendes Know-How, ' +
+                'Große Ressourcenbindung, ' +
                 'Kein Support bei technischen Problemen'],
-    chance_text: ['Keine Abhängigkeiten',
+    chance_text: ['Keine Abhängigkeiten, ' +
                   'Unternehmens-informationen bleiben offline']
   },{
     _id: '617364617364616473736472',
     risk_short_text: ['Hohe Abhängigkeit'],
     chance_short_text: ['Automatische Auswertung'],
-    risk_text: ['Hohe Abhängigkeit vom Cloudanbieter',
+    risk_text: ['Hohe Abhängigkeit vom Cloudanbieter, ' +
                 'Wartungsvertrag ist aufzusetzen und zu abzuschließen'],
-    chance_text: ['Kosten nach Verursacherprinzip (pay per use)',
-                  'Know-How des Cloudanbieters nutzen (Spezialisten)',
-                  'Eigene Ressourcen schonen',
-                  'Automatische Auswertunge',
-                  'Echtzeit-informationen',
-                  'Frühwarnsystem',
+    chance_text: ['Kosten nach Verursacherprinzip (pay per use), ' +
+                  'Know-How des Cloudanbieters nutzen (Spezialisten), ' +
+                  'Eigene Ressourcen schonen, ' +
+                  'Automatische Auswertunge, ' +
+                  'Echtzeit-informationen, ' +
+                  'Frühwarnsystem, ' +
                   'Fernwartung']
   },{
     _id: '617364617364616473736473',
     risk_short_text: ['Keine Schnittstellen'],
     chance_short_text: ['Verfügbarkeit und Performance'],
-    risk_text: ['Es sind keine oder wenige Schnittstellen vorhanden, sodass die Integration schwierig ist',
+    risk_text: ['Es sind keine oder wenige Schnittstellen vorhanden, sodass die Integration schwierig ist, ' +
                 'Schnittstellen in der Client-Ebene noch entwickelt werden'],
-    chance_text: ['Verfügbarkeit und Performance der Anwendungen steigen',
+    chance_text: ['Verfügbarkeit und Performance der Anwendungen steigen, ' +
                   'Organisatorische Flexibilität nimmt zu']
   },{
     _id: '617364617364616473736474',
@@ -127,32 +127,32 @@ Result.find({}).remove()
     _id: '617364617364616473736475',
     risk_short_text: ['Unterschiedliche Datenschutzgesetze'],
     chance_short_text: ['Verhinderung Imageschäden'],
-    risk_text: ['Bei ausländischen Partnern gilt kein deutscher Datenschutz',
+    risk_text: ['Bei ausländischen Partnern gilt kein deutscher Datenschutz, ' +
                 'Interne Regelungen können den Weg zur Auslagerung verbauen'],
-    chance_text: ['Verhinderung von Image-Schäden',
-                  'Vertrauen bei Kunden und Partnern schaffen',
+    chance_text: ['Verhinderung von Image-Schäden, ' +
+                  'Vertrauen bei Kunden und Partnern schaffen, ' +
                   'Vermeidung von Strafen und Bußgeldern']
   },{
     _id: '617364617364616473736476',
     risk_short_text: ['Eigener Aufwand'],
     chance_short_text: ['Eigenverantwortung bei Speicherung'],
     risk_text: ['Eigener Aufwand für die Einhaltung der Datenschutzregelungen'],
-    chance_text: ['Daten werden intern gespeichert, sodass die inländischen Datenschutzregelungen gelten',
+    chance_text: ['Daten werden intern gespeichert, sodass die inländischen Datenschutzregelungen gelten, ' +
                   'Eigenverantwortung für die Speicherung der Daten']
   },{
     _id: '617364617364616473736477',
     risk_short_text: ['Schlechte Verfügbarkeit'],
     chance_short_text: ['Verfügbarkeit'],
-    risk_text: ['Schlechte Verfügbarkeit = hohes Risiko der zusätzlichen Kosten durch Einkauf von Fremdkräften',
+    risk_text: ['Schlechte Verfügbarkeit = hohes Risiko der zusätzlichen Kosten durch Einkauf von Fremdkräften, ' +
                 'Hohes Risiko des Zeitverbrauchs bei der Migration durch Schulungen von Mitarbeitern. Sonst Risiko der unsauberen Planung durch ungeübte und Themenfremde Mitarbeitern'],
-    chance_text: ['Besserer Einsatz der limitierten Ressourcen nach der Migration',
+    chance_text: ['Besserer Einsatz der limitierten Ressourcen nach der Migration, ' +
                   'Gute Verfügbarkeit = Hohe Einsparungschancen von Geld, Zeit, Mitarbeitereffizienz nach Migration']
   },{
     _id: '617364617364616473736478',
     risk_short_text: ['Verfügbarkeit später wichtig'],
     chance_short_text: ['Verfügbarkeit ausreichend'],
     risk_text: ['Abhängigkeit von Qualität des Cloud Anbieters'],
-    chance_text: ['Know-how-Transfer/Support bei der Umsetzung des Hard- und Softwarelebenszyklus durch Cloudanbieter',
+    chance_text: ['Know-how-Transfer/Support bei der Umsetzung des Hard- und Softwarelebenszyklus durch Cloudanbieter, ' +
                   'Keine Abschreibung von eigener Hardware und Software nötig']
   },{
     _id: '617364617364616473736479',
@@ -164,9 +164,8 @@ Result.find({}).remove()
     _id: '617364617364616473736480',
     risk_short_text: ['Hoher Ressourceneinsatz'],
     chance_short_text: ['Eigene Kontrolle'],
-    risk_text: ['Unzureichende Datensicherheit der Cloud-Provider kann zu Wettbewerbsnachteilen führen',
-                'Anwendung kann aufgrund des geringen Standardisierungsgrades nicht 1:1 in der Cloud abgebildet werden',
-                'Verlust der Kontrolle über erfolgskritische Daten',
+    risk_text: ['Unzureichende Datensicherheit der Cloud-Provider kann zu Wettbewerbsnachteilen führen, ' +
+                'Anwendung kann aufgrund des geringen Standardisierungsgrades nicht 1:1 in der Cloud abgebildet werden, Verlust der Kontrolle über erfolgskritische Daten, ' +
                 'Vertragliche / Rechtliche Verstöße'],
     chance_text: ['']
   },{

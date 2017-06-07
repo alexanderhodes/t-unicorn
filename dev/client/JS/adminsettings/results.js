@@ -22,7 +22,7 @@ function getResultById(id) {
 //###################################### ajax requests ###################################################
 
 /**
- *  Lade Produkte per HTTP GET-Request und speichere in globaler variable products
+ *  Lade Results per HTTP GET-Request und speichere in globaler variable results
  */
 function getResultData() {
 
@@ -47,7 +47,6 @@ function getResultData() {
  * @param result {*}
  */
 function saveResult(result) {
-  console.log(result);
   $.ajax({
     type: "PUT",
     url: base_url + "results/" + result._id,
@@ -79,7 +78,7 @@ function deleteResult(result_id){
 }
 
 /**
- * Speichere neues Produkt in Datenbank per HTTP-POST-Request
+ * Speichere neues Result in Datenbank per HTTP-POST-Request
  */
 function newResult(){
   params = {
@@ -175,7 +174,7 @@ function buildResultListHTML(){
 }
 
 /**
- * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
+ * Ändere Result Chance Text via HTTP-PUT-Request
  * @param result_id {string}
  */
 function setResultChanceText(result_id){
@@ -198,7 +197,7 @@ function setResultChanceText(result_id){
 }
 
 /**
- * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
+ * Ändere Result Risk Text via HTTP-PUT-Request
  * @param result_id {string}
  */
 function setResultRiskText(result_id){
@@ -223,7 +222,7 @@ function setResultRiskText(result_id){
 }
 
 /**
- * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
+ * Ändere Result Chance Short Text via HTTP-PUT-Request
  * @param result_id {string}
  */
 function setResultChanceShortText(result_id){
@@ -246,7 +245,7 @@ function setResultChanceShortText(result_id){
 }
 
 /**
- * Ändere Produktname anhand der produkt_id via HTTP-PUT-Request
+ * Ändere Risk Chance Short Text via HTTP-PUT-Request
  * @param result_id {string}
  */
 function setResultRiskShortText(result_id){

@@ -17,8 +17,6 @@ function getStatementByID(id){
 
 function getResultOfStatementOptionByIds(statementId, optionsId){
   var s = getStatementByID(statementId);
-  console.log(optionsId);
-  console.log(s);
   for(var i = 0; i < s.options.length; i++){
     if(s.options[i].option_id === optionsId){
       var r = getResultById(s.options[i].result_id);
@@ -53,35 +51,47 @@ function getStatementsData() {
  *  delete Statement
  * @param statementId
  */
-function deleteStatement(statementId){
+function deleteStatement(statementId) {
 
   //delete Question
   $.ajax({
     type: "DELETE",
-    url: base_url + "statements/"+statementId,
+    url: base_url + "statements/" + statementId,
     beforeSend: setHeader,
     success: function (response) {
       getStatementsData();
     }
   });
+
+  var current_element = getStatementByID(statementId);
+  var rank = current_element.statement_rank;
+
+  for (var i = rank; i < statements.length; i++) {
+    update_element = statements[i];
+    update_element.statement_rank = update_element.statement_rank - 1;
+
+    $.ajax({
+      type: "PUT",
+      url: base_url + "statements/" + update_element._id,
+      data: update_element,
+      beforeSend: setHeader,
+      success: function (response) {
+        if (i == statements.length - 1) {
+          getStatementsData();
+        }
+      }
+    });
+  }
 }
 
 /**
- *  saves the product of an answer
+ *  saves the options of an result
  * @param product_id
  * @param statement_id
  * @param answer_id
  * @param bool
  */
 function newResultOption (result_id, statementId, optionsId, bool){
-  console.log("newResultOption");
-  /*let params = getStatementByID(statementId);
-  for(var i = 0; i < params.options.length; i++){
-    if(params.options[i].option_id === optionsId){
-      params.options[i].result_id = result_id;
-      console.log("new param");
-    }
-  }*/
   params = {
     optionId: optionsId,
     resultId: result_id
@@ -103,9 +113,7 @@ function newResultOption (result_id, statementId, optionsId, bool){
 
 /**
  *  edit statement text
- * @param catalogId {String}
- * @param id {String} questionID
- * @param index {Integer} number of question
+ * @param id {String} statementId
  */
 function editStatementText(statementId) {
   var s = getStatementByID(statementId);
@@ -139,10 +147,8 @@ function editStatementText(statementId) {
 }
 
 /**
- *  edit statement text
- * @param catalogId {String}
- * @param id {String} questionID
- * @param index {Integer} number of question
+ *  edit statement points
+ * @param id {String} statementId
  */
 function editStatementPoints(statementId){
   var s = getStatementByID(statementId);
@@ -179,7 +185,7 @@ function editStatementPoints(statementId){
 }
 
 /**
- *  builds the html content of adminsettings catalog part
+ *  builds the html content of adminsettings checklist part
  */
 function setHTMLForChecklist() {
   $("#checklist").html(buildHTMLChecklist());
@@ -252,8 +258,6 @@ function buildHTMLStatements() {
  * @returns {string} - html content
  */
 function buildHTMLOptions(statement){
-  console.log(statement.options.length);
-
   var html = '';
 
   html += '<!-- Antwortmöglichkeiten für die Frage--><div class="option_list">';
@@ -302,7 +306,7 @@ function optionResultsFoldOut(optionsId, statementId, index) {
 }
 
 /**
- *  load html content for products for answers of question
+ *  load html content for results for an option
  * @param statementId
  * @param optionsId - index for option of statement
  * @returns {string} - html content
@@ -370,9 +374,8 @@ function filterFunctionResults(optionsId) {
 
 /**
  * load dropdown html content (used for choosing a result)
- * @param prods
+ * @param optionsId
  * @param statementId
- * @param index
  * @returns {string} - html content
  */
 function setDropdown(statementId, optionsId){

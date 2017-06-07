@@ -85,6 +85,20 @@ export function create(req, res) {
     .catch(handleError(res));
 }
 
+// Creates a new Statement in the DB
+export function createNew(req, res) {
+  return Statement.create({
+    statement_text: 'Bitte geben Sie einen neuen Text ein!',
+    statement_rank: req.body.statement_rank,
+    options: [{option_id: '617364617364616473736458', result_id:'617364617364616473736463'},
+      {option_id: '617364617364616473736461', result_id:'617364617364616473736464'},
+      {option_id: '617364617364616473736462', result_id:'617364617364616473736400'}],
+    points: 0
+  })
+    .then(respondWithResult(res, 201))
+    .catch(handleError(res));
+}
+
 // Upserts the given Statement in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
@@ -97,12 +111,9 @@ export function upsert(req, res) {
 }
 
 export function updateResult(req, res) {
-  console.log("test updateResult");
 
   let option_id = req.body.optionId;
   let result_id = req.body.resultId;
-  console.log(option_id);
-  console.log(result_id);
 
   return Statement.findOneAndUpdate(
     {

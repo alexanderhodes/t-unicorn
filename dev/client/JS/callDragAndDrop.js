@@ -38,9 +38,6 @@ function refreshQuestionSortNumber(dragdrop_area) {
     //var id=current_question_id.split('_')[1];
     var s = getStatementByID(current_question_id);
 
-    console.log(current_question_id);
-    console.log("test");
-
     s.statement_rank = i+1;
     $.ajax({
       type: "PUT",

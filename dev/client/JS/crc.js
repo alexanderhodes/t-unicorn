@@ -1,8 +1,3 @@
-/**
- * Created by lizakanitz on 25.04.17.
- */
-
-
 var url = 'http://localhost:4000/'; //for loacal access
 var base_url = url + 'api/'; // for local testing
 var r;
@@ -60,8 +55,10 @@ $(document).ready(function() {
 
      "<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp card_recom\" id=\"card_grid_content\">";
     var card_statement = "<div class=\"mdl-card__title\" statement_id='" + currentStatement.statement_rank+ "'><h2 class=\"mdl-card__title-text statement_number\"> "
-      + currentStatement.statement_rank + "/" + statements.length + "</h2></div>" +
-      "<div class=\"mdl-card__supporting-text statement_text\">" + currentStatement.statement_text + "</div>";
+      //+ currentStatement.statement_rank + "/" + statements.length
+    + "</h2></div>" +
+      "<div class=\"mdl-card__supporting-text statement_text\">"
+      + currentStatement.statement_text + "</div>";
 
 
     var slider_for_options = "<div class=\"slider_area\"><div id=\"slider\"></div><div id=\"list_of_options\">";
@@ -215,6 +212,7 @@ function getActualPaddingFromLeft(option_index) {
   elem_width = $(".option_with_step[option_rang='" + option_index + "']").width();
   return actualPadding;
 }
+
 /**
  * This function loads the results from database.
  */
@@ -234,6 +232,7 @@ function load_Results() {
     }
   };
 };
+
 /**
  * This function generates the HTML code for the results page.
  * @param{Object} r
@@ -256,15 +255,14 @@ function show_result(r){
 
   var result_card="", result_card_begin = "", result_card_end="";
   result_card_begin += "<div class=\"mdl-grid\">";
-var middle_card;
-
-
+  var middle_card;
 
   middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp middle_card\">";
   // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
-  middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 class=\"mdl-card__title-text id='result_as_text' \">";
-  middle_card +=  "Ihre Bereitschaft für die Cloud beträgt: <span id='result_in_percent'></span></h2></div>" ;
-  middle_card +=  "<div class=\"mdl-card__supporting-text id='card_for_chart'\">";
+  middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 style='text-align: center;' class=\"mdl-card__title-text id='result_as_text' \">";
+  middle_card +=  "Unserer Meinung nach beträgt Ihre Bereitschaft für die Cloud: </h2></div>" ;
+  middle_card +=  "<span style='text-align: center;' id='result_in_percent'></span>" +
+    "<div class=\"mdl-card__supporting-text id='card_for_chart'\">";
   middle_card += "<div id='chart_area'><canvas id='myChart' style=\"width='100%';\"></canvas></div>";
   middle_card +=  "</div></div>";
 
@@ -277,10 +275,12 @@ var middle_card;
     if (r[i] == undefined){
       //next element
     } else {
-      var Text = '<p><dfn class="tooltip1">'+r[i].chance_short_text+
-      '<span rel="tooltip1">' + r[i].chance_text + '</span>' +
-      '</dfn>' +
-      '</p>';
+      var Text =
+      <!-- Multiline Tooltip -->
+        '<div id="tt'+ i +'" >' + r[i].chance_short_text + '</div>'+
+        '<div class="mdl-tooltip mdl-tooltip--large" for="tt'+ i +'"">'+
+        r[i].chance_text+
+      '</div>';
     if (r[i].chance_text != "") {
         lfdNr += 1;
         box1 += '<div class="data"><div class="thumb_icon"><img class="Thumbs" src="Images/Thumb_Up.png" alt="Daumen hoch"</img></div><div class="datatext">' + Text +  '</div></div>';
@@ -294,10 +294,11 @@ var middle_card;
   box2 +=  "RISIKEN</h2></div>" ;
   lfdNr = 0;
   for ( i = 0; i < 5; i++) {
-    Text = '<p><dfn class="tooltip2">' +r[i].risk_short_text+
-      '<span rel="tooltip2">' + r[i].risk_text + '</span>' +
-      '</dfn>' +
-      '</p>';
+    Text = <!-- Multiline Tooltip -->
+      '<div id="ttr'+ i +'" >' + r[i].risk_short_text + '</div>'+
+      '<div class="mdl-tooltip mdl-tooltip--large" for="ttr'+ i +'"">'+
+      r[i].risk_text+
+      '</div>';
 
     if (r[i].risk_text != "") {
       lfdNr += 1;
@@ -317,6 +318,7 @@ var middle_card;
 
   $("#main_content").html(result_card + buttons_atresult);
   $("#result_in_percent").html(+percentage+'%');
+  componentHandler.upgradeDom();
  var new_width=$("#main_content").find("#card_for_chart").width();
 
   $("#myChart").css("width", new_width);
@@ -428,10 +430,10 @@ switch (true){
  * This function opens the local mail client and fill the body with the result.
  */
 function answer_mailto(){
+  var mail_info = "mailto:" + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
   var divider ="-----------------------------------------------------------------------------------";
   var mail_body = divider+'\nVorteile:\n'+divider+'\n\n';
-  var mail_info = "mailto: " + "?subject=" + "Ihr Cloud Readiness Check Ergebnis" + "&body=";
-  var mail_advantages;
+  var mail_advantages = "";
   var mail_risks = '\n'+divider+'\nRisiken:\n'+divider+'\n\n';
   for(var i=0; i<r.length; i++)
   {

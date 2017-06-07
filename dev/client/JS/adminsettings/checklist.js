@@ -13,16 +13,13 @@ function newStatement(){
   }
   newRank = newRank+1;
   params = {
-    statement_text: "neues Statement",
-    statement_rank: newRank,
-    points: 0,
-    options: []
+    statement_rank: newRank
   };
 
-  //add Question
+  //add Statement
   $.ajax({
     type: "POST",
-    url: base_url + "statements/",
+    url: base_url + "statements/new",
     data: params,
     beforeSend: setHeader,
     success: function (response) {

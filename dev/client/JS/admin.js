@@ -1,7 +1,3 @@
-/**
- * Created by lizakanitz on 25.12.16.
- */
-
 var token;
 
 /*
