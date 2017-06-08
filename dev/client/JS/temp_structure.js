@@ -65,10 +65,9 @@ function load_Options() {
   req.send();
   req.onreadystatechange = function(){
     if (this.readyState == 4 && this.status == 200){
-
       ops = JSON.parse(this.responseText);
       ops.sort(function(a,b){
-        return a._id - b._id;
+        return a.rank - b.rank;
       });
     }
   };
