@@ -1,4 +1,4 @@
-var url = 'http://localhost:4000/'; //for loacal access
+var url = location.protocol + '//' + location.host+'/'; //for loacal access
 var base_url = url + 'api/'; // for local testing
 var r;
 

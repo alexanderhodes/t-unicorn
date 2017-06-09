@@ -7,7 +7,7 @@ module.exports = {
 
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/CyberCheck'
+    uri: 'mongodb://localhost/CRC'
   },
 
   // Seed database on startup

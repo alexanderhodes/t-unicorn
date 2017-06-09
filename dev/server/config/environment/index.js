@@ -20,10 +20,10 @@ var all = {
   root: path.normalize(`${__dirname}/../../..`),
 
   // Browser-sync port
-  browserSyncPort: process.env.BROWSER_SYNC_PORT || 4000,
+  browserSyncPort: process.env.BROWSER_SYNC_PORT || 5000,
 
   // Server port
-  port: process.env.PORT || 9001,
+  port: process.env.PORT || 9002,
 
   // Server IP
   ip: process.env.IP || '0.0.0.0',
