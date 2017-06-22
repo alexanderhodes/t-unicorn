@@ -347,7 +347,7 @@ text-align: right !important;
 }
 
 .box1{
-  background-color:#BDBDBD;
+  background-color:#FFFFFF;
   /*width:400px;
   height: 550px;
   float:left;
@@ -394,7 +394,7 @@ text-align: right !important;
 
 #chart_area{
   max-width: 450px !important;
-  float:left;
+  margin: auto;
 }
 
 

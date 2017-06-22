@@ -259,16 +259,16 @@ function show_result(r){
 
   middle_card="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp middle_card\">";
   // //<div class=\"mdl-cell--12-col mdl-card mdl-shadow--2dp\" id=\"card_grid_content\">";
-  middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 style='text-align: center;' class=\"mdl-card__title-text id='result_as_text' \">";
-  middle_card +=  "Unsere Einschätzung für Ihre Cloud-Bereitschaft beträgt: </h2></div>" ;
+  middle_card +=  "<div class=\"mdl-card__title middle_card\"><h2 style='text-align: center; margin: auto' class=\"mdl-card__title-text id='result_as_text' \">";
+  middle_card +=  "Ihre Cloud Readiness beträgt: </h2></div>" ;
   middle_card +=  "<span style='text-align: center;' id='result_in_percent'></span>" +
-    "<div class=\"mdl-card__supporting-text id='card_for_chart'\">";
+    "<div class=\"mdl-card__supporting-text\" style='margin: auto;' id='card_for_chart'\">";
   middle_card += "<div id='chart_area'><canvas id='myChart' style=\"width='100%';\"></canvas></div>";
   middle_card +=  "</div></div>";
 
   var box1 ="<div class=\"mdl-card mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-shadow--2dp box1\">";
   //box1+='<div class="box1">';//<div class="header1">VORTEILE</div>';
-  box1+=  "<div class=\"mdl-card__title \"><h2 class=\"mdl-card__title-text box1_text\">";
+  box1+=  "<div class=\"mdl-card__title box1\"><h2 class=\"mdl-card__title-text box1_text\">";
   box1 +=  "VORTEILE</h2></div>" ;
   var lfdNr = 0;
   for (var i = 0; i < 5; i++) {
